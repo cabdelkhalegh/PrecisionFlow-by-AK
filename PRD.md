@@ -655,7 +655,7 @@ Each Content Task contains multiple **Content Artifacts**, which are the actual 
 **Explicit separation of approval cycles (no ambiguity):**
 
 * **Script approval cycle (pre‑production):** statuses only live on `SCRIPT` artifacts (e.g., `script_submitted → script_internal_approved → script_pending_client_approval → script_client_approved`, with loop states like `script_internal_changes_requested → script_v2_submitted`). HARD GATE: **Filming is blocked until script approval requirements are satisfied.**
-* **Produced content approval cycle (post‑production):** statuses only live on `VIDEO_DRAFT` and `FINAL_CONTENT` artifacts (e.g., `draft_v1_submitted → draft_internal_approved → draft_pending_client_approval → final_content_client_approved`, with loops like `draft_internal_changes_requested → draft_v2_submitted`). This cycle governs **what will be published**, independent of script approval.
+* **Produced content approval cycle (post‑production):** statuses only live on `VIDEO_DRAFT` and `FINAL_CONTENT` artifacts (e.g., `draft_v1_submitted → draft_internal_approved → draft_pending_client_approval → final_content_client_approved`, with loops like `draft_pending_revision → draft_v2_submitted`). This cycle governs **what will be published**, independent of script approval.
 
 **Content Artifact (Versioned & Audited)**
 Artifacts represent *how* the deliverable evolves. Artifact types include:
