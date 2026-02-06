@@ -947,7 +947,7 @@ AI generates:
 * best practices
 * recommendations to TiKiT (agency improvements)
 * recommendations to client (how to run smoother next time)
-* risk patterns that reoccur
+* risk patterns that recur
 
 **FR-41 Final Intelligence Document**
 Final deliverable shared with client includes:
