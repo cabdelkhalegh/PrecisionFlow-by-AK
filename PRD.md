@@ -305,8 +305,16 @@ When building a creator shortlist, the system must handle:
 
   * each new submission increments version
 
-**Overall task status (derived):** compute a roll-up status from the most advanced artifact lifecycle state across the two cycles (SCRIPT → VIDEO_DRAFT → FINAL_CONTENT). A ContentTask is considered **complete** only when the FINAL_CONTENT artifact reaches `published` (and `kpi_collected` if KPI collection is required by policy).
+**Overall task status (derived):**
 
+* Artifact precedence is **FINAL_CONTENT > VIDEO_DRAFT > SCRIPT**.
+* For each artifact type (SCRIPT, VIDEO_DRAFT, FINAL_CONTENT), only the **latest version** (by version counter / creation time) is considered.
+* The overall task status is taken from the lifecycle state of the latest artifact of the **highest‑precedence type that exists** for the ContentTask.
+* A ContentTask is **blocked** if:
+  * no SCRIPT exists, or
+  * the latest SCRIPT exists but is in a non‑approved terminal state (e.g., `rejected`, `needs_changes`) and no newer SCRIPT is in progress; in this case, downstream VIDEO_DRAFT / FINAL_CONTENT states must **not** advance the overall task status beyond the SCRIPT approval gate.
+* A ContentTask is considered **in progress** when there is an active SCRIPT and/or VIDEO_DRAFT / FINAL_CONTENT lifecycle, but the completion condition (below) has not been met.
+* A ContentTask is considered **complete** only when the latest FINAL_CONTENT artifact reaches `published` (and `kpi_collected` if KPI collection is required by policy). If no FINAL_CONTENT exists, the task **cannot** be complete regardless of SCRIPT or VIDEO_DRAFT states.
 ---
 
 ### 4.6 Approval Item (Governance Backbone)
