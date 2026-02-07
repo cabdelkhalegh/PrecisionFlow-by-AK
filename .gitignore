@@ -61,6 +61,9 @@ temp/
 *.sqlite
 *.db
 *.sql
+# But keep migration and seed files
+!supabase/migrations/*.sql
+!supabase/seed.sql
 
 # OS files
 Thumbs.db
