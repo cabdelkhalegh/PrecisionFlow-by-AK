@@ -88,7 +88,7 @@ pnpm dev:mobile # Mobile app with Expo
 ## 📁 Project Structure
 
 ```
-tikit-os/
+PrecisionFlow-by-AK/
 ├── apps/
 │   ├── web/                    # Next.js web application
 │   │   ├── app/               # App Router pages
@@ -174,20 +174,24 @@ tikit-os/
 
 ### Root `.env.local`
 
+> **⚠️ SECURITY WARNING:** `SUPABASE_SERVICE_ROLE_KEY` is a **server-only secret**. It must **NEVER** be used in client-side code (browser or mobile), must **NOT** be exposed in any `NEXT_PUBLIC_*` or `EXPO_PUBLIC_*` environment variables, and should only be loaded in trusted server runtimes (e.g., Next.js API routes, server components, server actions, or edge/serverless functions).
+
 ```bash
-# Supabase
+# Supabase (public - safe for client)
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+
+# ⚠️ SERVER-ONLY SECRET - Never expose to client-side code
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 
-# OpenAI
-OPENAI_API_KEY=sk-your-api-key
+# Google Gemini (server-only secret)
+GEMINI_API_KEY=your-gemini-api-key
 
-# App URLs
+# App URLs (public - safe for client)
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_PUBLIC_API_URL=http://localhost:3000/api/trpc
 
-# Feature Flags
+# Feature Flags (public - safe for client)
 NEXT_PUBLIC_ENABLE_AI=true
 NEXT_PUBLIC_ENABLE_ANALYTICS=false
 
@@ -202,6 +206,8 @@ NEXT_PUBLIC_ENABLE_ANALYTICS=false
 EXPO_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 EXPO_PUBLIC_API_URL=http://localhost:3000/api/trpc
+
+# ⚠️ Never include server secrets (SERVICE_ROLE_KEY, GEMINI_API_KEY) in mobile env
 ```
 
 ---

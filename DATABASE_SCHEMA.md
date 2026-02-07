@@ -118,6 +118,31 @@ CREATE POLICY "Users can update their own profile"
   ON users FOR UPDATE
   USING (auth.uid() = id);
 
+-- Trigger function to prevent privilege escalation
+CREATE OR REPLACE FUNCTION prevent_user_privilege_escalation()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- If the row is being updated by its owner and the owner is not an admin,
+  -- prevent changes to privileged fields that could affect authorization.
+  IF auth.uid() = OLD.id AND OLD.role <> 'admin' THEN
+    IF NEW.role IS DISTINCT FROM OLD.role
+       OR NEW.permissions IS DISTINCT FROM OLD.permissions
+       OR NEW.organization_id IS DISTINCT FROM OLD.organization_id
+       OR NEW.status IS DISTINCT FROM OLD.status THEN
+      RAISE EXCEPTION 'You are not allowed to change privileged user fields (role, permissions, organization, status).';
+    END IF;
+  END IF;
+  
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Trigger to enforce privileged field protection
+CREATE TRIGGER prevent_user_privilege_escalation
+  BEFORE UPDATE ON users
+  FOR EACH ROW
+  EXECUTE FUNCTION prevent_user_privilege_escalation();
+
 -- Trigger for updated_at
 CREATE TRIGGER set_users_updated_at
   BEFORE UPDATE ON users

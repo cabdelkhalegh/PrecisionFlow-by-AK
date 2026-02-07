@@ -77,16 +77,16 @@ Development:
 
 ```typescript
 // Login
-const { user, session } = await auth.signIn({
+const { data: { user, session }, error } = await supabase.auth.signInWithPassword({
   email: "user@example.com",
-  password: "password"
+  password: "password",
 });
 
-// Refresh token
-const { session } = await auth.refreshSession();
+// Refresh token (automatically handled by Supabase client)
+const { data: { session: refreshedSession }, error: refreshError } = await supabase.auth.refreshSession();
 
 // Logout
-await auth.signOut();
+const { error: signOutError } = await supabase.auth.signOut();
 ```
 
 ---

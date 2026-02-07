@@ -26,11 +26,11 @@ Before contributing, please review:
 - [README.md](./README.md) - Project overview
 - [PRD.md](./PRD.md) - Complete product requirements
 - [NEXT_STEPS.md](./NEXT_STEPS.md) - Implementation roadmap
-- ARCHITECTURE.md - Technical architecture (when available)
+- [ARCHITECTURE.md](./ARCHITECTURE.md) - Technical architecture
 
 ### 2. Set Up Development Environment
 
-*(Instructions will be added once ARCHITECTURE.md is complete)*
+Please follow [DEV_SETUP.md](./DEV_SETUP.md) for step-by-step development environment setup instructions.
 
 ### 3. Join the Communication Channels
 

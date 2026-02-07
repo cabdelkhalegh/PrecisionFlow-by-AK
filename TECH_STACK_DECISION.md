@@ -75,12 +75,13 @@ After comprehensive evaluation by a council of senior engineers representing dif
 - Vercel: 100GB bandwidth, unlimited deployments
 - GitHub Actions: 2,000 minutes/month
 - Supabase: 500MB database, 2GB storage, 500K edge function calls
+- Google Gemini: Free tier (1,500 requests/day)
 - **Total Cost:** $0/month for MVP
 
 **Scaling Path:**
 - Month 1-3: Free tier
 - Month 4-6: Vercel Pro ($20) + Supabase Pro ($25) = $45/month
-- Month 7+: Scale based on metrics
+- Month 7+: Scale based on metrics (may need Gemini Pro if exceeding free tier)
 
 ---
 
@@ -292,7 +293,7 @@ const campaigns = trpc.campaigns.list.useQuery();
    - Database types auto-generated
 
 4. **Developer Experience** ✅
-   - Modern tooling (Turbo repo, pnpm)
+   - Modern tooling (Turborepo, pnpm)
    - Hot reload on web and mobile
    - Excellent VS Code integration
    - Outstanding documentation
@@ -374,15 +375,15 @@ const campaigns = trpc.campaigns.list.useQuery();
 - Supabase: $0
 - GitHub: $0
 - EAS Build: $0 (30 builds/month free)
-- OpenAI: ~$50/month
-- **Total: ~$50/month**
+- Google Gemini: $0 (free tier: 1,500 requests/day)
+- **Total: $0/month**
 
 ### Phase 2: Growth (Months 4-6)
 - Vercel Pro: $20
 - Supabase Pro: $25
-- OpenAI: ~$100
+- Google Gemini: $0 (or upgrade to Pro if needed)
 - Monitoring: $26 (Sentry)
-- **Total: ~$171/month**
+- **Total: ~$71/month**
 
 ### Phase 3: Scale (Months 7+)
 - Infrastructure: $200-500

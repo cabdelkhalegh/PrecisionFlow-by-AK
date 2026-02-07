@@ -221,30 +221,34 @@ USING (
 
 ### AI/ML Integration
 
-**Primary:** OpenAI API (GPT-4)
+**Primary:** Google Gemini API (Gemini 1.5 Flash)
 
 **Rationale:**
+- **Free Tier:** 1,500 requests/day at no cost (perfect for MVP)
 - State-of-the-art language understanding
+- Multimodal capabilities (text, images, PDFs)
 - Brief structuring and extraction
 - Strategy generation
 - Learning pattern recognition
-- Pay-as-you-go pricing (no free tier, but cost-effective)
+- Cost-effective scaling (Gemini Pro available if needed)
 
-**Alternative/Fallback:** Anthropic Claude (via API)
+**Alternative/Fallback:** Anthropic Claude (via API) or OpenAI GPT-4
 
 **Local Processing:** None (to stay free-tier)
 
 **Implementation:**
 - API calls from Supabase Edge Functions
 - Streaming responses for better UX
-- Caching of AI responses
-- Rate limiting to control costs
+- Caching of AI responses to minimize API calls
+- Rate limiting to stay within free tier limits
+- Upgrade path to Gemini Pro if usage exceeds free tier
 
 **AI Features:**
 1. **Brief Structuring:**
    - Extract: objectives, audience, deliverables, budget, timeline
    - Identify missing information
    - Risk assessment
+   - PDF/document parsing support
 
 2. **Strategy Generation:**
    - Content recommendations
@@ -687,14 +691,15 @@ test(brief): add AI brief parsing tests
 - Supabase: $0
 - GitHub: $0
 - EAS Build: $0 (30 builds/month)
+- Google Gemini: $0 (1,500 requests/day free)
 - **Total: $0/month**
 
 **Paid Tier (Growing - 100-1000 Users):**
 - Vercel Pro: $20/month
 - Supabase Pro: $25/month
 - Sentry: $26/month (50K events)
-- OpenAI API: ~$50-100/month (estimated)
-- **Total: ~$121-146/month**
+- Google Gemini: $0 (or upgrade to Pro if needed)
+- **Total: ~$71/month**
 
 **Scale Tier (1000+ Users):**
 - Vercel Enterprise: Custom
@@ -714,7 +719,7 @@ test(brief): add AI brief parsing tests
 | **Database** | Supabase (PostgreSQL) | Free tier, real-time, auth, storage, RLS |
 | **Authentication** | Supabase Auth | JWT, OAuth, MFA, RLS integration |
 | **File Storage** | Supabase Storage | S3-compatible, CDN, transformations |
-| **AI/ML** | OpenAI API | GPT-4 for brief parsing, strategy, learning |
+| **AI/ML** | Google Gemini API | Gemini 1.5 Flash for brief parsing, strategy, learning (free tier) |
 | **State Management** | Zustand + React Query | Lightweight, server state separation |
 | **Styling** | TailwindCSS + NativeWind | Utility-first, web+mobile compatibility |
 | **Type Safety** | TypeScript + Zod | Strict mode, runtime validation |
