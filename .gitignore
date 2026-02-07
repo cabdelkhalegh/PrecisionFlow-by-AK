@@ -94,6 +94,16 @@ env/
 .next/
 next-env.d.ts
 
+# Turbo
+.turbo/
+
+# pnpm
+.pnpm-store/
+pnpm-lock.yaml
+
+# Supabase
+.supabase/
+
 # Nuxt.js
 .nuxt
 .output
