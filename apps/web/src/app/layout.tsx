@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { TRPCProvider } from '@/lib/trpc-provider';
+import { ToastProvider } from '@/components/ui/Toast';
 
 export const metadata: Metadata = {
   title: 'TiKiT OS - Campaign Execution & Intelligence',
@@ -15,7 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <TRPCProvider>{children}</TRPCProvider>
+        <TRPCProvider>
+          <ToastProvider>
+            {children}
+          </ToastProvider>
+        </TRPCProvider>
       </body>
     </html>
   );

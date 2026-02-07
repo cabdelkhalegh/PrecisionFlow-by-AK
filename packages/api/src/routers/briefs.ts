@@ -146,7 +146,6 @@ export const briefsRouter = router({
 
   /**
    * Process brief with AI (parse and extract structured data)
-   * Note: This will be implemented when @tikit/ai package is available
    */
   processWithAI: protectedProcedure
     .input(z.object({ id: z.string().uuid() }))
@@ -173,22 +172,29 @@ export const briefsRouter = router({
         });
       }
 
-      // TODO: Import and use @tikit/ai package when dependencies are installed
-      // For now, return a placeholder response
-      // const { parseBrief, calculateRiskLevel } = await import('@tikit/ai');
-      // const structuredData = await parseBrief(brief.raw_content);
-      // const riskLevel = calculateRiskLevel(structuredData.missing_info);
+      let structuredData;
+      let riskLevel: 'low' | 'medium' | 'high' | 'critical' = 'medium';
 
-      // Placeholder structured data
-      const structuredData = {
-        objectives: ['Increase brand awareness'],
-        target_audience: 'To be determined',
-        deliverables: [],
-        timeline: 'TBD',
-        budget: 'TBD',
-        kpis: [],
-        missing_info: ['Budget details', 'Specific timeline', 'Deliverables list'],
-      };
+      try {
+        // Import and use AI package
+        const { parseBrief, calculateRiskLevel } = await import('@tikit/ai');
+        structuredData = await parseBrief(brief.raw_content);
+        riskLevel = calculateRiskLevel(structuredData.missing_info);
+      } catch (aiError) {
+        console.error('AI processing error:', aiError);
+        
+        // Fallback to placeholder if AI fails
+        structuredData = {
+          objectives: ['AI processing temporarily unavailable - please review manually'],
+          target_audience: 'To be determined',
+          deliverables: [],
+          timeline: 'TBD',
+          budget: 'TBD',
+          kpis: [],
+          missing_info: ['AI processing failed - manual review required'],
+        };
+        riskLevel = 'high';
+      }
 
       // Update brief with structured data
       const { data: updatedBrief, error: updateError } = await ctx.supabase
@@ -207,8 +213,7 @@ export const briefsRouter = router({
         });
       }
 
-      // Calculate and update campaign risk level
-      const riskLevel = 'medium'; // Placeholder
+      // Update campaign risk level
       await ctx.supabase
         .from('campaigns')
         .update({ risk_level: riskLevel })
