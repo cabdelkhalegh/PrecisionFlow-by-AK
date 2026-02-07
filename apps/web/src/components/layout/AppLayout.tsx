@@ -2,17 +2,19 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { trpc } from '@/lib/trpc';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: '📊' },
   { name: 'Campaigns', href: '/campaigns', icon: '📋' },
   { name: 'Clients', href: '/clients', icon: '👥' },
   { name: 'Briefs', href: '/briefs', icon: '📄' },
-  { name: 'Approvals', href: '/approvals', icon: '✓' },
+  { name: 'Approvals', href: '/approvals', icon: '✓', showBadge: true },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { data: pendingCount } = trpc.approvals.countPending.useQuery();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -31,11 +33,12 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               <div className="ml-6 flex space-x-8">
                 {navigation.map((item) => {
                   const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
+                  const showCount = item.showBadge && pendingCount && pendingCount > 0;
                   return (
                     <Link
                       key={item.name}
                       href={item.href}
-                      className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium ${
+                      className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium relative ${
                         isActive
                           ? 'border-blue-500 text-gray-900'
                           : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
@@ -43,6 +46,11 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                     >
                       <span className="mr-2">{item.icon}</span>
                       {item.name}
+                      {showCount && (
+                        <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-orange-500 rounded-full">
+                          {pendingCount}
+                        </span>
+                      )}
                     </Link>
                   );
                 })}
