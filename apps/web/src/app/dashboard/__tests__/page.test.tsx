@@ -37,11 +37,11 @@ describe('DashboardPage', () => {
     render(<DashboardPage />)
     
     const newCampaignButton = screen.getByRole('button', { name: /New Campaign/i })
-    const reviewBriefsButton = screen.getByRole('button', { name: /Review Briefs/i })
+    const viewCampaignsButton = screen.getByRole('button', { name: /View Campaigns/i })
     const contentTasksButton = screen.getByRole('button', { name: /Content Tasks/i })
     
     expect(newCampaignButton).toBeInTheDocument()
-    expect(reviewBriefsButton).toBeInTheDocument()
+    expect(viewCampaignsButton).toBeInTheDocument()
     expect(contentTasksButton).toBeInTheDocument()
   })
 
