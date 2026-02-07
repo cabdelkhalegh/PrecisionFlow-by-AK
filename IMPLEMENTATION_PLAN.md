@@ -176,16 +176,18 @@ Build the primary user interface for campaign management.
 - [ ] Client detail page (`/clients/[id]`)
 - [ ] Client edit functionality
 
-#### 3.3 Campaign Management Pages
-- [ ] Campaigns list page (`/campaigns`)
-  - [ ] Campaign table/cards
-  - [ ] Filter by status, risk, client
-  - [ ] Sort functionality
-  - [ ] Search
-- [ ] Campaign creation page (`/campaigns/new`)
-  - [ ] Campaign form
-  - [ ] Client selection
-  - [ ] Budget input
+#### 3.3 Campaign Management Pages ✅
+- [x] Campaigns list page (`/campaigns`)
+  - [x] Campaign table view
+  - [x] Filter by status, risk, client
+  - [x] Search functionality
+  - [x] Color-coded status/risk badges
+- [x] Campaign creation page (`/campaigns/new`)
+  - [x] Campaign form with validation
+  - [x] Client selection dropdown
+  - [x] Timeline (start/end dates)
+  - [x] Budget input
+  - [x] Tags input
 - [ ] Campaign detail page (`/campaigns/[id]`)
   - [ ] Campaign overview
   - [ ] Status management
@@ -215,9 +217,10 @@ Build the primary user interface for campaign management.
 ### Success Criteria
 - ✅ Users can navigate the dashboard
 - ✅ Clients can be created and listed via UI
-- [ ] Campaigns can be created via UI
+- ✅ Campaigns can be created and listed via UI
 - [ ] Briefs can be uploaded and viewed
 - [ ] Risk levels displayed correctly
+- [ ] Responsive design on mobile
 - ✅ UI is responsive and accessible
 
 ### 📦 Completed Deliverables
