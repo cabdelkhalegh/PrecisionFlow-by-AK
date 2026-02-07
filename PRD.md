@@ -297,10 +297,7 @@ When building a creator shortlist, the system must handle:
 * DeliverableType (reel/post/story/etc.)
 * Requirements snapshot (from structured brief)
 * Schedule datetime (agreed)
-* Status:
-
-  * draft → submitted → approved_internal → pending_client_approval → approved_by_client → approved_for_posting → published → kpi_collected → closed
-  * plus exception states when needed
+* Status: **derived** (see 6F.1 — lifecycle states live on Content Artifacts and are split into two approval cycles: Script vs Produced Content)
 * Assets:
 
   * draft upload, caption text, hashtags, link, proof screenshot, URL
@@ -308,6 +305,16 @@ When building a creator shortlist, the system must handle:
 
   * each new submission increments version
 
+**Overall task status (derived):**
+
+* Artifact precedence is **FINAL_CONTENT > VIDEO_DRAFT > SCRIPT**.
+* For each artifact type (SCRIPT, VIDEO_DRAFT, FINAL_CONTENT), only the **latest version** (by version counter / creation time) is considered.
+* The overall task status is taken from the lifecycle state of the latest artifact of the **highest‑precedence type that exists** for the ContentTask.
+* A ContentTask is **blocked** if:
+  * no SCRIPT exists, or
+  * the latest SCRIPT exists but is in a non‑approved terminal state (e.g., `rejected`, `needs_changes`) and no newer SCRIPT is in progress; in this case, downstream VIDEO_DRAFT / FINAL_CONTENT states must **not** advance the overall task status beyond the SCRIPT approval gate.
+* A ContentTask is considered **in progress** when there is an active SCRIPT and/or VIDEO_DRAFT / FINAL_CONTENT lifecycle, but the completion condition (below) has not been met.
+* A ContentTask is considered **complete** only when the latest FINAL_CONTENT artifact reaches `published` (and `kpi_collected` if KPI collection is required by policy). If no FINAL_CONTENT exists, the task **cannot** be complete regardless of SCRIPT or VIDEO_DRAFT states.
 ---
 
 ### 4.6 Approval Item (Governance Backbone)
@@ -650,6 +657,13 @@ TiKiT OS explicitly codifies this separation. Script approval governs *what will
 Represents the deliverable itself (e.g. “1 Instagram Reel”). It defines *what* must be delivered.
 
 Each Content Task contains multiple **Content Artifacts**, which are the actual versioned objects submitted for approval.
+
+**Lifecycle ownership:** lifecycle states belong to each **Content Artifact** (SCRIPT / VIDEO_DRAFT / FINAL_CONTENT). ContentTask does **not** own a standalone status; any “overall task status” is derived as a roll-up from the most advanced artifact state. A ContentTask is considered **complete** only when the FINAL_CONTENT artifact reaches `published` (and `kpi_collected` if KPI collection is required by policy).
+
+**Explicit separation of approval cycles (no ambiguity):**
+
+* **Script approval cycle (pre‑production):** statuses only live on `SCRIPT` artifacts (e.g., `script_submitted → script_internal_approved → script_pending_client_approval → script_client_approved`, with loop states like `script_internal_changes_requested → script_v2_submitted`). HARD GATE: **Filming is blocked until script approval requirements are satisfied.**
+* **Produced content approval cycle (post‑production):** statuses only live on `VIDEO_DRAFT` and `FINAL_CONTENT` artifacts (e.g., `draft_v1_submitted → draft_internal_approved → draft_pending_client_approval → final_content_client_approved`, with loops like `draft_pending_revision → draft_v2_submitted`). This cycle governs **what will be published**, independent of script approval.
 
 **Content Artifact (Versioned & Audited)**
 Artifacts represent *how* the deliverable evolves. Artifact types include:
