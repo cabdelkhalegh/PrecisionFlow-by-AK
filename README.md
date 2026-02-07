@@ -97,9 +97,9 @@ TiKiT OS will be built with:
 - **Real-time:** Supabase Realtime (PostgreSQL replication)
 
 **AI/ML:**
-- **Primary:** Google Gemini API (Gemini 1.5 Flash) - Free tier: 1,500 requests/day
+- **Primary:** Google Gemini API (Gemini 2.0 Flash) - Free tier: 1,500 requests/day
 - **Use Cases:** Brief parsing, strategy generation, learning extraction
-- **Alternative:** Anthropic Claude or OpenAI GPT-4
+- **Alternative:** Anthropic Claude 3.5 or OpenAI GPT-4
 
 **Infrastructure:**
 - **Web Hosting:** Vercel (Edge Network, Serverless)

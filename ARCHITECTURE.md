@@ -221,18 +221,19 @@ USING (
 
 ### AI/ML Integration
 
-**Primary:** Google Gemini API (Gemini 1.5 Flash)
+**Primary:** Google Gemini API (Gemini 2.0 Flash)
 
 **Rationale:**
 - **Free Tier:** 1,500 requests/day at no cost (perfect for MVP)
-- State-of-the-art language understanding
-- Multimodal capabilities (text, images, PDFs)
-- Brief structuring and extraction
-- Strategy generation
-- Learning pattern recognition
-- Cost-effective scaling (Gemini Pro available if needed)
+- **Latest Model:** Gemini 2.0 Flash - newest generation with improved performance
+- State-of-the-art language understanding with enhanced reasoning
+- Multimodal capabilities (text, images, PDFs, video)
+- Advanced brief structuring and extraction
+- Superior strategy generation with better context understanding
+- Learning pattern recognition with improved accuracy
+- Cost-effective scaling (Gemini 2.0 Pro available if needed)
 
-**Alternative/Fallback:** Anthropic Claude (via API) or OpenAI GPT-4
+**Alternative/Fallback:** Anthropic Claude 3.5 or OpenAI GPT-4
 
 **Local Processing:** None (to stay free-tier)
 
@@ -240,8 +241,8 @@ USING (
 - API calls from Supabase Edge Functions
 - Streaming responses for better UX
 - Caching of AI responses to minimize API calls
-- Rate limiting to stay within free tier limits
-- Upgrade path to Gemini Pro if usage exceeds free tier
+- Rate limiting to stay within free tier limits (1,500 requests/day)
+- Upgrade path to Gemini 2.0 Pro if usage exceeds free tier
 
 **AI Features:**
 1. **Brief Structuring:**
@@ -719,7 +720,7 @@ test(brief): add AI brief parsing tests
 | **Database** | Supabase (PostgreSQL) | Free tier, real-time, auth, storage, RLS |
 | **Authentication** | Supabase Auth | JWT, OAuth, MFA, RLS integration |
 | **File Storage** | Supabase Storage | S3-compatible, CDN, transformations |
-| **AI/ML** | Google Gemini API | Gemini 1.5 Flash for brief parsing, strategy, learning (free tier) |
+| **AI/ML** | Google Gemini API | Gemini 2.0 Flash for brief parsing, strategy, learning (free tier) |
 | **State Management** | Zustand + React Query | Lightweight, server state separation |
 | **Styling** | TailwindCSS + NativeWind | Utility-first, web+mobile compatibility |
 | **Type Safety** | TypeScript + Zod | Strict mode, runtime validation |

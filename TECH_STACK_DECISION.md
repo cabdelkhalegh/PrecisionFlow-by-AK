@@ -75,13 +75,13 @@ After comprehensive evaluation by a council of senior engineers representing dif
 - Vercel: 100GB bandwidth, unlimited deployments
 - GitHub Actions: 2,000 minutes/month
 - Supabase: 500MB database, 2GB storage, 500K edge function calls
-- Google Gemini: Free tier (1,500 requests/day)
+- Google Gemini 2.0 Flash: Free tier (1,500 requests/day)
 - **Total Cost:** $0/month for MVP
 
 **Scaling Path:**
 - Month 1-3: Free tier
 - Month 4-6: Vercel Pro ($20) + Supabase Pro ($25) = $45/month
-- Month 7+: Scale based on metrics (may need Gemini Pro if exceeding free tier)
+- Month 7+: Scale based on metrics (may need Gemini 2.0 Pro if exceeding free tier)
 
 ---
 
@@ -202,22 +202,26 @@ const campaigns = trpc.campaigns.list.useQuery();
 ### 8. AI/ML Engineer
 **Focus:** AI integration, model selection, costs
 
-**Recommendation:** OpenAI API (GPT-4)
-- **Quality:** State-of-the-art language understanding
-- **API Simplicity:** Easy integration
-- **Cost Efficiency:** Pay-as-you-go
+**Recommendation:** Google Gemini 2.0 Flash (Free Tier)
+- **Quality:** Latest-generation AI with enhanced reasoning capabilities
+- **Free Tier:** 1,500 requests/day at $0 cost
+- **API Simplicity:** Easy integration with excellent documentation
+- **Cost Efficiency:** Completely free for MVP, optional upgrade path
 - **Streaming:** Better UX for long responses
-- **Function Calling:** Structured data extraction
+- **Multimodal:** Text, images, PDFs, video support
+- **Function Calling:** Structured data extraction capabilities
 
 **Use Cases:**
-1. **Brief Structuring:** Extract structured data from raw text
+1. **Brief Structuring:** Extract structured data from raw text/PDFs
 2. **Strategy Generation:** AI-assisted campaign planning
-3. **Creator Matching:** Intelligent recommendations
-4. **Learning Extraction:** Post-campaign analysis
+3. **Creator Matching:** Intelligent recommendations with reasoning
+4. **Learning Extraction:** Post-campaign analysis and pattern recognition
 
 **Cost Management:**
 - Cache AI responses where appropriate
-- Use GPT-3.5 for simpler tasks
+- Implement rate limiting to stay within free tier (1,500 req/day)
+- Monitor usage with alerting at 80% threshold
+- Upgrade to Gemini 2.0 Pro only if needed (~$7/month for 1M tokens)
 - Implement rate limiting
 - Estimated: $50-100/month in early stages
 
@@ -375,15 +379,15 @@ const campaigns = trpc.campaigns.list.useQuery();
 - Supabase: $0
 - GitHub: $0
 - EAS Build: $0 (30 builds/month free)
-- Google Gemini: $0 (free tier: 1,500 requests/day)
+- Google Gemini 2.0 Flash: $0 (free tier: 1,500 requests/day)
 - **Total: $0/month**
 
 ### Phase 2: Growth (Months 4-6)
 - Vercel Pro: $20
 - Supabase Pro: $25
-- Google Gemini: $0 (or upgrade to Pro if needed)
+- Google Gemini: $0 (or upgrade to 2.0 Pro if needed: ~$7/month)
 - Monitoring: $26 (Sentry)
-- **Total: ~$71/month**
+- **Total: ~$71-78/month**
 
 ### Phase 3: Scale (Months 7+)
 - Infrastructure: $200-500
