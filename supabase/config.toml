@@ -25,12 +25,12 @@ max_header_length = 4096
 
 [studio]
 enabled = true
-port = 54323
+port = 54324
 api_url = "http://127.0.0.1"
 
 [inbucket]
 enabled = true
-port = 54324
+port = 54327
 smtp_port = 54325
 pop3_port = 54326
 
@@ -52,7 +52,7 @@ enable_confirmations = false
 
 [edge_runtime]
 enabled = true
-port = 54321
+port = 54328
 
 [analytics]
 enabled = false
