@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -63,16 +65,20 @@ export default function DashboardPage() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <ActionButton 
-              icon="➕"
-              title="New Campaign"
-              description="Create a new campaign"
-            />
-            <ActionButton 
-              icon="📝"
-              title="Review Briefs"
-              description="Review pending briefs"
-            />
+            <Link href="/campaigns/new">
+              <ActionButton 
+                icon="➕"
+                title="New Campaign"
+                description="Create a new campaign"
+              />
+            </Link>
+            <Link href="/campaigns">
+              <ActionButton 
+                icon="📊"
+                title="View Campaigns"
+                description="Browse all campaigns"
+              />
+            </Link>
             <ActionButton 
               icon="🎬"
               title="Content Tasks"
