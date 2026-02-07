@@ -2,9 +2,37 @@
 
 Get TiKiT OS up and running in minutes!
 
-## 🚀 Quick Setup (5 minutes)
+## 🚀 One-Click Deployment (Easiest!)
 
-### Option 1: Cloud Deployment (Recommended for Production)
+The fastest way to get started:
+
+```bash
+# Just run this one command:
+./scripts/one-click-deploy.sh
+```
+
+This interactive script will:
+- ✅ Check all prerequisites
+- ✅ Guide you through Supabase setup
+- ✅ Deploy the complete database
+- ✅ Configure environment variables
+- ✅ Verify everything works
+
+Then:
+```bash
+pnpm install
+pnpm dev:web
+```
+
+Visit http://localhost:3000 and you're done! 🎉
+
+**👉 For detailed instructions, see [ONE_CLICK_DEPLOY.md](./ONE_CLICK_DEPLOY.md)**
+
+---
+
+## 🛠️ Manual Setup (Alternative)
+
+### Option 1: Cloud Deployment (Production)
 
 ```bash
 # 1. Install Supabase CLI

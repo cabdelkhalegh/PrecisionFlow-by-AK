@@ -4,6 +4,21 @@
 
 ---
 
+## 🚀 Quick Deploy
+
+[![Deploy to Supabase](https://img.shields.io/badge/Deploy%20to-Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/dashboard/new)
+[![One-Click Deploy](https://img.shields.io/badge/One--Click-Deploy-blue?style=for-the-badge&logo=rocket&logoColor=white)](#one-click-deployment)
+
+**Deploy the complete TiKiT OS database to Supabase in under 5 minutes:**
+
+```bash
+./scripts/one-click-deploy.sh
+```
+
+Or follow the [detailed deployment guide](./SUPABASE_DEPLOYMENT.md).
+
+---
+
 ## 📘 Overview
 
 This repository contains the development of **TiKiT OS**, an enterprise-grade operating system for influencer marketing agencies. TiKiT OS enforces governance, accountability, and intelligence across the entire campaign lifecycle using the **campaign as the single operating container**.
@@ -196,6 +211,32 @@ All implementation must adhere to:
 ---
 
 ## 📋 Getting Started
+
+### One-Click Deployment
+
+The fastest way to get started with TiKiT OS:
+
+1. **Deploy Database:**
+   ```bash
+   ./scripts/one-click-deploy.sh
+   ```
+   This will:
+   - Guide you through Supabase account setup
+   - Create a new Supabase project
+   - Deploy the complete database schema
+   - Configure environment variables
+   - Verify the deployment
+
+2. **Start Development:**
+   ```bash
+   pnpm install
+   pnpm dev:web
+   ```
+
+3. **Access Dashboard:**
+   Open http://localhost:3000
+
+**Alternative:** Use the [Deploy to Supabase](https://supabase.com/dashboard/new) button above and follow the [deployment guide](./SUPABASE_DEPLOYMENT.md).
 
 ### For Developers
 1. Review [PRD.md](./PRD.md) to understand product requirements
