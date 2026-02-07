@@ -1,0 +1,186 @@
+-- TiKiT OS - Seed Data
+-- Sample data for development and testing
+-- This file is optional and should only be run in development environments
+
+-- =============================================================================
+-- SEED ADMIN USER
+-- =============================================================================
+-- Note: This should be replaced with actual user creation via Supabase Auth
+-- This is just for reference
+
+-- INSERT INTO auth.users (id, email, encrypted_password, email_confirmed_at, created_at, updated_at)
+-- VALUES (
+--   '00000000-0000-0000-0000-000000000001',
+--   'admin@tikit-os.com',
+--   crypt('admin123', gen_salt('bf')),
+--   NOW(),
+--   NOW(),
+--   NOW()
+-- );
+
+-- =============================================================================
+-- SEED SAMPLE USERS
+-- =============================================================================
+-- Note: In production, users will be created through Supabase Auth
+-- These are example user profiles that would be created after authentication
+
+-- INSERT INTO public.users (id, email, full_name, role, status)
+-- VALUES
+--   ('00000000-0000-0000-0000-000000000001', 'admin@tikit-os.com', 'Admin User', 'admin', 'active'),
+--   ('00000000-0000-0000-0000-000000000002', 'manager@tikit-os.com', 'Campaign Manager', 'campaign_manager', 'active'),
+--   ('00000000-0000-0000-0000-000000000003', 'director@tikit-os.com', 'Director', 'director', 'active'),
+--   ('00000000-0000-0000-0000-000000000004', 'finance@tikit-os.com', 'Finance Officer', 'finance', 'active');
+
+-- =============================================================================
+-- SEED SAMPLE CLIENTS
+-- =============================================================================
+
+-- INSERT INTO public.clients (id, name, industry, website, primary_contact_name, primary_contact_email, status, created_by)
+-- VALUES
+--   (
+--     '10000000-0000-0000-0000-000000000001',
+--     'TechCorp Inc.',
+--     'Technology',
+--     'https://techcorp.example.com',
+--     'John Smith',
+--     'john.smith@techcorp.example.com',
+--     'active',
+--     '00000000-0000-0000-0000-000000000002'
+--   ),
+--   (
+--     '10000000-0000-0000-0000-000000000002',
+--     'Fashion Forward',
+--     'Fashion & Retail',
+--     'https://fashionforward.example.com',
+--     'Jane Doe',
+--     'jane.doe@fashionforward.example.com',
+--     'active',
+--     '00000000-0000-0000-0000-000000000002'
+--   );
+
+-- =============================================================================
+-- SEED SAMPLE CAMPAIGNS
+-- =============================================================================
+
+-- INSERT INTO public.campaigns (
+--   id,
+--   name,
+--   description,
+--   client_id,
+--   state,
+--   risk_level,
+--   campaign_manager_id,
+--   start_date,
+--   end_date,
+--   budget_total,
+--   budget_currency,
+--   created_by
+-- )
+-- VALUES
+--   (
+--     '20000000-0000-0000-0000-000000000001',
+--     'TechCorp Product Launch 2026',
+--     'Launch campaign for new TechCorp product with tech influencers',
+--     '10000000-0000-0000-0000-000000000001',
+--     'brief_upload',
+--     'medium',
+--     '00000000-0000-0000-0000-000000000002',
+--     '2026-03-01',
+--     '2026-06-30',
+--     50000.00,
+--     'USD',
+--     '00000000-0000-0000-0000-000000000002'
+--   ),
+--   (
+--     '20000000-0000-0000-0000-000000000002',
+--     'Fashion Forward Spring Collection',
+--     'Influencer campaign for spring collection launch',
+--     '10000000-0000-0000-0000-000000000002',
+--     'brief_upload',
+--     'low',
+--     '00000000-0000-0000-0000-000000000002',
+--     '2026-02-15',
+--     '2026-04-30',
+--     30000.00,
+--     'USD',
+--     '00000000-0000-0000-0000-000000000002'
+--   );
+
+-- =============================================================================
+-- SEED SAMPLE INFLUENCERS
+-- =============================================================================
+
+-- INSERT INTO public.influencers (
+--   id,
+--   name,
+--   email,
+--   instagram_handle,
+--   tiktok_handle,
+--   total_followers,
+--   avg_engagement_rate,
+--   categories,
+--   status,
+--   created_by
+-- )
+-- VALUES
+--   (
+--     '30000000-0000-0000-0000-000000000001',
+--     'Alex Tech Reviewer',
+--     'alex@techreviewer.example.com',
+--     '@alextechreviewer',
+--     '@alextechreviewer',
+--     250000,
+--     4.5,
+--     ARRAY['technology', 'gadgets', 'reviews'],
+--     'active',
+--     '00000000-0000-0000-0000-000000000002'
+--   ),
+--   (
+--     '30000000-0000-0000-0000-000000000002',
+--     'Sarah Fashion',
+--     'sarah@fashionista.example.com',
+--     '@sarahfashion',
+--     '@sarahfashion',
+--     500000,
+--     6.2,
+--     ARRAY['fashion', 'lifestyle', 'beauty'],
+--     'active',
+--     '00000000-0000-0000-0000-000000000002'
+--   );
+
+-- =============================================================================
+-- SEED CAMPAIGN MEMBERS
+-- =============================================================================
+
+-- INSERT INTO public.campaign_members (campaign_id, user_id, role, created_by)
+-- VALUES
+--   ('20000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000002', 'campaign_manager', '00000000-0000-0000-0000-000000000002'),
+--   ('20000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000003', 'director', '00000000-0000-0000-0000-000000000002'),
+--   ('20000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000002', 'campaign_manager', '00000000-0000-0000-0000-000000000002'),
+--   ('20000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000003', 'director', '00000000-0000-0000-0000-000000000002');
+
+-- =============================================================================
+-- NOTES ON SEED DATA
+-- =============================================================================
+-- 
+-- This seed data file is provided as a reference for development and testing.
+-- 
+-- **IMPORTANT:**
+-- 1. User authentication must be handled through Supabase Auth
+-- 2. After users sign up via Supabase Auth, their profiles are created in the users table
+-- 3. In production, seed data should NOT be used
+-- 4. For local development:
+--    - Use Supabase CLI: `supabase db seed`
+--    - Or run this file manually: `psql -f seed.sql`
+-- 
+-- **To use this seed data:**
+-- 1. Uncomment the INSERT statements above
+-- 2. Ensure the UUIDs don't conflict with real data
+-- 3. Run via Supabase CLI or directly via psql
+-- 
+-- **Security Notes:**
+-- - Never commit real passwords or API keys to seed files
+-- - Use environment variables for sensitive data
+-- - Seed data should only contain public or anonymized information
+-- 
+-- =============================================================================

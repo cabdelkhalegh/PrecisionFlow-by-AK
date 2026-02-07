@@ -203,7 +203,17 @@ All implementation must adhere to:
 3. Review [DATABASE_SCHEMA.md](./DATABASE_SCHEMA.md) for database design
 4. Review [API_SPEC.md](./API_SPEC.md) for API documentation
 5. Follow [DEV_SETUP.md](./DEV_SETUP.md) to set up your development environment
-6. Review [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines
+6. **Set up Supabase:**
+   - Run `./scripts/setup-supabase.sh` for automated setup
+   - Or follow [DEPLOYMENT.md](./DEPLOYMENT.md) for manual setup
+   - Review [supabase/README.md](./supabase/README.md) for migrations info
+7. Review [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines
+
+### For Deployment
+1. Complete [SUPABASE_CHECKLIST.md](./SUPABASE_CHECKLIST.md) before deploying
+2. Follow [DEPLOYMENT.md](./DEPLOYMENT.md) for step-by-step deployment guide
+3. Run `./scripts/verify-deployment.sh` to verify setup
+4. Monitor application health and performance
 
 ### For Stakeholders
 1. Review [PRD.md](./PRD.md) for complete product vision
