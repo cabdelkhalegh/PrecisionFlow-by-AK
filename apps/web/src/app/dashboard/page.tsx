@@ -2,6 +2,9 @@
 
 import { trpc } from '@/lib/trpc';
 import Link from 'next/link';
+import { AppLayout } from '@/components/layout/AppLayout';
+import { Card } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
 
 export default function DashboardPage() {
   const campaignsQuery = trpc.campaigns.list.useQuery({
@@ -15,19 +18,16 @@ export default function DashboardPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">TiKiT OS Dashboard</h1>
+    <AppLayout>
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           <p className="mt-2 text-sm text-gray-600">
-            Campaign Execution & Intelligence Platform
+            Welcome back! Here's what's happening with your campaigns.
           </p>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Stats Cards */}
         <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
@@ -47,42 +47,42 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick Actions */}
-        <div className="mb-8 rounded-lg bg-white p-6 shadow-sm">
+        <Card className="mb-8">
           <h2 className="mb-4 text-lg font-semibold text-gray-900">Quick Actions</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <Link
               href="/campaigns/new"
-              className="rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-blue-500 hover:bg-blue-50"
+              className="rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-blue-500 hover:bg-blue-50 transition-colors"
             >
               <div className="text-2xl">📋</div>
               <div className="mt-2 font-medium text-gray-900">New Campaign</div>
             </Link>
             <Link
               href="/clients/new"
-              className="rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-green-500 hover:bg-green-50"
+              className="rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-green-500 hover:bg-green-50 transition-colors"
             >
               <div className="text-2xl">👥</div>
               <div className="mt-2 font-medium text-gray-900">New Client</div>
             </Link>
             <Link
               href="/briefs/upload"
-              className="rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-purple-500 hover:bg-purple-50"
+              className="rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-purple-500 hover:bg-purple-50 transition-colors"
             >
               <div className="text-2xl">📄</div>
               <div className="mt-2 font-medium text-gray-900">Upload Brief</div>
             </Link>
             <Link
               href="/approvals"
-              className="rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-orange-500 hover:bg-orange-50"
+              className="rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-orange-500 hover:bg-orange-50 transition-colors"
             >
               <div className="text-2xl">✓</div>
               <div className="mt-2 font-medium text-gray-900">Approvals</div>
             </Link>
           </div>
-        </div>
+        </Card>
 
         {/* Recent Campaigns */}
-        <div className="mb-8 rounded-lg bg-white p-6 shadow-sm">
+        <Card className="mb-8">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-900">Recent Campaigns</h2>
             <Link href="/campaigns" className="text-sm text-blue-600 hover:text-blue-800">
@@ -109,28 +109,28 @@ export default function DashboardPage() {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span
-                      className={`rounded-full px-3 py-1 text-xs font-medium ${
+                    <Badge
+                      variant={
                         campaign.risk_level === 'low'
-                          ? 'bg-green-100 text-green-800'
+                          ? 'success'
                           : campaign.risk_level === 'medium'
-                            ? 'bg-yellow-100 text-yellow-800'
+                            ? 'warning'
                             : campaign.risk_level === 'high'
-                              ? 'bg-orange-100 text-orange-800'
-                              : 'bg-red-100 text-red-800'
-                      }`}
+                              ? 'warning'
+                              : 'danger'
+                      }
                     >
                       {campaign.risk_level}
-                    </span>
+                    </Badge>
                   </div>
                 </div>
               ))}
             </div>
           )}
-        </div>
+        </Card>
 
         {/* Recent Clients */}
-        <div className="rounded-lg bg-white p-6 shadow-sm">
+        <Card>
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-900">Recent Clients</h2>
             <Link href="/clients" className="text-sm text-blue-600 hover:text-blue-800">
@@ -155,27 +155,27 @@ export default function DashboardPage() {
                     <p className="text-sm text-gray-500">{client.company_name}</p>
                   )}
                   {client.tier && (
-                    <span
-                      className={`mt-2 inline-block rounded px-2 py-1 text-xs font-medium ${
+                    <Badge
+                      variant={
                         client.tier === 'platinum'
-                          ? 'bg-purple-100 text-purple-800'
+                          ? 'info'
                           : client.tier === 'gold'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : client.tier === 'silver'
-                              ? 'bg-gray-100 text-gray-800'
-                              : 'bg-orange-100 text-orange-800'
-                      }`}
+                            ? 'warning'
+                            : 'default'
+                      }
+                      size="sm"
+                      className="mt-2"
                     >
                       {client.tier}
-                    </span>
+                    </Badge>
                   )}
                 </div>
               ))}
             </div>
           )}
-        </div>
-      </main>
-    </div>
+        </Card>
+      </div>
+    </AppLayout>
   );
 }
 
@@ -198,13 +198,13 @@ function StatCard({
   };
 
   return (
-    <div className="rounded-lg bg-white p-6 shadow-sm">
+    <Card>
       <div className="text-sm font-medium text-gray-600">{title}</div>
       {loading ? (
         <div className="mt-2 text-3xl font-bold text-gray-400">...</div>
       ) : (
         <div className={`mt-2 text-3xl font-bold ${colorClasses[color]}`}>{value}</div>
       )}
-    </div>
+    </Card>
   );
 }
