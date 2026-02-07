@@ -1,5 +1,37 @@
-import { ReactElement } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import { render, RenderOptions } from '@testing-library/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+/**
+ * Create a new QueryClient for each test to avoid cache pollution
+ */
+export function createTestQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        gcTime: 0,
+      },
+      mutations: {
+        retry: false,
+      },
+    },
+  })
+}
+
+/**
+ * Wrapper component with all necessary providers for testing
+ */
+export function createWrapper(queryClient?: QueryClient) {
+  const client = queryClient || createTestQueryClient()
+  return function Wrapper({ children }: { children: ReactNode }) {
+    return (
+      <QueryClientProvider client={client}>
+        {children}
+      </QueryClientProvider>
+    )
+  }
+}
 
 /**
  * Custom render function that wraps components with common providers
@@ -7,9 +39,13 @@ import { render, RenderOptions } from '@testing-library/react'
  */
 export function renderWithProviders(
   ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>
+  options?: Omit<RenderOptions, 'wrapper'> & { queryClient?: QueryClient }
 ) {
-  return render(ui, { ...options })
+  const { queryClient, ...renderOptions } = options || {}
+  return render(ui, { 
+    wrapper: createWrapper(queryClient),
+    ...renderOptions 
+  })
 }
 
 /**
