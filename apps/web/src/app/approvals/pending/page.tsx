@@ -4,9 +4,14 @@ import { AppLayout } from '@/components/layout/AppLayout';
 import { ApprovalCard } from '@/components/approvals/ApprovalCard';
 import { Badge } from '@/components/ui/Badge';
 import { trpc } from '@/lib/trpc';
+import type { ApprovalWithRelations } from '@/types/api';
 
 export default function PendingApprovalsPage() {
-  const { data: approvals, isLoading, refetch } = trpc.approvals.getPendingForUser.useQuery();
+  const { data: approvals, isLoading, refetch } = trpc.approvals.getPendingForUser.useQuery() as {
+    data: ApprovalWithRelations[] | undefined;
+    isLoading: boolean;
+    refetch: () => void;
+  };
 
   const handleUpdate = () => {
     refetch();

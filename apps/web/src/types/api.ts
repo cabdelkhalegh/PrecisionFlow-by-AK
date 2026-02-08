@@ -7,24 +7,27 @@
 export interface ApprovalWithRelations {
   id: string;
   campaign_id: string;
-  approval_type: 'brief' | 'strategy' | 'shortlist' | 'content' | 'budget_revision';
-  status: 'pending' | 'approved' | 'rejected' | 'overridden';
+  approval_type: string;
+  status: string;
   approver_id: string;
   requested_by: string;
   requested_at: string;
   responded_at: string | null;
   comments: string | null;
-  metadata: any | null;
+  request_notes?: string;
+  approver_comments?: string;
   created_at: string;
+  approved_at?: string;
   updated_at: string;
+  metadata: any | null;
   campaigns?: {
     name: string;
-    client_id: string;
-  } | null;
+    client_id?: string;
+  };
   users?: {
-    full_name: string;
+    full_name?: string;
     email: string;
-  } | null;
+  };
 }
 
 // Campaign with client data
