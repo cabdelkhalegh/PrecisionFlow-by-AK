@@ -33,6 +33,7 @@ This repository contains the development of **TiKiT OS**, an enterprise-grade op
 | [DATABASE_SCHEMA.md](./DATABASE_SCHEMA.md) | Database design and ERD | ✅ Complete |
 | [API_SPEC.md](./API_SPEC.md) | API documentation | ✅ Complete |
 | [DEV_SETUP.md](./DEV_SETUP.md) | Development environment setup | ✅ Complete |
+| [BUSINESS_ANALYSIS.md](./BUSINESS_ANALYSIS.md) | Cost, pricing, ROI & GCC deployment plan | ✅ Complete |
 
 ---
 
