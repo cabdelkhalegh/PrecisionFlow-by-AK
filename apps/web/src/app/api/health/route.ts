@@ -14,17 +14,18 @@ export async function GET() {
     service: 'precisionflow-web',
   };
 
-  // Verify Supabase connectivity
+  // Verify Supabase connectivity (only reports connected/unavailable, no data counts)
   try {
     const supabase = getSupabase();
-    const { count, error } = await supabase
+    const { error } = await supabase
       .from('clients')
-      .select('*', { count: 'exact', head: true });
+      .select('id', { count: 'exact', head: true })
+      .limit(0);
 
     if (error) {
       health.database = { status: 'error', message: error.message };
     } else {
-      health.database = { status: 'connected', clientCount: count ?? 0 };
+      health.database = { status: 'connected' };
     }
   } catch (e) {
     health.database = {
