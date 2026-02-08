@@ -1,4 +1,6 @@
 # Supabase Configuration
+# Replace "your-project-id" with your actual Supabase project ID
+# Get this from your Supabase dashboard: Settings > General
 
 project_id = "your-project-id"
 

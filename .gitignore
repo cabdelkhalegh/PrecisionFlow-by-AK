@@ -99,7 +99,6 @@ next-env.d.ts
 
 # pnpm
 .pnpm-store/
-pnpm-lock.yaml
 
 # Nuxt.js
 .nuxt
