@@ -41,6 +41,7 @@
     "db:reset": "pnpm --filter=database reset",
     "clean": "turbo run clean && rm -rf node_modules",
     "clean:modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+    "setup": "bash scripts/setup-env.sh",
     "prepare": "husky install"
   },
   "devDependencies": {
