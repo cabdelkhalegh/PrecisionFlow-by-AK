@@ -5,6 +5,7 @@
 import { z } from 'zod';
 import { router, protectedProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
+import { logCreation, logUpdate, logDeletion } from '../utils/audit';
 
 export const clientsRouter = router({
   /**
@@ -154,6 +155,14 @@ export const clientsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { id, ...updates } = input;
 
+      // Get old data for audit trail
+      const { data: oldData } = await ctx.supabase
+        .from('clients')
+        .select('*')
+        .eq('id', id)
+        .is('deleted_at', null)
+        .single();
+
       const updateData: Record<string, unknown> = {};
       if (updates.name) updateData.name = updates.name;
       if (updates.companyName) updateData.company_name = updates.companyName;
@@ -179,6 +188,15 @@ export const clientsRouter = router({
         });
       }
 
+      // Log client update to audit trail
+      await logUpdate(ctx.supabase, {
+        tableName: 'clients',
+        recordId: id,
+        oldData: oldData || undefined,
+        newData: data,
+        userId: ctx.user.id,
+      });
+
       return data;
     }),
 
@@ -188,6 +206,14 @@ export const clientsRouter = router({
   delete: protectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
+      // Get old data for audit trail
+      const { data: oldData } = await ctx.supabase
+        .from('clients')
+        .select('*')
+        .eq('id', input.id)
+        .is('deleted_at', null)
+        .single();
+
       const { error } = await ctx.supabase
         .from('clients')
         .update({ deleted_at: new Date().toISOString() })
@@ -199,6 +225,14 @@ export const clientsRouter = router({
           message: error.message,
         });
       }
+
+      // Log client deletion to audit trail
+      await logDeletion(ctx.supabase, {
+        tableName: 'clients',
+        recordId: input.id,
+        oldData: oldData || undefined,
+        userId: ctx.user.id,
+      });
 
       return { success: true };
     }),
