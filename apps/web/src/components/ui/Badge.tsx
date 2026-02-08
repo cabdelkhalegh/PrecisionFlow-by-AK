@@ -1,5 +1,7 @@
+import type { ReactNode } from 'react';
+
 interface BadgeProps {
-  children: React.ReactNode;
+  children: ReactNode;
   variant?: 'default' | 'success' | 'warning' | 'danger' | 'info';
   size?: 'sm' | 'md';
 }
