@@ -75,27 +75,28 @@ export function ApprovalRequestModal({
           value={approvalType}
           onChange={(e) => setApprovalType(e.target.value)}
           required
-        >
-          <option value="brief">Brief Approval</option>
-          <option value="strategy">Strategy Approval</option>
-          <option value="shortlist">Shortlist Approval</option>
-          <option value="content">Content Approval</option>
-          <option value="budget_revision">Budget Revision</option>
-        </Select>
+          options={[
+            { value: 'brief', label: 'Brief Approval' },
+            { value: 'strategy', label: 'Strategy Approval' },
+            { value: 'shortlist', label: 'Shortlist Approval' },
+            { value: 'content', label: 'Content Approval' },
+            { value: 'budget_revision', label: 'Budget Revision' },
+          ]}
+        />
 
         <Select
           label="Approver"
           value={approverId}
           onChange={(e) => setApproverId(e.target.value)}
           required
-        >
-          <option value="">Select an approver...</option>
-          {approvers.map((approver) => (
-            <option key={approver.id} value={approver.id}>
-              {approver.name} ({approver.role})
-            </option>
-          ))}
-        </Select>
+          options={[
+            { value: '', label: 'Select an approver...' },
+            ...approvers.map((approver) => ({
+              value: approver.id,
+              label: `${approver.name} (${approver.role})`,
+            })),
+          ]}
+        />
 
         <Textarea
           label="Request Notes"
