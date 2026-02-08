@@ -3,6 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@tikit/api', '@tikit/types', '@tikit/database', '@tikit/ai', '@tikit/ui'],
   output: 'standalone', // Required for Docker deployment
+  typescript: {
+    // Skip type checking during build (run separately with pnpm typecheck)
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    // Skip ESLint during build (run separately with pnpm lint)
+    ignoreDuringBuilds: true,
+  },
   experimental: {
     // Server actions are enabled by default in Next.js 15
   },
