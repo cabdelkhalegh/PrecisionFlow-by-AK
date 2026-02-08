@@ -55,6 +55,7 @@ Project planning, roadmaps, and strategic decisions.
 |----------|-------------|------|--------|
 | [NEXT_STEPS.md](./NEXT_STEPS.md) | Implementation roadmap, phases, milestones, and next actions | 15K | ✅ Complete |
 | [COUNCIL_FINAL_RECOMMENDATION.md](./COUNCIL_FINAL_RECOMMENDATION.md) | Final technical recommendations and decisions | 13K | ✅ Complete |
+| [ADVANCED_FEATURES_REFERENCE.md](./ADVANCED_FEATURES_REFERENCE.md) | Consolidated advanced/future features for evaluation (Phases 2-4, PRD2) | 13K | ✅ Complete |
 
 ---
 
@@ -64,6 +65,7 @@ Project planning, roadmaps, and strategic decisions.
 1. [PRD.md](./PRD.md) - Understand complete product vision
 2. [README.md](./README.md) - Quick overview
 3. [NEXT_STEPS.md](./NEXT_STEPS.md) - Timeline and milestones
+4. [ADVANCED_FEATURES_REFERENCE.md](./ADVANCED_FEATURES_REFERENCE.md) - Future features for evaluation
 
 ### For Developers
 1. [ARCHITECTURE.md](./ARCHITECTURE.md) - Technical architecture
@@ -92,8 +94,8 @@ Project planning, roadmaps, and strategic decisions.
 | Product | 2 | 56K | ✅ Complete |
 | Architecture | 4 | 95K | ✅ Complete |
 | Development | 2 | 24K | ✅ Complete |
-| Planning | 2 | 28K | ✅ Complete |
-| **Total** | **10** | **203K** | **✅ Foundation Complete** |
+| Planning | 3 | 41K | ✅ Complete |
+| **Total** | **11** | **216K** | **✅ Foundation Complete** |
 
 ---
 
