@@ -1,0 +1,24 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+.next
+.expo
+.turbo
+dist
+build
+out
+
+# Misc
+.DS_Store
+*.pem
+*.log
+.env*.local
+.vercel
+.idea
+.vscode
+
+# Testing
+coverage

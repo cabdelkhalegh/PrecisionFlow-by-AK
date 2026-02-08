@@ -1,0 +1,22 @@
+{
+  "name": "@tikit/ui",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tikit/types": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tikit/eslint-config": "workspace:*",
+    "@tikit/typescript-config": "workspace:*",
+    "@types/react": "^19.1.0",
+    "typescript": "^5.9.2"
+  }
+}
