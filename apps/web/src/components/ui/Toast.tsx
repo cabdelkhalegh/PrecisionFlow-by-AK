@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react';
 
 type ToastType = 'success' | 'error' | 'info' | 'warning';
 
@@ -18,31 +18,37 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const timersRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
+
+  const removeToast = useCallback((id: string) => {
+    setToasts((prev) => prev.filter((toast) => toast.id !== id));
+    // Clear the timer for this toast
+    const timer = timersRef.current.get(id);
+    if (timer) {
+      clearTimeout(timer);
+      timersRef.current.delete(id);
+    }
+  }, []);
 
   const showToast = useCallback((message: string, type: ToastType = 'info') => {
     const id = Math.random().toString(36).substr(2, 9);
     setToasts((prev) => [...prev, { id, message, type }]);
-  }, []);
+    
+    // Set timer for this specific toast
+    const timer = setTimeout(() => {
+      removeToast(id);
+    }, 3000);
+    
+    timersRef.current.set(id, timer);
+  }, [removeToast]);
 
-  const removeToast = useCallback((id: string) => {
-    setToasts((prev) => prev.filter((toast) => toast.id !== id));
-  }, []);
-
-  // Auto-remove toasts with proper cleanup
+  // Cleanup all timers on unmount
   useEffect(() => {
-    if (toasts.length === 0) return;
-
-    const timers = toasts.map((toast) => 
-      setTimeout(() => {
-        removeToast(toast.id);
-      }, 3000)
-    );
-
-    // Cleanup function to clear all timers
     return () => {
-      timers.forEach((timer) => clearTimeout(timer));
+      timersRef.current.forEach((timer) => clearTimeout(timer));
+      timersRef.current.clear();
     };
-  }, [toasts, removeToast]);
+  }, []);
 
   const getToastStyles = (type: ToastType) => {
     switch (type) {

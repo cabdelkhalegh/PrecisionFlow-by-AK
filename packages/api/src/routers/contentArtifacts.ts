@@ -34,7 +34,8 @@ export const contentArtifactsRouter = router({
         .limit(1);
       
       const newVersion = (existingVersions?.[0]?.version || 0) + 1;
-      const previous_version_id = existingVersions?.[0]?.id || null;
+      // Only link to previous version if this isn't the first version
+      const previous_version_id = newVersion > 1 ? (existingVersions?.[0]?.id || null) : null;
       
       // Mark all previous artifacts as not latest (if any exist)
       if (newVersion > 1) {

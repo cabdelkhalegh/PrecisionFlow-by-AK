@@ -239,7 +239,7 @@ export const creatorsRouter = router({
       // Calculate aggregate metrics in a single pass
       let totalViews = 0;
       let totalEngagement = 0;
-      const totalTasks = count || 0;
+      const taskCount = tasks?.length || 0;
       const recentTasks = tasks?.slice(0, 5) || [];
       
       tasks?.forEach(t => {
@@ -247,12 +247,10 @@ export const creatorsRouter = router({
         totalEngagement += t.engagement_rate || 0;
       });
       
-      const taskCount = tasks?.length || 1;
-      
       return {
-        totalTasksCompleted: totalTasks,
-        averageViews: Math.round(totalViews / taskCount),
-        averageEngagementRate: parseFloat((totalEngagement / taskCount).toFixed(2)),
+        totalTasksCompleted: taskCount, // Number of tasks analyzed (limited to 100)
+        averageViews: taskCount > 0 ? Math.round(totalViews / taskCount) : 0,
+        averageEngagementRate: taskCount > 0 ? parseFloat((totalEngagement / taskCount).toFixed(2)) : 0,
         recentTasks,
       };
     }),
