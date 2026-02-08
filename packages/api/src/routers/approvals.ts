@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { publicProcedure, protectedProcedure, directorProcedure, router } from '../trpc';
+import { logCreation, logUpdate } from '../utils/audit';
 
 // Approval type enum
 const approvalTypeSchema = z.enum(['brief', 'strategy', 'shortlist', 'content', 'budget_revision']);
@@ -109,6 +110,10 @@ export const approvalsRouter = router({
         .single();
 
       if (error) throw new Error(error.message);
+
+      // Log creation to audit trail
+      await logCreation(ctx.supabase, 'approvals', data.id, data, ctx.user.id);
+
       return data;
     }),
 
@@ -146,6 +151,10 @@ export const approvalsRouter = router({
         .single();
 
       if (error) throw new Error(error.message);
+
+      // Log update to audit trail
+      await logUpdate(ctx.supabase, 'approvals', data.id, approval, data, ctx.user.id);
+
       return data;
     }),
 
@@ -183,6 +192,10 @@ export const approvalsRouter = router({
         .single();
 
       if (error) throw new Error(error.message);
+
+      // Log update to audit trail
+      await logUpdate(ctx.supabase, 'approvals', data.id, approval, data, ctx.user.id);
+
       return data;
     }),
 
@@ -196,6 +209,13 @@ export const approvalsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      // Get old data for audit
+      const { data: oldApproval } = await ctx.supabase
+        .from('approvals')
+        .select('*')
+        .eq('id', input.id)
+        .single();
+
       const { data, error } = await ctx.supabase
         .from('approvals')
         .update({
@@ -210,6 +230,12 @@ export const approvalsRouter = router({
         .single();
 
       if (error) throw new Error(error.message);
+
+      // Log update to audit trail
+      if (oldApproval) {
+        await logUpdate(ctx.supabase, 'approvals', data.id, oldApproval, data, ctx.user.id);
+      }
+
       return data;
     }),
 
