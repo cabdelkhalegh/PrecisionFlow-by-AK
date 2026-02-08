@@ -56,6 +56,8 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
+            role="alert"
+            aria-live="polite"
             className={`px-4 py-3 rounded-lg shadow-lg flex items-center justify-between min-w-[300px] ${getToastStyles(toast.type)}`}
           >
             <span>{toast.message}</span>

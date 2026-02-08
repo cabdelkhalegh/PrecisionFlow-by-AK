@@ -125,6 +125,14 @@ export const clientsRouter = router({
         });
       }
 
+      // Log creation
+      await logCreation(ctx.supabase, {
+        userId: ctx.user.id,
+        entityType: 'client',
+        entityId: data.id,
+        newData: data,
+      });
+
       return data;
     }),
 

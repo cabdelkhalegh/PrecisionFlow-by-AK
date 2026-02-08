@@ -49,6 +49,13 @@ export const contentArtifactsRouter = router({
         previous_version_id = prevArtifact?.id;
       }
       
+      // First, mark all previous artifacts as not latest
+      await db
+        .from('content_artifacts')
+        .update({ is_latest: false })
+        .eq('content_task_id', input.content_task_id)
+        .eq('artifact_type', input.artifact_type);
+      
       const { data, error } = await db
         .from('content_artifacts')
         .insert({

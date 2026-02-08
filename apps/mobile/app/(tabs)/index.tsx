@@ -8,8 +8,11 @@ import { trpc } from '../../lib/trpc';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { data: campaigns, isLoading } = trpc.campaigns.list.useQuery({ limit: 5, offset: 0 });
-  const { data: clients } = trpc.clients.list.useQuery({ limit: 5, offset: 0 });
+  const { data: campaignsData, isLoading } = trpc.campaigns.list.useQuery({ limit: 5, offset: 0 });
+  const { data: clientsData } = trpc.clients.list.useQuery({ limit: 5, offset: 0 });
+
+  const campaigns = campaignsData?.campaigns || [];
+  const clients = clientsData?.clients || [];
 
   return (
     <ScrollView style={styles.container}>
@@ -21,11 +24,11 @@ export default function HomeScreen() {
       {/* Stats */}
       <View style={styles.stats}>
         <View style={styles.statCard}>
-          <Text style={styles.statValue}>{campaigns?.length || 0}</Text>
+          <Text style={styles.statValue}>{campaigns.length || 0}</Text>
           <Text style={styles.statLabel}>Campaigns</Text>
         </View>
         <View style={styles.statCard}>
-          <Text style={styles.statValue}>{clients?.length || 0}</Text>
+          <Text style={styles.statValue}>{clients.length || 0}</Text>
           <Text style={styles.statLabel}>Clients</Text>
         </View>
       </View>
