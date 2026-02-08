@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
 import { Select } from '../ui/Select';
@@ -15,6 +15,20 @@ interface ApprovalRequestModalProps {
   onSuccess?: () => void;
 }
 
+// Move static data outside component to avoid recreation
+const APPROVAL_TYPE_OPTIONS = [
+  { value: 'brief', label: 'Brief Approval' },
+  { value: 'strategy', label: 'Strategy Approval' },
+  { value: 'shortlist', label: 'Shortlist Approval' },
+  { value: 'content', label: 'Content Approval' },
+  { value: 'budget_revision', label: 'Budget Revision' },
+];
+
+const PLACEHOLDER_APPROVERS = [
+  { id: '1', name: 'John Director', role: 'Director' },
+  { id: '2', name: 'Jane Manager', role: 'Finance' },
+];
+
 export function ApprovalRequestModal({
   isOpen,
   onClose,
@@ -26,12 +40,14 @@ export function ApprovalRequestModal({
   const [requestNotes, setRequestNotes] = useState('');
   const { showToast } = useToast();
 
-  // Fetch users who can be approvers (directors, finance, etc.)
-  // For now, we'll use a placeholder - in production, you'd fetch from users API
-  const approvers = [
-    { id: '1', name: 'John Director', role: 'Director' },
-    { id: '2', name: 'Jane Manager', role: 'Finance' },
-  ];
+  // Memoize approver options to avoid recreation on every render
+  const approverOptions = useMemo(() => [
+    { value: '', label: 'Select an approver...' },
+    ...PLACEHOLDER_APPROVERS.map((approver) => ({
+      value: approver.id,
+      label: `${approver.name} (${approver.role})`,
+    })),
+  ], []);
 
   const createMutation = trpc.approvals.create.useMutation({
     onSuccess: () => {
@@ -44,7 +60,7 @@ export function ApprovalRequestModal({
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     
     if (!approverId) {
@@ -58,14 +74,14 @@ export function ApprovalRequestModal({
       approverId,
       requestNotes: requestNotes || undefined,
     });
-  };
+  }, [approverId, approvalType, campaignId, requestNotes, createMutation, showToast]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setApprovalType('brief');
     setApproverId('');
     setRequestNotes('');
     onClose();
-  };
+  }, [onClose]);
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title="Request Approval">
@@ -75,13 +91,7 @@ export function ApprovalRequestModal({
           value={approvalType}
           onChange={(e) => setApprovalType(e.target.value)}
           required
-          options={[
-            { value: 'brief', label: 'Brief Approval' },
-            { value: 'strategy', label: 'Strategy Approval' },
-            { value: 'shortlist', label: 'Shortlist Approval' },
-            { value: 'content', label: 'Content Approval' },
-            { value: 'budget_revision', label: 'Budget Revision' },
-          ]}
+          options={APPROVAL_TYPE_OPTIONS}
         />
 
         <Select
@@ -89,13 +99,7 @@ export function ApprovalRequestModal({
           value={approverId}
           onChange={(e) => setApproverId(e.target.value)}
           required
-          options={[
-            { value: '', label: 'Select an approver...' },
-            ...approvers.map((approver) => ({
-              value: approver.id,
-              label: `${approver.name} (${approver.role})`,
-            })),
-          ]}
+          options={approverOptions}
         />
 
         <Textarea

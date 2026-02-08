@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { Textarea } from '../ui/Textarea';
@@ -27,6 +27,22 @@ interface ApprovalCardProps {
   showActions?: boolean;
   onUpdate?: () => void;
 }
+
+// Move type labels outside component to avoid recreation
+const TYPE_LABELS: Record<string, string> = {
+  brief: 'Brief Approval',
+  strategy: 'Strategy Approval',
+  shortlist: 'Shortlist Approval',
+  content: 'Content Approval',
+  budget_revision: 'Budget Revision',
+};
+
+const STATUS_VARIANTS: Record<string, 'default' | 'success' | 'warning' | 'danger'> = {
+  pending: 'warning',
+  approved: 'success',
+  rejected: 'danger',
+  overridden: 'default',
+};
 
 export function ApprovalCard({ approval, showActions = false, onUpdate }: ApprovalCardProps) {
   const [comments, setComments] = useState('');
@@ -60,38 +76,29 @@ export function ApprovalCard({ approval, showActions = false, onUpdate }: Approv
     },
   });
 
-  const handleApprove = () => {
+  // Memoize callbacks to prevent unnecessary re-renders
+  const handleApprove = useCallback(() => {
     approveMutation.mutate({ id: approval.id, comments });
-  };
+  }, [approveMutation, approval.id, comments]);
 
-  const handleReject = () => {
+  const handleReject = useCallback(() => {
     if (!comments.trim()) {
       showToast('Please provide a reason for rejection', 'warning');
       return;
     }
     rejectMutation.mutate({ id: approval.id, reason: comments });
-  };
+  }, [rejectMutation, approval.id, comments, showToast]);
 
-  const getTypeLabel = (type: string) => {
-    const labels: Record<string, string> = {
-      brief: 'Brief Approval',
-      strategy: 'Strategy Approval',
-      shortlist: 'Shortlist Approval',
-      content: 'Content Approval',
-      budget_revision: 'Budget Revision',
-    };
-    return labels[type] || type;
-  };
+  // Memoize derived values to avoid recalculation on every render
+  const typeLabel = useMemo(
+    () => TYPE_LABELS[approval.approval_type] || approval.approval_type,
+    [approval.approval_type]
+  );
 
-  const getStatusVariant = (status: string) => {
-    const variants: Record<string, 'default' | 'success' | 'warning' | 'danger'> = {
-      pending: 'warning',
-      approved: 'success',
-      rejected: 'danger',
-      overridden: 'default',
-    };
-    return variants[status] || 'default';
-  };
+  const statusVariant = useMemo(
+    () => STATUS_VARIANTS[approval.status] || 'default',
+    [approval.status]
+  );
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
@@ -99,7 +106,7 @@ export function ApprovalCard({ approval, showActions = false, onUpdate }: Approv
       <div className="flex items-start justify-between mb-4">
         <div>
           <h3 className="text-lg font-semibold text-gray-900">
-            {getTypeLabel(approval.approval_type)}
+            {typeLabel}
           </h3>
           {approval.campaigns && (
             <p className="text-sm text-gray-600 mt-1">
@@ -107,7 +114,7 @@ export function ApprovalCard({ approval, showActions = false, onUpdate }: Approv
             </p>
           )}
         </div>
-        <Badge variant={getStatusVariant(approval.status)}>
+        <Badge variant={statusVariant}>
           {approval.status}
         </Badge>
       </div>
