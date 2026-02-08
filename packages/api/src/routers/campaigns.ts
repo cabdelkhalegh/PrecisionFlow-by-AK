@@ -1,10 +1,12 @@
 /**
  * Campaign router - handles all campaign-related operations
+ * All state changes are logged to audit trail per CONTRIBUTING.md §176-178
  */
 
 import { z } from 'zod';
 import { router, protectedProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
+import { logCreation, logUpdate, logDeletion } from '../utils/audit';
 
 export const campaignsRouter = router({
   /**
@@ -76,6 +78,7 @@ export const campaignsRouter = router({
 
   /**
    * Create a new campaign
+   * Creates audit log entry per CONTRIBUTING.md requirements
    */
   create: protectedProcedure
     .input(
@@ -111,11 +114,21 @@ export const campaignsRouter = router({
         });
       }
 
+      // Log campaign creation to audit trail
+      await logCreation({
+        supabase: ctx.supabase,
+        tableName: 'campaigns',
+        recordId: data.id,
+        data: data as Record<string, unknown>,
+        userId: ctx.user.id,
+      });
+
       return data;
     }),
 
   /**
    * Update a campaign
+   * Creates audit log entry per CONTRIBUTING.md requirements
    */
   update: protectedProcedure
     .input(
@@ -131,6 +144,13 @@ export const campaignsRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...updates } = input;
+
+      // Get old data for audit trail
+      const { data: oldData } = await ctx.supabase
+        .from('campaigns')
+        .select()
+        .eq('id', id)
+        .single();
 
       const updateData: Record<string, unknown> = {};
       if (updates.name) updateData.name = updates.name;
@@ -155,15 +175,35 @@ export const campaignsRouter = router({
         });
       }
 
+      // Log campaign update to audit trail
+      if (oldData) {
+        await logUpdate({
+          supabase: ctx.supabase,
+          tableName: 'campaigns',
+          recordId: id,
+          oldData: oldData as Record<string, unknown>,
+          newData: data as Record<string, unknown>,
+          userId: ctx.user.id,
+        });
+      }
+
       return data;
     }),
 
   /**
    * Delete a campaign (soft delete)
+   * Creates audit log entry per CONTRIBUTING.md requirements
    */
   delete: protectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
+      // Get data before deletion for audit trail
+      const { data: oldData } = await ctx.supabase
+        .from('campaigns')
+        .select()
+        .eq('id', input.id)
+        .single();
+
       const { error } = await ctx.supabase
         .from('campaigns')
         .update({ deleted_at: new Date().toISOString() })
@@ -173,6 +213,17 @@ export const campaignsRouter = router({
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: error.message,
+        });
+      }
+
+      // Log campaign deletion to audit trail
+      if (oldData) {
+        await logDeletion({
+          supabase: ctx.supabase,
+          tableName: 'campaigns',
+          recordId: input.id,
+          data: oldData as Record<string, unknown>,
+          userId: ctx.user.id,
         });
       }
 

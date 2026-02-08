@@ -15,6 +15,16 @@ describe('Campaigns Router', () => {
     mockSupabase = createMockSupabaseClient();
     mockUser = createMockUser();
     vi.clearAllMocks();
+    
+    // Setup default audit log mock (successful insertion)
+    mockSupabase.from = vi.fn((table) => {
+      if (table === 'audit_logs') {
+        return {
+          insert: vi.fn().mockResolvedValue(mockSuccessResponse({})),
+        } as any;
+      }
+      return mockSupabase.from.mock.results[0].value;
+    });
   });
 
   describe('list', () => {
@@ -326,6 +336,157 @@ describe('Campaigns Router', () => {
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       
       await expect(caller.delete({ id: 'campaign-123' })).rejects.toThrow('Delete failed');
+    });
+  });
+
+  describe('Audit Trail', () => {
+    it('should create audit log when creating campaign', async () => {
+      const mockCampaign = createMockCampaign();
+      const auditInsertSpy = vi.fn().mockResolvedValue(mockSuccessResponse({}));
+      
+      mockSupabase.from = vi.fn((table) => {
+        if (table === 'campaigns') {
+          return {
+            insert: vi.fn().mockReturnValue({
+              select: vi.fn().mockReturnValue({
+                single: vi.fn().mockResolvedValue(mockSuccessResponse(mockCampaign)),
+              }),
+            }),
+          } as any;
+        }
+        if (table === 'audit_logs') {
+          return {
+            insert: auditInsertSpy,
+          } as any;
+        }
+        return {} as any;
+      });
+
+      const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
+      await caller.create({
+        name: 'Test Campaign',
+        clientId: 'client-123',
+      });
+
+      expect(auditInsertSpy).toHaveBeenCalledWith(expect.objectContaining({
+        table_name: 'campaigns',
+        record_id: mockCampaign.id,
+        action: 'created',
+        user_id: mockUser.id,
+      }));
+    });
+
+    it('should create audit log when updating campaign', async () => {
+      const mockCampaign = createMockCampaign();
+      const auditInsertSpy = vi.fn().mockResolvedValue(mockSuccessResponse({}));
+      
+      mockSupabase.from = vi.fn((table) => {
+        if (table === 'campaigns') {
+          return {
+            select: vi.fn().mockReturnValue({
+              eq: vi.fn().mockReturnValue({
+                single: vi.fn().mockResolvedValue(mockSuccessResponse(mockCampaign)),
+              }),
+            }),
+            update: vi.fn().mockReturnValue({
+              eq: vi.fn().mockReturnValue({
+                is: vi.fn().mockReturnValue({
+                  select: vi.fn().mockReturnValue({
+                    single: vi.fn().mockResolvedValue(mockSuccessResponse({ ...mockCampaign, name: 'Updated' })),
+                  }),
+                }),
+              }),
+            }),
+          } as any;
+        }
+        if (table === 'audit_logs') {
+          return {
+            insert: auditInsertSpy,
+          } as any;
+        }
+        return {} as any;
+      });
+
+      const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
+      await caller.update({
+        id: 'campaign-123',
+        name: 'Updated',
+      });
+
+      expect(auditInsertSpy).toHaveBeenCalledWith(expect.objectContaining({
+        table_name: 'campaigns',
+        record_id: 'campaign-123',
+        action: 'updated',
+        user_id: mockUser.id,
+      }));
+    });
+
+    it('should create audit log when deleting campaign', async () => {
+      const mockCampaign = createMockCampaign();
+      const auditInsertSpy = vi.fn().mockResolvedValue(mockSuccessResponse({}));
+      
+      mockSupabase.from = vi.fn((table) => {
+        if (table === 'campaigns') {
+          return {
+            select: vi.fn().mockReturnValue({
+              eq: vi.fn().mockReturnValue({
+                single: vi.fn().mockResolvedValue(mockSuccessResponse(mockCampaign)),
+              }),
+            }),
+            update: vi.fn().mockReturnValue({
+              eq: vi.fn().mockResolvedValue(mockSuccessResponse(null)),
+            }),
+          } as any;
+        }
+        if (table === 'audit_logs') {
+          return {
+            insert: auditInsertSpy,
+          } as any;
+        }
+        return {} as any;
+      });
+
+      const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
+      await caller.delete({ id: 'campaign-123' });
+
+      expect(auditInsertSpy).toHaveBeenCalledWith(expect.objectContaining({
+        table_name: 'campaigns',
+        record_id: 'campaign-123',
+        action: 'deleted',
+        user_id: mockUser.id,
+      }));
+    });
+
+    it('should not fail campaign creation if audit log fails', async () => {
+      const mockCampaign = createMockCampaign();
+      
+      mockSupabase.from = vi.fn((table) => {
+        if (table === 'campaigns') {
+          return {
+            insert: vi.fn().mockReturnValue({
+              select: vi.fn().mockReturnValue({
+                single: vi.fn().mockResolvedValue(mockSuccessResponse(mockCampaign)),
+              }),
+            }),
+          } as any;
+        }
+        if (table === 'audit_logs') {
+          return {
+            insert: vi.fn().mockRejectedValue(new Error('Audit log failed')),
+          } as any;
+        }
+        return {} as any;
+      });
+
+      const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
+      
+      // Should still succeed even if audit log fails
+      const result = await caller.create({
+        name: 'Test Campaign',
+        clientId: 'client-123',
+      });
+
+      expect(result).toEqual(mockCampaign);
     });
   });
 });
