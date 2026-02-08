@@ -24,37 +24,26 @@ export const contentArtifactsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { db, user } = ctx;
       
-      // Get current version number for this artifact type
+      // Get current version number and ID in a single query
       const { data: existingVersions } = await db
         .from('content_artifacts')
-        .select('version')
+        .select('id, version')
         .eq('content_task_id', input.content_task_id)
         .eq('artifact_type', input.artifact_type)
         .order('version', { ascending: false })
         .limit(1);
       
       const newVersion = (existingVersions?.[0]?.version || 0) + 1;
+      const previous_version_id = existingVersions?.[0]?.id || null;
       
-      // If there's a previous version, get its ID
-      let previous_version_id = null;
-      if (newVersion > 1 && existingVersions?.[0]) {
-        const { data: prevArtifact } = await db
+      // Mark all previous artifacts as not latest (if any exist)
+      if (newVersion > 1) {
+        await db
           .from('content_artifacts')
-          .select('id')
+          .update({ is_latest: false })
           .eq('content_task_id', input.content_task_id)
-          .eq('artifact_type', input.artifact_type)
-          .eq('version', newVersion - 1)
-          .single();
-        
-        previous_version_id = prevArtifact?.id;
+          .eq('artifact_type', input.artifact_type);
       }
-      
-      // First, mark all previous artifacts as not latest
-      await db
-        .from('content_artifacts')
-        .update({ is_latest: false })
-        .eq('content_task_id', input.content_task_id)
-        .eq('artifact_type', input.artifact_type);
       
       const { data, error } = await db
         .from('content_artifacts')

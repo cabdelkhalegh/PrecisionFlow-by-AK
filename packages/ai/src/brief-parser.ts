@@ -98,23 +98,22 @@ export function calculateRiskLevel(missingInfo?: string[]): 'low' | 'medium' | '
     return 'low';
   }
 
-  // Critical missing info keywords
-  const criticalKeywords = ['budget', 'timeline', 'deadline', 'deliverables'];
-  const highRiskKeywords = ['objective', 'target', 'audience', 'kpi'];
-  const mediumRiskKeywords = ['contact', 'guidelines', 'brand'];
+  // Critical missing info keywords - use RegExp for faster matching
+  const criticalPattern = /\b(budget|timeline|deadline|deliverables)\b/i;
+  const highRiskPattern = /\b(objective|target|audience|kpi)\b/i;
+  const mediumRiskPattern = /\b(contact|guidelines|brand)\b/i;
 
   let criticalCount = 0;
   let highCount = 0;
   let mediumCount = 0;
 
+  // Single pass through missing info with optimized pattern matching
   for (const missing of missingInfo) {
-    const lowerMissing = missing.toLowerCase();
-    
-    if (criticalKeywords.some(keyword => lowerMissing.includes(keyword))) {
+    if (criticalPattern.test(missing)) {
       criticalCount++;
-    } else if (highRiskKeywords.some(keyword => lowerMissing.includes(keyword))) {
+    } else if (highRiskPattern.test(missing)) {
       highCount++;
-    } else if (mediumRiskKeywords.some(keyword => lowerMissing.includes(keyword))) {
+    } else if (mediumRiskPattern.test(missing)) {
       mediumCount++;
     }
   }

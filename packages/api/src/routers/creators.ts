@@ -94,13 +94,14 @@ export const creatorsRouter = router({
       }
       
       if (input.minFollowers) {
-        // Check all platform follower counts
-        query = query.or(
-          `instagram_followers.gte.${input.minFollowers},` +
-          `tiktok_followers.gte.${input.minFollowers},` +
-          `youtube_subscribers.gte.${input.minFollowers},` +
+        // Check all platform follower counts - use array join for cleaner code
+        const followerConditions = [
+          `instagram_followers.gte.${input.minFollowers}`,
+          `tiktok_followers.gte.${input.minFollowers}`,
+          `youtube_subscribers.gte.${input.minFollowers}`,
           `twitter_followers.gte.${input.minFollowers}`
-        );
+        ];
+        query = query.or(followerConditions.join(','));
       }
       
       if (input.minEngagement) {
@@ -224,26 +225,35 @@ export const creatorsRouter = router({
     .query(async ({ ctx, input }) => {
       const { db } = ctx;
       
-      // Get creator's completed tasks and their performance
-      const { data: tasks, error } = await db
+      // Get creator's completed tasks with pagination (limit to last 100 for performance)
+      const { data: tasks, error, count } = await db
         .from('content_tasks')
-        .select('*')
+        .select('views, engagement_rate, created_at', { count: 'exact' })
         .eq('creator_id', input.id)
         .in('status', ['approved', 'published'])
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(100);
       
       if (error) throw new Error(`Failed to fetch performance: ${error.message}`);
       
-      // Calculate aggregate metrics
-      const totalTasks = tasks?.length || 0;
-      const avgViews = tasks?.reduce((sum, t) => sum + (t.views || 0), 0) / (totalTasks || 1);
-      const avgEngagement = tasks?.reduce((sum, t) => sum + (t.engagement_rate || 0), 0) / (totalTasks || 1);
+      // Calculate aggregate metrics in a single pass
+      let totalViews = 0;
+      let totalEngagement = 0;
+      const totalTasks = count || 0;
+      const recentTasks = tasks?.slice(0, 5) || [];
+      
+      tasks?.forEach(t => {
+        totalViews += t.views || 0;
+        totalEngagement += t.engagement_rate || 0;
+      });
+      
+      const taskCount = tasks?.length || 1;
       
       return {
         totalTasksCompleted: totalTasks,
-        averageViews: Math.round(avgViews),
-        averageEngagementRate: parseFloat(avgEngagement.toFixed(2)),
-        recentTasks: tasks?.slice(0, 5) || [],
+        averageViews: Math.round(totalViews / taskCount),
+        averageEngagementRate: parseFloat((totalEngagement / taskCount).toFixed(2)),
+        recentTasks,
       };
     }),
 });
