@@ -25,6 +25,15 @@ This repository contains the development of **TiKiT OS**, an enterprise-grade op
 
 ## 📚 Key Documents
 
+### Business & Investment
+
+| Document | Purpose | Status |
+|----------|---------|--------|
+| [BUSINESS_PRD.md](./BUSINESS_PRD.md) | Comprehensive business case, ROI analysis, and deployment plan (60 pages) | ✅ Complete |
+| [EXECUTIVE_SUMMARY.md](./EXECUTIVE_SUMMARY.md) | One-page investment overview for leadership | ✅ Complete |
+
+### Product & Technical
+
 | Document | Purpose | Status |
 |----------|---------|--------|
 | [PRD.md](./PRD.md) | Complete Product Requirements Document | ✅ Approved (PR #1) |
@@ -206,11 +215,13 @@ All implementation must adhere to:
 6. Review [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines
 
 ### For Stakeholders
-1. Review [PRD.md](./PRD.md) for complete product vision
-2. Review [NEXT_STEPS.md](./NEXT_STEPS.md) for timeline and milestones
-3. Review [ARCHITECTURE.md](./ARCHITECTURE.md) for technical decisions
-4. Provide feedback on PRs as they are created
-5. Participate in milestone reviews
+1. **Start here**: Review [EXECUTIVE_SUMMARY.md](./EXECUTIVE_SUMMARY.md) for quick investment overview (5 min read)
+2. **Deep dive**: Review [BUSINESS_PRD.md](./BUSINESS_PRD.md) for complete business case with ROI analysis, market analysis, and deployment strategy (60 pages)
+3. Review [PRD.md](./PRD.md) for complete product vision
+4. Review [NEXT_STEPS.md](./NEXT_STEPS.md) for timeline and milestones
+5. Review [ARCHITECTURE.md](./ARCHITECTURE.md) for technical decisions
+6. Provide feedback on PRs as they are created
+7. Participate in milestone reviews
 
 ---
 
