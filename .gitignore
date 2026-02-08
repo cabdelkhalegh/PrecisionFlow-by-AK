@@ -94,6 +94,12 @@ env/
 .next/
 next-env.d.ts
 
+# Turborepo
+.turbo/
+
+# pnpm
+.pnpm-store/
+
 # Nuxt.js
 .nuxt
 .output

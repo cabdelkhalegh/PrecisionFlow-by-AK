@@ -1,0 +1,40 @@
+{
+  "name": "tikit-os",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TiKiT OS - Campaign Execution & Intelligence Platform",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:web": "turbo run dev --filter=web",
+    "build": "turbo run build",
+    "build:web": "turbo run build --filter=web",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:unit": "turbo run test:unit",
+    "clean": "turbo run clean && rm -rf node_modules .turbo",
+    "db:generate": "supabase gen types typescript --local > packages/database/src/types.ts",
+    "db:migrate": "supabase db push",
+    "db:seed": "supabase db seed"
+  },
+  "devDependencies": {
+    "@turbo/gen": "^1.11.2",
+    "prettier": "^3.1.1",
+    "turbo": "^1.11.2",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "campaign-management",
+    "influencer-marketing",
+    "tikit-os"
+  ],
+  "author": "Adi Mustapha",
+  "license": "UNLICENSED"
+}
