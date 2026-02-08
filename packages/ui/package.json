@@ -14,7 +14,8 @@
     "react": "^19.0.0"
   },
   "devDependencies": {
-    "@tikit/config": "workspace:*",
+    "@tikit/eslint-config": "workspace:*",
+    "@tikit/typescript-config": "workspace:*",
     "@types/react": "^19.1.0",
     "typescript": "^5.9.2"
   }
