@@ -1116,15 +1116,121 @@ This gives you:
 
 ### Partnership Options Summary
 
-| Option | Upfront | Ongoing | Total | Ownership | Support |
-|--------|---------|---------|-------|-----------|---------|
-| **A: Fixed** | $180K - $200K | Optional | $180K - $200K | 100% yours | 6 months |
-| **B: Success** | $120K - $140K | $60K if ROI met | $180K - $200K | 100% yours | 12 months |
-| **C: BOT** | $60K - $80K | $3.5K-4.5K/mo × 18 | $150K - $188K | After 24 months | Included |
+| Option | Upfront | Ongoing | Year 1 Total | 3-Year Total | Ownership | Support |
+|--------|---------|---------|--------------|--------------|-----------|---------|
+| **A: Fixed** | $180K - $200K | Optional | $220K-256K | $328K | 100% yours | 6 months |
+| **B: Success** | $120K - $140K | $60K if ROI met | $200K-236K | $320K | 100% yours | 12 months |
+| **C: BOT** | $60K - $80K | $3.5K-4.5K/mo × 18 | $94K | $190K | After 24 months | Included |
+| **D: Revenue Share** ⭐ | $50K - $60K | **6% per campaign** | **$478K** | **$1.86M** | Joint partnership | Included |
+
+**NEW: Option D** offers continuous revenue growth and perfect incentive alignment. See detailed analysis below.
 
 ---
 
-### Recommended: Option A + Success Bonus
+### Option D: Revenue-Share Partnership (RECOMMENDED) ⭐
+
+**Why This is Revolutionary**:
+
+This model transforms our relationship from a one-time transaction into a **true growth partnership** where both parties benefit from every campaign success.
+
+**Structure**:
+- **Upfront Development**: $50,000-60,000 (minimal, just covers kickoff)
+- **Revenue Share**: **6% of every campaign** executed on TiKiT OS
+- **Starting**: Month 7 (when platform goes live)
+- **Duration**: Ongoing perpetual partnership
+- **Support**: Fully included in revenue share (no separate fees)
+- **Ownership**: Joint partnership with buyout options
+
+**How It Works**:
+```
+Example Campaign:
+• TikiT runs campaign worth $50,000
+• PrecisionFlow receives: $3,000 (6%)
+• TikiT keeps: $47,000
+• Both benefit from campaign success
+```
+
+**Financial Projections**:
+
+| Year | Campaigns/Month | Monthly Revenue (6%) | Annual Revenue |
+|------|-----------------|---------------------|----------------|
+| **Year 1** | 22-25 avg | $66K-75K | **$478K** |
+| **Year 2** | 28 avg | $84K | **$630K** |
+| **Year 3** | 35 avg | $105K | **$756K** |
+| **5-Year Total** | Growing | Growing | **$3.6M+** |
+
+**Comparison to Other Options**:
+- Fixed-price (A): $328K over 3 years
+- Success-based (B): $320K over 3 years  
+- BOT (C): $190K over 3 years
+- **Revenue-share (D): $1.86M over 3 years** (5-6x higher!)
+
+**Why This Benefits TikiT Agency**:
+
+1. ✅ **Lower Upfront Cost**: $55K vs $180K-220K (75% less)
+2. ✅ **Pay for Performance**: Only pay when campaigns run
+3. ✅ **Cash Flow Friendly**: Cost spreads across revenue generation
+4. ✅ **Ongoing Support Included**: No separate support fees
+5. ✅ **Shared Risk**: We succeed together or fail together
+6. ✅ **Continuous Improvements**: We're incentivized to enhance platform
+7. ✅ **Scalable**: Payment automatically scales with your success
+
+**Why This Benefits PrecisionFlow**:
+
+1. ✅ **Continuous Revenue Growth**: Revenue grows with their success
+2. ✅ **Predictable MRR**: Monthly recurring revenue model
+3. ✅ **10x Higher Lifetime Value**: $3.6M vs $400K over 5 years
+4. ✅ **Aligned Incentives**: We win when they win
+5. ✅ **Compound Returns**: Year 3 revenue = 3-4x Year 1
+6. ✅ **Scalable Business Model**: Can forecast and invest confidently
+
+**Flexible Terms**:
+
+We offer several variations to fit your needs:
+
+**Standard**: 6% with $55K upfront
+**Lower Risk**: 5% with $75K upfront  
+**Higher Commitment**: 7% with $40K upfront
+
+**Buyout Options** (Your choice):
+- After Year 2: Buy out for $600K and own 100%
+- After Year 3: Buy out for $800K and own 100%
+- Or continue the partnership (recommended - mutual benefit)
+
+**Client-Friendly Features**:
+- Transparent tracking (built into platform)
+- Monthly automated reporting
+- 30-day payment terms
+- Audit rights for both parties
+- 3-year minimum term with exit options
+
+**See Full Analysis**: [REVENUE_SHARE_ANALYSIS.md](./REVENUE_SHARE_ANALYSIS.md) for complete financial projections, NPV analysis, and comparison matrix.
+
+---
+
+### NEW RECOMMENDATION: Option D (Revenue-Share) ⭐
+
+**We now recommend Option D (6% Revenue Share) as the primary partnership model.**
+
+**Why the Change**:
+1. **Continuous Growth**: $3.6M+ over 5 years vs $400K for fixed-price
+2. **Perfect Alignment**: We only succeed when you succeed
+3. **Lower Client Risk**: $55K upfront vs $180K-220K
+4. **Sustainable Revenue**: Monthly recurring revenue (MRR) model
+5. **Win-Win Partnership**: Both parties benefit from every campaign
+
+**Fallback Options**:
+- If you prefer full ownership immediately → **Option A** (Fixed-Price)
+- If you want to test first → **Option B** (Success-Based)
+- If cash flow is critical → **Option C** (BOT)
+
+But for **continuous revenue growth** and true partnership → **Option D is superior**.
+
+---
+
+### Previous Recommendation: Option A + Success Bonus
+
+*[This remains available if revenue-share isn't preferred]*
 
 **Structure**:
 - **Base**: $180,000 fixed

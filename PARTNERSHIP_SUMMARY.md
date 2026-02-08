@@ -82,7 +82,16 @@ A comprehensive **partnership proposal** for building a custom campaign manageme
 
 ## Partnership Options Offered
 
-### Option A: Fixed-Price (Recommended)
+### Option D: Revenue-Share Partnership ⭐ (NEW - RECOMMENDED)
+
+- **$50K-$60K upfront + 6% of every campaign**
+- Continuous revenue growth partnership
+- Year 1: $478K | Year 3: $1.86M | 5 Years: $3.6M+
+- Perfect incentive alignment
+- Minimal upfront risk for client
+- **BEST for sustained growth**
+
+### Option A: Fixed-Price
 
 - $180K base + $40K success bonus
 - Clear scope and deliverables
@@ -102,6 +111,34 @@ A comprehensive **partnership proposal** for building a custom campaign manageme
 - Ownership transfers after 24 months
 - All-inclusive support during term
 - Cash flow friendly
+
+---
+
+## Why Revenue-Share (Option D) is Superior
+
+**For Continuous Growth**:
+- Options A/B/C: One-time payment ($200K-400K total)
+- Option D: Growing revenue ($3.6M+ over 5 years)
+- **10x higher lifetime value**
+
+**For Alignment**:
+- Options A/B/C: Transaction ends, incentives misalign
+- Option D: We succeed when they succeed (perfect alignment)
+
+**For Client Risk**:
+- Options A/B/C: $140K-$220K upfront (high risk)
+- Option D: $55K upfront (75% less risk)
+
+**For Predictability**:
+- Options A/B/C: No ongoing revenue
+- Option D: Monthly recurring revenue (MRR model)
+
+**Comparison**:
+
+| Option | Year 1 | Year 3 | 5 Years | Growth |
+|--------|--------|--------|---------|--------|
+| A/B/C | $200K-$256K | $320K-$328K | $400K | Flat |
+| **D (6%)** | **$478K** | **$1.86M** | **$3.6M+** | **Compound** |
 
 ---
 
