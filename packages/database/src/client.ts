@@ -45,9 +45,9 @@ export const getSupabase = (): SupabaseClient<Database> => {
 export const supabase: SupabaseClient<Database> = new Proxy(
   {} as SupabaseClient<Database>,
   {
-    get(_target, prop, receiver) {
+    get(_target, prop) {
       const client = getSupabase();
-      const value = Reflect.get(client, prop, receiver);
+      const value = Reflect.get(client, prop, client);
       if (typeof value === 'function') {
         return value.bind(client);
       }
@@ -83,12 +83,21 @@ export const getSupabaseAdmin = (): SupabaseClient<Database> | null => {
   return _supabaseAdmin;
 };
 
-export const supabaseAdmin = new Proxy(
-  {} as SupabaseClient<Database> | null,
+/**
+ * Lazy proxy for the admin Supabase client.
+ * Returns null at the top level if the service role key is unavailable.
+ * Callers should check `hasAdminAccess()` before using this.
+ */
+export const supabaseAdmin: SupabaseClient<Database> | null = new Proxy(
+  {} as SupabaseClient<Database>,
   {
     get(_target, prop) {
       const client = getSupabaseAdmin();
-      if (client === null) return undefined;
+      if (client === null) {
+        throw new Error(
+          'Supabase admin client is not available. Set SUPABASE_SERVICE_ROLE_KEY to enable admin access.',
+        );
+      }
       const value = Reflect.get(client, prop, client);
       if (typeof value === 'function') {
         return value.bind(client);
@@ -96,7 +105,7 @@ export const supabaseAdmin = new Proxy(
       return value;
     },
   },
-);
+) as SupabaseClient<Database> | null;
 
 // Helper to check if admin client is available
 export const hasAdminAccess = () => getSupabaseAdmin() !== null;
