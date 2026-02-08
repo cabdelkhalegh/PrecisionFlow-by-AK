@@ -9,9 +9,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@tikit/ai": "workspace:*",
     "@tikit/database": "workspace:*",
     "@tikit/types": "workspace:*",
     "@trpc/server": "^10.45.1",
+    "@supabase/supabase-js": "^2.39.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
