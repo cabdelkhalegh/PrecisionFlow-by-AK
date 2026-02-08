@@ -17,11 +17,11 @@ export default function ApprovalsPage() {
     type: typeFilter !== 'all' ? (typeFilter as any) : undefined,
   });
 
-  const filteredApprovals = approvals?.filter((approval) => {
+  const filteredApprovals = approvals?.filter((approval: any) => {
     if (!searchTerm) return true;
     const searchLower = searchTerm.toLowerCase();
     return (
-      approval.campaigns?.name.toLowerCase().includes(searchLower) ||
+      approval.campaigns?.name?.toLowerCase().includes(searchLower) ||
       approval.approval_type.toLowerCase().includes(searchLower)
     );
   });
@@ -81,7 +81,7 @@ export default function ApprovalsPage() {
             <p className="text-sm text-gray-600">
               Showing {filteredApprovals.length} approval{filteredApprovals.length !== 1 ? 's' : ''}
             </p>
-            {filteredApprovals.map((approval) => (
+            {filteredApprovals.map((approval: any) => (
               <ApprovalCard key={approval.id} approval={approval} />
             ))}
           </div>

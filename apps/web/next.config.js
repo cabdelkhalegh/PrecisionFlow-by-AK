@@ -2,9 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@tikit/api', '@tikit/types', '@tikit/database', '@tikit/ai', '@tikit/ui'],
+  output: 'standalone', // Required for Docker deployment
   experimental: {
-    // Enable server actions
-    serverActions: true,
+    // Server actions are enabled by default in Next.js 15
   },
   // Environment variables that should be available on the client
   env: {
