@@ -23,7 +23,7 @@ const getGenAI = () => {
  */
 export const getBriefProcessingModel = () => {
   return getGenAI().getGenerativeModel({ 
-    model: 'gemini-2.0-flash-exp',
+    model: 'gemini-2.0-flash',
     generationConfig: {
       temperature: 0.2, // Lower temperature for more consistent structured output
       topP: 0.8,

@@ -16,7 +16,7 @@ export const shortlistsRouter = router({
   getByCampaign: protectedProcedure
     .input(z.object({ campaign_id: z.string().uuid() }))
     .query(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const { data, error } = await db
         .from('campaign_shortlists')
@@ -38,7 +38,7 @@ export const shortlistsRouter = router({
   addCreator: protectedProcedure
     .input(addCreatorToShortlistSchema)
     .mutation(async ({ ctx, input }) => {
-      const { db, user } = ctx;
+      const { supabase: db, user } = ctx;
       
       // Get current max position if not provided
       let position = input.position;
@@ -81,7 +81,7 @@ export const shortlistsRouter = router({
       creator_id: z.string().uuid(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const { data, error } = await db
         .from('campaign_shortlists')
@@ -108,7 +108,7 @@ export const shortlistsRouter = router({
       new_position: z.number().int().min(1),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const { data, error } = await db
         .from('campaign_shortlists')
@@ -133,7 +133,7 @@ export const shortlistsRouter = router({
       proposed_deliverables: z.array(z.string()).optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const { data, error } = await db
         .from('campaign_shortlists')
@@ -156,7 +156,7 @@ export const shortlistsRouter = router({
   submit: protectedProcedure
     .input(z.object({ campaign_id: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
-      const { db, user } = ctx;
+      const { supabase: db, user } = ctx;
       
       // Update all draft items to submitted
       const { data, error } = await db
@@ -185,7 +185,7 @@ export const shortlistsRouter = router({
       feedback: z.string().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { db, user } = ctx;
+      const { supabase: db, user } = ctx;
       
       const updateData: any = {
         status: input.approved ? 'approved' : 'rejected',

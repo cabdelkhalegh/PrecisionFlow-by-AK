@@ -67,7 +67,7 @@ export const creatorsRouter = router({
       minEngagement: z.number().optional(),
     }))
     .query(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       let query = db
         .from('creators')
@@ -122,7 +122,7 @@ export const creatorsRouter = router({
   getById: protectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .query(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const { data, error } = await db
         .from('creators')
@@ -141,7 +141,7 @@ export const creatorsRouter = router({
   create: protectedProcedure
     .input(createCreatorSchema)
     .mutation(async ({ ctx, input }) => {
-      const { db, user } = ctx;
+      const { supabase: db, user } = ctx;
       
       const { data, error } = await db
         .from('creators')
@@ -164,7 +164,7 @@ export const creatorsRouter = router({
       data: updateCreatorSchema,
     }))
     .mutation(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const { data, error } = await db
         .from('creators')
@@ -183,7 +183,7 @@ export const creatorsRouter = router({
   delete: protectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const { data, error } = await db
         .from('creators')
@@ -205,7 +205,7 @@ export const creatorsRouter = router({
       limit: z.number().min(1).max(50).default(10),
     }))
     .query(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const { data, error } = await db
         .from('creators')
@@ -223,7 +223,7 @@ export const creatorsRouter = router({
   getPerformance: protectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .query(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       // Get creator's completed tasks with pagination (limit to last 100 for performance)
       const { data: tasks, error, count } = await db
