@@ -17,6 +17,11 @@ export function createMockSupabaseClient(): SupabaseClient<Database> {
     update: vi.fn().mockReturnThis(),
     delete: vi.fn().mockReturnThis(),
     eq: vi.fn().mockReturnThis(),
+    is: vi.fn().mockReturnThis(),
+    order: vi.fn().mockReturnThis(),
+    range: vi.fn().mockReturnThis(),
+    or: vi.fn().mockReturnThis(),
+    limit: vi.fn().mockReturnThis(),
     single: vi.fn(),
     auth: {
       getUser: vi.fn(),
@@ -34,7 +39,7 @@ export function createMockSupabaseClient(): SupabaseClient<Database> {
  */
 export function createMockUser(overrides = {}) {
   return {
-    id: 'test-user-id',
+    id: 'a0000000-0000-0000-0000-000000000001',
     email: 'test@example.com',
     role: 'authenticated',
     ...overrides,
@@ -46,16 +51,17 @@ export function createMockUser(overrides = {}) {
  */
 export function createMockCampaign(overrides = {}) {
   return {
-    id: 'campaign-123',
+    id: 'b0000000-0000-0000-0000-000000000001',
     name: 'Test Campaign',
-    client_id: 'client-123',
+    client_id: 'c0000000-0000-0000-0000-000000000001',
     status: 'draft',
     budget: 10000,
     start_date: '2024-01-01',
     end_date: '2024-12-31',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    created_by: 'test-user-id',
+    deleted_at: null,
+    created_by: 'a0000000-0000-0000-0000-000000000001',
     ...overrides,
   };
 }
@@ -65,7 +71,7 @@ export function createMockCampaign(overrides = {}) {
  */
 export function createMockClient(overrides = {}) {
   return {
-    id: 'client-123',
+    id: 'c0000000-0000-0000-0000-000000000001',
     name: 'Test Client',
     tier: 'gold',
     contact_email: 'client@example.com',
@@ -81,8 +87,8 @@ export function createMockClient(overrides = {}) {
  */
 export function createMockBrief(overrides = {}) {
   return {
-    id: 'brief-123',
-    campaign_id: 'campaign-123',
+    id: 'd0000000-0000-0000-0000-000000000001',
+    campaign_id: 'b0000000-0000-0000-0000-000000000001',
     raw_content: 'Test brief content',
     structured_data: {
       objectives: ['Increase brand awareness'],
@@ -102,13 +108,13 @@ export function createMockBrief(overrides = {}) {
  */
 export function createMockAuditLog(overrides = {}) {
   return {
-    id: 'audit-123',
+    id: 'e0000000-0000-0000-0000-000000000001',
     table_name: 'campaigns',
-    record_id: 'campaign-123',
+    record_id: 'b0000000-0000-0000-0000-000000000001',
     action: 'created',
     old_data: null,
     new_data: { name: 'Test Campaign' },
-    user_id: 'test-user-id',
+    user_id: 'a0000000-0000-0000-0000-000000000001',
     timestamp: new Date().toISOString(),
     ...overrides,
   };
@@ -117,11 +123,11 @@ export function createMockAuditLog(overrides = {}) {
 /**
  * Setup mock successful database response
  */
-export function mockSuccessResponse(data: any) {
+export function mockSuccessResponse(data: any, count: number | null = null) {
   return {
     data,
     error: null,
-    count: null,
+    count,
     status: 200,
     statusText: 'OK',
   };

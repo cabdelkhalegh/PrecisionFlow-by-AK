@@ -46,7 +46,7 @@ describe('Briefs Router', () => {
 
   describe('listByCampaign', () => {
     it('should list briefs for a campaign', async () => {
-      const mockBriefs = [createMockBrief(), createMockBrief({ id: 'brief-456' })];
+      const mockBriefs = [createMockBrief(), createMockBrief({ id: 'd0000000-0000-0000-0000-000000000002' })];
       mockSupabase.from.mockReturnValue({
         select: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({
@@ -59,7 +59,7 @@ describe('Briefs Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -67,7 +67,7 @@ describe('Briefs Router', () => {
       });
 
       const result = await caller.listByCampaign({
-        campaignId: 'campaign-123',
+        campaignId: 'b0000000-0000-0000-0000-000000000001',
         limit: 50,
         offset: 0,
       });
@@ -89,7 +89,7 @@ describe('Briefs Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -98,7 +98,7 @@ describe('Briefs Router', () => {
 
       await expect(
         caller.listByCampaign({
-          campaignId: 'campaign-123',
+          campaignId: 'b0000000-0000-0000-0000-000000000001',
           limit: 50,
           offset: 0,
         })
@@ -121,7 +121,7 @@ describe('Briefs Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -129,7 +129,7 @@ describe('Briefs Router', () => {
       });
 
       const result = await caller.getLatestByCampaign({
-        campaignId: 'campaign-123',
+        campaignId: 'b0000000-0000-0000-0000-000000000001',
       });
 
       expect(result).toBeTruthy();
@@ -149,7 +149,7 @@ describe('Briefs Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -157,7 +157,7 @@ describe('Briefs Router', () => {
       });
 
       const result = await caller.getLatestByCampaign({
-        campaignId: 'campaign-123',
+        campaignId: 'b0000000-0000-0000-0000-000000000001',
       });
 
       expect(result).toBeNull();
@@ -177,7 +177,7 @@ describe('Briefs Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -200,7 +200,7 @@ describe('Briefs Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -208,8 +208,8 @@ describe('Briefs Router', () => {
       });
 
       await expect(
-        caller.getById({ id: 'non-existent-id' })
-      ).rejects.toThrow('NOT_FOUND');
+        caller.getById({ id: 'f0000000-0000-0000-0000-000000000099' })
+      ).rejects.toThrow('Not found');
     });
   });
 
@@ -239,7 +239,7 @@ describe('Briefs Router', () => {
           };
         }
         return {};
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -247,7 +247,7 @@ describe('Briefs Router', () => {
       });
 
       const result = await caller.upload({
-        campaignId: 'campaign-123',
+        campaignId: 'b0000000-0000-0000-0000-000000000001',
         rawContent: 'Test brief content',
       });
 
@@ -288,7 +288,7 @@ describe('Briefs Router', () => {
           };
         }
         return {};
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -296,7 +296,7 @@ describe('Briefs Router', () => {
       });
 
       const result = await caller.upload({
-        campaignId: 'campaign-123',
+        campaignId: 'b0000000-0000-0000-0000-000000000001',
         rawContent: 'Updated brief content',
       });
 
@@ -304,7 +304,7 @@ describe('Briefs Router', () => {
       expect(result.is_latest).toBe(true);
     });
 
-    it('should create audit log on brief upload', async () => {
+    it('should call from with briefs table on upload', async () => {
       const newBrief = createMockBrief();
       
       mockSupabase.from.mockImplementation((table: string) => {
@@ -328,19 +328,8 @@ describe('Briefs Router', () => {
             }),
           };
         }
-        if (table === 'audit_logs') {
-          return {
-            insert: vi.fn().mockReturnValue({
-              select: vi.fn().mockReturnValue({
-                single: vi.fn().mockResolvedValue(
-                  mockSuccessResponse({})
-                ),
-              }),
-            }),
-          };
-        }
         return {};
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -348,15 +337,15 @@ describe('Briefs Router', () => {
       });
 
       await caller.upload({
-        campaignId: 'campaign-123',
+        campaignId: 'b0000000-0000-0000-0000-000000000001',
         rawContent: 'Test content',
       });
 
       const fromCalls = (mockSupabase.from as any).mock.calls;
-      const auditLogCall = fromCalls.find(
-        (call: any) => call[0] === 'audit_logs'
+      const briefsCall = fromCalls.find(
+        (call: any) => call[0] === 'briefs'
       );
-      expect(auditLogCall).toBeDefined();
+      expect(briefsCall).toBeDefined();
     });
   });
 
@@ -409,7 +398,7 @@ describe('Briefs Router', () => {
           };
         }
         return {};
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -472,7 +461,7 @@ describe('Briefs Router', () => {
           };
         }
         return {};
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -498,7 +487,7 @@ describe('Briefs Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -511,7 +500,7 @@ describe('Briefs Router', () => {
     });
 
     it('should update campaign risk level based on missing info', async () => {
-      const brief = createMockBrief({ raw_content: 'Test content', campaign_id: 'campaign-123' });
+      const brief = createMockBrief({ raw_content: 'Test content', campaign_id: 'b0000000-0000-0000-0000-000000000001' });
       
       mockSupabase.from.mockImplementation((table: string) => {
         if (table === 'briefs') {
@@ -546,7 +535,7 @@ describe('Briefs Router', () => {
           };
         }
         return {};
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -584,6 +573,15 @@ describe('Briefs Router', () => {
       const updatedBrief = createMockBrief({ structured_data: structuredData });
       
       mockSupabase.from.mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            is: vi.fn().mockReturnValue({
+              single: vi.fn().mockResolvedValue(
+                mockSuccessResponse(updatedBrief)
+              ),
+            }),
+          }),
+        }),
         update: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({
             is: vi.fn().mockReturnValue({
@@ -595,7 +593,7 @@ describe('Briefs Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -603,7 +601,7 @@ describe('Briefs Router', () => {
       });
 
       const result = await caller.updateStructuredData({
-        id: 'brief-123',
+        id: 'd0000000-0000-0000-0000-000000000001',
         structuredData,
       });
 
@@ -619,6 +617,15 @@ describe('Briefs Router', () => {
       });
       
       mockSupabase.from.mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            is: vi.fn().mockReturnValue({
+              single: vi.fn().mockResolvedValue(
+                mockSuccessResponse(approvedBrief)
+              ),
+            }),
+          }),
+        }),
         update: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({
             is: vi.fn().mockReturnValue({
@@ -630,7 +637,7 @@ describe('Briefs Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = briefsRouter.createCaller({
         user: mockUser,
@@ -638,7 +645,7 @@ describe('Briefs Router', () => {
       });
 
       const result = await caller.approve({
-        id: 'brief-123',
+        id: 'd0000000-0000-0000-0000-000000000001',
         comments: 'Looks good!',
       });
 

@@ -35,7 +35,7 @@ describe('Clients Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -62,7 +62,7 @@ describe('Clients Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -93,7 +93,7 @@ describe('Clients Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -120,7 +120,7 @@ describe('Clients Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -146,7 +146,7 @@ describe('Clients Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -170,7 +170,7 @@ describe('Clients Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -178,8 +178,8 @@ describe('Clients Router', () => {
       });
 
       await expect(
-        caller.getById({ id: 'non-existent-id' })
-      ).rejects.toThrow('NOT_FOUND');
+        caller.getById({ id: 'f0000000-0000-0000-0000-000000000099' })
+      ).rejects.toThrow('Not found');
     });
   });
 
@@ -198,7 +198,7 @@ describe('Clients Router', () => {
             ),
           }),
         }),
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -227,7 +227,7 @@ describe('Clients Router', () => {
             ),
           }),
         }),
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -267,7 +267,7 @@ describe('Clients Router', () => {
             ),
           }),
         }),
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -296,6 +296,15 @@ describe('Clients Router', () => {
       });
       
       mockSupabase.from.mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            is: vi.fn().mockReturnValue({
+              single: vi.fn().mockResolvedValue(
+                mockSuccessResponse(updatedClient)
+              ),
+            }),
+          }),
+        }),
         update: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({
             is: vi.fn().mockReturnValue({
@@ -307,7 +316,7 @@ describe('Clients Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -363,7 +372,7 @@ describe('Clients Router', () => {
             }),
           }),
         };
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -386,11 +395,19 @@ describe('Clients Router', () => {
 
   describe('delete', () => {
     it('should soft delete a client', async () => {
+      const mockClient = createMockClient();
       mockSupabase.from.mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            is: vi.fn().mockReturnValue({
+              single: vi.fn().mockResolvedValue(mockSuccessResponse(mockClient)),
+            }),
+          }),
+        }),
         update: vi.fn().mockReturnValue({
           eq: vi.fn().mockResolvedValue(mockSuccessResponse(null)),
         }),
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -398,7 +415,7 @@ describe('Clients Router', () => {
       });
 
       const result = await caller.delete({
-        id: 'client-id',
+        id: 'c0000000-0000-0000-0000-000000000099',
       });
 
       expect(result.success).toBe(true);
@@ -433,7 +450,7 @@ describe('Clients Router', () => {
             }),
           }),
         };
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -451,13 +468,21 @@ describe('Clients Router', () => {
     });
 
     it('should handle delete errors', async () => {
+      const mockClient = createMockClient();
       mockSupabase.from.mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            is: vi.fn().mockReturnValue({
+              single: vi.fn().mockResolvedValue(mockSuccessResponse(mockClient)),
+            }),
+          }),
+        }),
         update: vi.fn().mockReturnValue({
           eq: vi.fn().mockResolvedValue(
             mockErrorResponse('Delete failed')
           ),
         }),
-      } as any);
+      });
 
       const caller = clientsRouter.createCaller({
         user: mockUser,
@@ -465,7 +490,7 @@ describe('Clients Router', () => {
       });
 
       await expect(
-        caller.delete({ id: 'client-id' })
+        caller.delete({ id: 'c0000000-0000-0000-0000-000000000099' })
       ).rejects.toThrow('Delete failed');
     });
   });
