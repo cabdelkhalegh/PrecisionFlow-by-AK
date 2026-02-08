@@ -25,12 +25,13 @@ This repository contains the development of **TiKiT OS**, an enterprise-grade op
 
 ## 📚 Key Documents
 
-### Business & Investment
+### Partnership & Business
 
 | Document | Purpose | Status |
 |----------|---------|--------|
-| [BUSINESS_PRD.md](./BUSINESS_PRD.md) | Comprehensive business case, ROI analysis, and deployment plan (60 pages) | ✅ Complete |
-| [EXECUTIVE_SUMMARY.md](./EXECUTIVE_SUMMARY.md) | One-page investment overview for leadership | ✅ Complete |
+| [BUSINESS_PRD.md](./BUSINESS_PRD.md) | Complete partnership proposal for TikiT Agency (custom internal solution) | ✅ Complete |
+| [EXECUTIVE_SUMMARY.md](./EXECUTIVE_SUMMARY.md) | One-page partnership overview for leadership | ✅ Complete |
+| [PARTNERSHIP_SUMMARY.md](./PARTNERSHIP_SUMMARY.md) | Delivery summary and win-win structure explanation | ✅ Complete |
 
 ### Product & Technical
 
@@ -215,13 +216,12 @@ All implementation must adhere to:
 6. Review [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines
 
 ### For Stakeholders
-1. **Start here**: Review [EXECUTIVE_SUMMARY.md](./EXECUTIVE_SUMMARY.md) for quick investment overview (5 min read)
-2. **Deep dive**: Review [BUSINESS_PRD.md](./BUSINESS_PRD.md) for complete business case with ROI analysis, market analysis, and deployment strategy (60 pages)
-3. Review [PRD.md](./PRD.md) for complete product vision
-4. Review [NEXT_STEPS.md](./NEXT_STEPS.md) for timeline and milestones
-5. Review [ARCHITECTURE.md](./ARCHITECTURE.md) for technical decisions
-6. Provide feedback on PRs as they are created
-7. Participate in milestone reviews
+1. **Start here**: Review [EXECUTIVE_SUMMARY.md](./EXECUTIVE_SUMMARY.md) for quick partnership overview (5 min read)
+2. **Deep dive**: Review [BUSINESS_PRD.md](./BUSINESS_PRD.md) for complete partnership proposal - custom solution for TikiT Agency (not a product for sale)
+3. **Understand positioning**: Review [PARTNERSHIP_SUMMARY.md](./PARTNERSHIP_SUMMARY.md) for win-win structure
+4. Review [PRD.md](./PRD.md) for complete product vision
+5. Review [NEXT_STEPS.md](./NEXT_STEPS.md) for timeline and milestones
+6. Review [ARCHITECTURE.md](./ARCHITECTURE.md) for technical decisions
 
 ---
 
