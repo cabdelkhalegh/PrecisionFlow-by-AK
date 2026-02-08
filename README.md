@@ -25,9 +25,11 @@ This repository contains the development of **TiKiT OS**, an enterprise-grade op
 
 ## 📚 Key Documents
 
+📖 **[Complete Documentation Index](./DOCS_INDEX.md)** - Full documentation guide organized by role and category
+
 | Document | Purpose | Status |
 |----------|---------|--------|
-| [PRD.md](./PRD.md) | Complete Product Requirements Document | ✅ Approved (PR #1) |
+| [PRD.md](./PRD.md) | Complete Product Requirements Document | ✅ Approved & Locked v1.0 |
 | [NEXT_STEPS.md](./NEXT_STEPS.md) | Implementation roadmap and next actions | ✅ Complete |
 | [ARCHITECTURE.md](./ARCHITECTURE.md) | Technical architecture & stack decisions | ✅ Complete |
 | [DATABASE_SCHEMA.md](./DATABASE_SCHEMA.md) | Database design and ERD | ✅ Complete |
