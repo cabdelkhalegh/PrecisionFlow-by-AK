@@ -93,6 +93,10 @@ env/
 # Next.js
 .next/
 next-env.d.ts
+.vercel
+
+# Turbo
+.turbo/
 
 # Nuxt.js
 .nuxt

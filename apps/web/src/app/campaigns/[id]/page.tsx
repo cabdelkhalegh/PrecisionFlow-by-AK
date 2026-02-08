@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import AppLayout from '@/components/layout/AppLayout';
+import { AppLayout } from '@/components/layout/AppLayout';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -20,16 +20,20 @@ export default function CampaignDetailPage() {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   // Fetch campaign
-  const { data: campaign, isLoading: campaignLoading, refetch: refetchCampaign } = trpc.campaigns.getById.useQuery(
+  const { data: campaignData, isLoading: campaignLoading, refetch: refetchCampaign } = trpc.campaigns.getById.useQuery(
     { id: campaignId },
     { enabled: !!campaignId }
   );
+  
+  // Type cast to avoid type errors
+  const campaign: any = campaignData;
 
   // Fetch client
-  const { data: client } = trpc.clients.getById.useQuery(
+  const { data: clientData } = trpc.clients.getById.useQuery(
     { id: campaign?.client_id || '' },
     { enabled: !!campaign?.client_id }
   );
+  const client: any = clientData;
 
   // Fetch briefs
   const { data: briefsData, refetch: refetchBriefs } = trpc.briefs.listByCampaign.useQuery(
