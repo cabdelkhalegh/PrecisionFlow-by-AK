@@ -5,6 +5,7 @@
 import { z } from 'zod';
 import { router, protectedProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
+import { logCreation, logUpdate } from '../utils/audit';
 
 export const briefsRouter = router({
   /**
@@ -213,6 +214,15 @@ export const briefsRouter = router({
         });
       }
 
+      // Log AI processing to audit trail
+      await logUpdate(ctx.supabase, {
+        tableName: 'briefs',
+        recordId: input.id,
+        oldData: brief,
+        newData: updatedBrief,
+        userId: ctx.user.id,
+      });
+
       // Update campaign risk level
       await ctx.supabase
         .from('campaigns')
@@ -248,6 +258,14 @@ export const briefsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      // Get old data for audit trail
+      const { data: oldData } = await ctx.supabase
+        .from('briefs')
+        .select('*')
+        .eq('id', input.id)
+        .is('deleted_at', null)
+        .single();
+
       const { data, error } = await ctx.supabase
         .from('briefs')
         .update({
@@ -265,6 +283,15 @@ export const briefsRouter = router({
         });
       }
 
+      // Log update to audit trail
+      await logUpdate(ctx.supabase, {
+        tableName: 'briefs',
+        recordId: input.id,
+        oldData: oldData || undefined,
+        newData: data,
+        userId: ctx.user.id,
+      });
+
       return data;
     }),
 
@@ -279,6 +306,14 @@ export const briefsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      // Get old data for audit trail
+      const { data: oldData } = await ctx.supabase
+        .from('briefs')
+        .select('*')
+        .eq('id', input.id)
+        .is('deleted_at', null)
+        .single();
+
       const { data, error } = await ctx.supabase
         .from('briefs')
         .update({
@@ -298,6 +333,15 @@ export const briefsRouter = router({
           message: error.message,
         });
       }
+
+      // Log approval to audit trail
+      await logUpdate(ctx.supabase, {
+        tableName: 'briefs',
+        recordId: input.id,
+        oldData: oldData || undefined,
+        newData: data,
+        userId: ctx.user.id,
+      });
 
       return data;
     }),
