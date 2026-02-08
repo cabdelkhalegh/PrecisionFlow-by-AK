@@ -215,11 +215,12 @@ export const briefsRouter = router({
       }
 
       // Log AI processing to audit trail
-      await logUpdate(ctx.supabase, {
+      await logUpdate({
+        supabase: ctx.supabase,
         tableName: 'briefs',
         recordId: input.id,
-        oldData: brief,
-        newData: updatedBrief,
+        oldData: brief as Record<string, unknown>,
+        newData: updatedBrief as Record<string, unknown>,
         userId: ctx.user.id,
       });
 
@@ -284,11 +285,12 @@ export const briefsRouter = router({
       }
 
       // Log update to audit trail
-      await logUpdate(ctx.supabase, {
+      await logUpdate({
+        supabase: ctx.supabase,
         tableName: 'briefs',
         recordId: input.id,
-        oldData: oldData || undefined,
-        newData: data,
+        oldData: (oldData || {}) as Record<string, unknown>,
+        newData: data as Record<string, unknown>,
         userId: ctx.user.id,
       });
 
@@ -335,11 +337,12 @@ export const briefsRouter = router({
       }
 
       // Log approval to audit trail
-      await logUpdate(ctx.supabase, {
+      await logUpdate({
+        supabase: ctx.supabase,
         tableName: 'briefs',
         recordId: input.id,
-        oldData: oldData || undefined,
-        newData: data,
+        oldData: (oldData || {}) as Record<string, unknown>,
+        newData: data as Record<string, unknown>,
         userId: ctx.user.id,
       });
 

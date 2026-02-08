@@ -98,6 +98,9 @@ next-env.d.ts
 # Turbo
 .turbo/
 
+# TypeScript build info
+*.tsbuildinfo
+
 # Nuxt.js
 .nuxt
 .output
