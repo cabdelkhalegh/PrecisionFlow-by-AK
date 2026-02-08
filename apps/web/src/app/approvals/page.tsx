@@ -6,6 +6,7 @@ import { ApprovalCard } from '@/components/approvals/ApprovalCard';
 import { Select } from '@/components/ui/Select';
 import { Input } from '@/components/ui/Input';
 import { trpc } from '@/lib/trpc';
+import type { ApprovalWithRelations } from '@/types/api';
 
 export default function ApprovalsPage() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -15,7 +16,7 @@ export default function ApprovalsPage() {
   const { data: approvals, isLoading } = trpc.approvals.list.useQuery({
     status: statusFilter !== 'all' ? (statusFilter as any) : undefined,
     type: typeFilter !== 'all' ? (typeFilter as any) : undefined,
-  });
+  }) as { data: ApprovalWithRelations[] | undefined; isLoading: boolean };
 
   const filteredApprovals = approvals?.filter((approval) => {
     if (!searchTerm) return true;
