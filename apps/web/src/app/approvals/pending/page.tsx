@@ -50,7 +50,7 @@ export default function PendingApprovalsPage() {
           <div className="text-center py-12 bg-white rounded-lg">
             <p className="text-gray-500 text-lg">No pending approvals</p>
             <p className="text-gray-400 mt-2">
-              You're all caught up! Approval requests will appear here.
+              You&apos;re all caught up! Approval requests will appear here.
             </p>
           </div>
         )}

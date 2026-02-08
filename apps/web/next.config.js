@@ -2,10 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@tikit/api', '@tikit/types', '@tikit/database', '@tikit/ai', '@tikit/ui'],
-  experimental: {
-    // Enable server actions
-    serverActions: true,
-  },
   // Environment variables that should be available on the client
   env: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,

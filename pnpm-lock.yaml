@@ -105,18 +105,21 @@ importers:
       '@tikit/api':
         specifier: workspace:*
         version: link:../../packages/api
+      '@tikit/database':
+        specifier: workspace:*
+        version: link:../../packages/database
       '@tikit/types':
         specifier: workspace:*
         version: link:../../packages/types
       '@trpc/client':
-        specifier: ^10.45.1
-        version: 10.45.4(@trpc/server@10.45.4)
+        specifier: ^11.0.0
+        version: 11.9.0(@trpc/server@11.9.0)(typescript@5.9.3)
       '@trpc/react-query':
-        specifier: ^10.45.1
-        version: 10.45.4(@tanstack/react-query@5.90.20)(@trpc/client@10.45.4)(@trpc/server@10.45.4)(react-dom@19.2.4)(react@19.2.4)
+        specifier: ^11.0.0
+        version: 11.9.0(@tanstack/react-query@5.90.20)(@trpc/client@11.9.0)(@trpc/server@11.9.0)(react-dom@19.2.4)(react@19.2.4)(typescript@5.9.3)
       '@trpc/server':
-        specifier: ^10.45.1
-        version: 10.45.4
+        specifier: ^11.0.0
+        version: 11.9.0(typescript@5.9.3)
       next:
         specifier: ^15.0.8
         version: 15.5.12(@babel/core@7.29.0)(@playwright/test@1.58.2)(react-dom@19.2.4)(react@19.2.4)
@@ -216,8 +219,8 @@ importers:
         specifier: workspace:*
         version: link:../types
       '@trpc/server':
-        specifier: ^10.45.1
-        version: 10.45.4
+        specifier: ^11.0.0
+        version: 11.9.0(typescript@5.9.3)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -3729,14 +3732,6 @@ packages:
       '@testing-library/dom': 10.4.1
     dev: true
 
-  /@trpc/client@10.45.4(@trpc/server@10.45.4):
-    resolution: {integrity: sha512-ItpH5FMIJFt862kbAgC8hf5NJnDLo0FwEvMEX6zSLCenzWD0UH6H/fvAX1suFo1e0wcAmMhiEU1Tl6xKk/Pd1g==}
-    peerDependencies:
-      '@trpc/server': 10.45.4
-    dependencies:
-      '@trpc/server': 10.45.4
-    dev: false
-
   /@trpc/client@11.9.0(@trpc/server@11.9.0)(typescript@5.9.3):
     resolution: {integrity: sha512-3r4RT/GbR263QO+2gCPyrs5fEYaXua3/AzCs+GbWC09X0F+mVkyBpO3GRSDObiNU/N1YB597U7WGW3WA1d1TVw==}
     peerDependencies:
@@ -3745,22 +3740,6 @@ packages:
     dependencies:
       '@trpc/server': 11.9.0(typescript@5.9.3)
       typescript: 5.9.3
-    dev: false
-
-  /@trpc/react-query@10.45.4(@tanstack/react-query@5.90.20)(@trpc/client@10.45.4)(@trpc/server@10.45.4)(react-dom@19.2.4)(react@19.2.4):
-    resolution: {integrity: sha512-/JfbkFMztsYbpl94P9TWritMjbHqWxeHz4uwjHM3W2zUcIKT88FiFXVmD/jLitPLrKhi4yAONoaRks5SUm12fQ==}
-    peerDependencies:
-      '@tanstack/react-query': ^4.18.0
-      '@trpc/client': 10.45.4
-      '@trpc/server': 10.45.4
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@tanstack/react-query': 5.90.20(react@19.2.4)
-      '@trpc/client': 10.45.4(@trpc/server@10.45.4)
-      '@trpc/server': 10.45.4
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
     dev: false
 
   /@trpc/react-query@11.9.0(@tanstack/react-query@5.90.20)(@trpc/client@11.9.0)(@trpc/server@11.9.0)(react-dom@18.3.1)(react@19.1.0)(typescript@5.9.3):
@@ -3781,8 +3760,22 @@ packages:
       typescript: 5.9.3
     dev: false
 
-  /@trpc/server@10.45.4:
-    resolution: {integrity: sha512-5MuyK5sDuFVGHOT9EMVHgRjP5I5j3RqGymcb5D47UOp8tzn6LH0g1lEgYrAsOZ12vmk1gpxMw/v/y4xHHK/Qdg==}
+  /@trpc/react-query@11.9.0(@tanstack/react-query@5.90.20)(@trpc/client@11.9.0)(@trpc/server@11.9.0)(react-dom@19.2.4)(react@19.2.4)(typescript@5.9.3):
+    resolution: {integrity: sha512-9Gpj06ZcfsA77PB5A8VC2MFS/E7pPvoNqaSlSrAgLyRsKqy0gldFOW2RMKura69M6fwtgjg9+4i2+rOHKT7qLw==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.80.3
+      '@trpc/client': 11.9.0
+      '@trpc/server': 11.9.0
+      react: '>=18.2.0'
+      react-dom: '>=18.2.0'
+      typescript: '>=5.7.2'
+    dependencies:
+      '@tanstack/react-query': 5.90.20(react@19.2.4)
+      '@trpc/client': 11.9.0(@trpc/server@11.9.0)(typescript@5.9.3)
+      '@trpc/server': 11.9.0(typescript@5.9.3)
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+      typescript: 5.9.3
     dev: false
 
   /@trpc/server@11.9.0(typescript@5.9.3):
