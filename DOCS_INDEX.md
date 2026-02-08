@@ -56,6 +56,7 @@ Project planning, roadmaps, and strategic decisions.
 | [NEXT_STEPS.md](./NEXT_STEPS.md) | Implementation roadmap, phases, milestones, and next actions | 15K | ✅ Complete |
 | [COUNCIL_FINAL_RECOMMENDATION.md](./COUNCIL_FINAL_RECOMMENDATION.md) | Final technical recommendations and decisions | 13K | ✅ Complete |
 | [ADVANCED_FEATURES_REFERENCE.md](./ADVANCED_FEATURES_REFERENCE.md) | Consolidated advanced/future features for evaluation (Phases 2-4, PRD2) | 13K | ✅ Complete |
+| [PRD_SEARCH_REPORT.md](./PRD_SEARCH_REPORT.md) | Search report for PRD-001 through PRD-010 (Phase 14-15) - Not Found | 11K | ✅ Complete |
 
 ---
 
