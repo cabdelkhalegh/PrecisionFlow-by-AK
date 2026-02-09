@@ -206,6 +206,9 @@ importers:
         specifier: ^3.22.4
         version: 3.25.76
     devDependencies:
+      '@precisionflow/eslint-config':
+        specifier: workspace:*
+        version: link:../config/eslint
       typescript:
         specifier: ^5.3.3
         version: 5.9.3
@@ -231,6 +234,9 @@ importers:
         specifier: ^3.22.4
         version: 3.25.76
     devDependencies:
+      '@precisionflow/eslint-config':
+        specifier: workspace:*
+        version: link:../config/eslint
       '@vitest/coverage-v8':
         specifier: ^1.2.0
         version: 1.6.1(vitest@1.6.1)
@@ -270,6 +276,9 @@ importers:
         specifier: ^2.39.7
         version: 2.95.3
     devDependencies:
+      '@precisionflow/eslint-config':
+        specifier: workspace:*
+        version: link:../config/eslint
       '@precisionflow/types':
         specifier: workspace:*
         version: link:../types

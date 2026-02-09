@@ -13,6 +13,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@precisionflow/eslint-config": "workspace:*",
     "typescript": "^5.3.3"
   }
 }
