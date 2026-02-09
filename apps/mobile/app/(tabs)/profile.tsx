@@ -75,7 +75,7 @@ export default function ProfileScreen() {
 
           <View style={styles.infoRow}>
             <Text style={styles.label}>Platform</Text>
-            <Text style={styles.value}>TiKiT OS Mobile</Text>
+            <Text style={styles.value}>PrecisionFlow Mobile</Text>
           </View>
         </View>
 

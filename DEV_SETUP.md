@@ -1,6 +1,6 @@
 # 🛠️ Development Environment Setup
 
-**Product:** TiKiT OS — Campaign Execution & Intelligence  
+**Product:** PrecisionFlow — Campaign Execution & Intelligence  
 **Last Updated:** February 2026
 
 ---
@@ -598,7 +598,7 @@ GitHub Actions runs on every PR:
 ### Team Communication
 
 - **Slack/Discord:** [Link to be added]
-- **Email:** dev-team@tikit-os.com
+- **Email:** dev-team@precisionflow.com
 
 ### Issue Reporting
 

@@ -32,6 +32,9 @@ export default function RootLayout() {
           <Stack.Screen name="index" />
           <Stack.Screen name="(auth)/login" />
           <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="campaign/[id]" options={{ headerShown: true, title: 'Campaign' }} />
+          <Stack.Screen name="client/[id]" options={{ headerShown: true, title: 'Client' }} />
+          <Stack.Screen name="creator/[id]" options={{ headerShown: true, title: 'Creator' }} />
         </Stack>
       </QueryClientProvider>
     </trpc.Provider>

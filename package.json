@@ -1,8 +1,8 @@
 {
-  "name": "tikit-os",
-  "version": "0.1.0",
+  "name": "precisionflow",
+  "version": "1.0.0",
   "private": true,
-  "description": "TiKiT OS - Campaign Execution & Intelligence Platform",
+  "description": "PrecisionFlow - Campaign Execution & Intelligence Platform",
   "keywords": [
     "influencer-marketing",
     "campaign-management",
@@ -41,6 +41,7 @@
     "db:reset": "pnpm --filter=database reset",
     "clean": "turbo run clean && rm -rf node_modules",
     "clean:modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+    "setup": "bash scripts/setup-env.sh",
     "prepare": "husky install"
   },
   "devDependencies": {

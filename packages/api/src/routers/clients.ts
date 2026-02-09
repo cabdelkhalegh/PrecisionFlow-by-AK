@@ -126,11 +126,12 @@ export const clientsRouter = router({
       }
 
       // Log creation
-      await logCreation(ctx.supabase, {
+      await logCreation({
+        supabase: ctx.supabase,
+        tableName: 'clients',
+        recordId: data.id,
+        data: data as Record<string, unknown>,
         userId: ctx.user.id,
-        entityType: 'client',
-        entityId: data.id,
-        newData: data,
       });
 
       return data;
@@ -197,11 +198,12 @@ export const clientsRouter = router({
       }
 
       // Log client update to audit trail
-      await logUpdate(ctx.supabase, {
+      await logUpdate({
+        supabase: ctx.supabase,
         tableName: 'clients',
         recordId: id,
-        oldData: oldData || undefined,
-        newData: data,
+        oldData: (oldData || {}) as Record<string, unknown>,
+        newData: data as Record<string, unknown>,
         userId: ctx.user.id,
       });
 
@@ -235,10 +237,11 @@ export const clientsRouter = router({
       }
 
       // Log client deletion to audit trail
-      await logDeletion(ctx.supabase, {
+      await logDeletion({
+        supabase: ctx.supabase,
         tableName: 'clients',
         recordId: input.id,
-        oldData: oldData || undefined,
+        data: (oldData || {}) as Record<string, unknown>,
         userId: ctx.user.id,
       });
 

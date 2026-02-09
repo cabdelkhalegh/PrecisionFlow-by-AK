@@ -1,5 +1,5 @@
 -- Migration: 00004_create_campaigns_table
--- Description: Create campaigns table (root entity for TiKiT OS)
+-- Description: Create campaigns table (root entity for PrecisionFlow)
 -- Created: 2026-02-07
 
 CREATE TABLE public.campaigns (

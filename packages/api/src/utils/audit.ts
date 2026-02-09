@@ -4,7 +4,7 @@
  */
 
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { Database } from '@tikit/database';
+import type { Database } from '@precisionflow/database';
 
 /**
  * Log an audit trail entry

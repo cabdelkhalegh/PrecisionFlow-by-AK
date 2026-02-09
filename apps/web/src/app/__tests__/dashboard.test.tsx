@@ -15,12 +15,12 @@ describe('Dashboard Page', () => {
   it('renders page header', () => {
     renderWithProviders(<DashboardPage />);
     
-    expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /dashboard/i })).toBeInTheDocument();
   });
 
   it('shows loading state', () => {
     renderWithProviders(<DashboardPage />);
-    expect(screen.getByText(/loading/i)).toBeInTheDocument();
+    expect(screen.getByText(/Loading campaigns/i)).toBeInTheDocument();
   });
 
   it('displays campaign statistics', async () => {

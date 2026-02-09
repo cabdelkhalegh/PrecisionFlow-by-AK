@@ -35,21 +35,24 @@ importers:
       '@expo/vector-icons':
         specifier: ^14.0.0
         version: 14.1.0(expo-font@14.0.11)(react-native@0.81.5)(react@19.1.0)
+      '@precisionflow/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@precisionflow/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@precisionflow/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@react-navigation/native':
         specifier: ^7.0.1
         version: 7.1.28(react-native@0.81.5)(react@19.1.0)
+      '@supabase/supabase-js':
+        specifier: ^2.49.1
+        version: 2.95.3
       '@tanstack/react-query':
         specifier: ^5.62.14
         version: 5.90.20(react@19.1.0)
-      '@tikit/api':
-        specifier: workspace:*
-        version: link:../../packages/api
-      '@tikit/types':
-        specifier: workspace:*
-        version: link:../../packages/types
-      '@tikit/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       '@trpc/client':
         specifier: ^11.0.0
         version: 11.9.0(@trpc/server@11.9.0)(typescript@5.9.3)
@@ -84,10 +87,10 @@ importers:
       '@babel/core':
         specifier: ^7.25.2
         version: 7.29.0
-      '@tikit/eslint-config':
+      '@precisionflow/eslint-config':
         specifier: workspace:*
         version: link:../../packages/config/eslint
-      '@tikit/typescript-config':
+      '@precisionflow/typescript-config':
         specifier: workspace:*
         version: link:../../packages/config/typescript
       '@types/react':
@@ -99,18 +102,21 @@ importers:
 
   apps/web:
     dependencies:
+      '@precisionflow/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@precisionflow/database':
+        specifier: workspace:*
+        version: link:../../packages/database
+      '@precisionflow/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@supabase/supabase-js':
+        specifier: ^2.39.7
+        version: 2.95.3
       '@tanstack/react-query':
         specifier: ^5.17.19
         version: 5.90.20(react@19.2.4)
-      '@tikit/api':
-        specifier: workspace:*
-        version: link:../../packages/api
-      '@tikit/database':
-        specifier: workspace:*
-        version: link:../../packages/database
-      '@tikit/types':
-        specifier: workspace:*
-        version: link:../../packages/types
       '@trpc/client':
         specifier: ^11.0.0
         version: 11.9.0(@trpc/server@11.9.0)(typescript@5.9.3)
@@ -206,18 +212,18 @@ importers:
 
   packages/api:
     dependencies:
+      '@precisionflow/ai':
+        specifier: workspace:*
+        version: link:../ai
+      '@precisionflow/database':
+        specifier: workspace:*
+        version: link:../database
+      '@precisionflow/types':
+        specifier: workspace:*
+        version: link:../types
       '@supabase/supabase-js':
         specifier: ^2.39.0
         version: 2.95.3
-      '@tikit/ai':
-        specifier: workspace:*
-        version: link:../ai
-      '@tikit/database':
-        specifier: workspace:*
-        version: link:../database
-      '@tikit/types':
-        specifier: workspace:*
-        version: link:../types
       '@trpc/server':
         specifier: ^11.0.0
         version: 11.9.0(typescript@5.9.3)
@@ -264,7 +270,7 @@ importers:
         specifier: ^2.39.7
         version: 2.95.3
     devDependencies:
-      '@tikit/types':
+      '@precisionflow/types':
         specifier: workspace:*
         version: link:../types
       typescript:
@@ -279,17 +285,17 @@ importers:
 
   packages/ui:
     dependencies:
-      '@tikit/types':
+      '@precisionflow/types':
         specifier: workspace:*
         version: link:../types
       react:
         specifier: ^19.0.0
         version: 19.1.0
     devDependencies:
-      '@tikit/eslint-config':
+      '@precisionflow/eslint-config':
         specifier: workspace:*
         version: link:../config/eslint
-      '@tikit/typescript-config':
+      '@precisionflow/typescript-config':
         specifier: workspace:*
         version: link:../config/typescript
       '@types/react':

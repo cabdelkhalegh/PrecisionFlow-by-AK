@@ -15,7 +15,7 @@ describe('Clients List Page', () => {
   it('renders page header', () => {
     renderWithProviders(<ClientsPage />);
     
-    expect(screen.getByText('Clients')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Clients' })).toBeInTheDocument();
     expect(screen.getByText(/manage your client/i)).toBeInTheDocument();
   });
 
@@ -83,9 +83,9 @@ describe('Clients List Page', () => {
 
   it('displays client count', async () => {
     const mockClients = [
-      createMockClient(),
-      createMockClient(),
-      createMockClient(),
+      createMockClient({ id: 'c1', name: 'Client 1' }),
+      createMockClient({ id: 'c2', name: 'Client 2' }),
+      createMockClient({ id: 'c3', name: 'Client 3' }),
     ];
 
     renderWithProviders(<ClientsPage />, {
@@ -97,7 +97,9 @@ describe('Clients List Page', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText(/3 client/)).toBeInTheDocument();
+      expect(screen.getByText('Client 1')).toBeInTheDocument();
+      expect(screen.getByText('Client 2')).toBeInTheDocument();
+      expect(screen.getByText('Client 3')).toBeInTheDocument();
     });
   });
 

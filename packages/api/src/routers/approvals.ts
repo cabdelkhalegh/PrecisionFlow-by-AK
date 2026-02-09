@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { publicProcedure, protectedProcedure, directorProcedure, router } from '../trpc';
+import { protectedProcedure, directorProcedure, router } from '../trpc';
 import { logCreation, logUpdate } from '../utils/audit';
 
 // Approval type enum
@@ -112,7 +112,13 @@ export const approvalsRouter = router({
       if (error) throw new Error(error.message);
 
       // Log creation to audit trail
-      await logCreation(ctx.supabase, 'approvals', data.id, data, ctx.user.id);
+      await logCreation({
+        supabase: ctx.supabase,
+        tableName: 'approvals',
+        recordId: data.id,
+        data: data as Record<string, unknown>,
+        userId: ctx.user.id,
+      });
 
       return data;
     }),
@@ -153,7 +159,14 @@ export const approvalsRouter = router({
       if (error) throw new Error(error.message);
 
       // Log update to audit trail
-      await logUpdate(ctx.supabase, 'approvals', data.id, approval, data, ctx.user.id);
+      await logUpdate({
+        supabase: ctx.supabase,
+        tableName: 'approvals',
+        recordId: data.id,
+        oldData: approval as Record<string, unknown>,
+        newData: data as Record<string, unknown>,
+        userId: ctx.user.id,
+      });
 
       return data;
     }),
@@ -194,7 +207,14 @@ export const approvalsRouter = router({
       if (error) throw new Error(error.message);
 
       // Log update to audit trail
-      await logUpdate(ctx.supabase, 'approvals', data.id, approval, data, ctx.user.id);
+      await logUpdate({
+        supabase: ctx.supabase,
+        tableName: 'approvals',
+        recordId: data.id,
+        oldData: approval as Record<string, unknown>,
+        newData: data as Record<string, unknown>,
+        userId: ctx.user.id,
+      });
 
       return data;
     }),
@@ -233,7 +253,14 @@ export const approvalsRouter = router({
 
       // Log update to audit trail
       if (oldApproval) {
-        await logUpdate(ctx.supabase, 'approvals', data.id, oldApproval, data, ctx.user.id);
+        await logUpdate({
+          supabase: ctx.supabase,
+          tableName: 'approvals',
+          recordId: data.id,
+          oldData: oldApproval as Record<string, unknown>,
+          newData: data as Record<string, unknown>,
+          userId: ctx.user.id,
+        });
       }
 
       return data;

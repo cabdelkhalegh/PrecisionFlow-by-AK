@@ -3,9 +3,9 @@
  */
 
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-import { appRouter } from '@tikit/api';
-import type { Context } from '@tikit/api';
-import { supabase } from '@tikit/database';
+import { appRouter } from '@precisionflow/api';
+import type { Context } from '@precisionflow/api';
+import { supabase } from '@precisionflow/database';
 
 const handler = (req: Request) =>
   fetchRequestHandler({
@@ -13,13 +13,28 @@ const handler = (req: Request) =>
     req,
     router: appRouter,
     createContext: async (): Promise<Context> => {
-      // Get user from Supabase session
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      // Extract JWT from Authorization header sent by the browser client
+      const authHeader = req.headers.get('authorization');
+      const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+
+      let user = null;
+
+      if (token) {
+        // Verify the JWT and get the user
+        const { data } = await supabase.auth.getUser(token);
+        user = data.user;
+      }
+
+      if (!user) {
+        // Fall back to cookie-based session (SSR / server components)
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        user = session?.user ?? null;
+      }
 
       return {
-        user: session?.user || null,
+        user,
         supabase,
       };
     },

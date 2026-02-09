@@ -82,7 +82,11 @@ export default function ApprovalsPage() {
               Showing {filteredApprovals.length} approval{filteredApprovals.length !== 1 ? 's' : ''}
             </p>
             {filteredApprovals.map((approval: any) => (
-              <ApprovalCard key={approval.id} approval={approval} />
+              <ApprovalCard
+                key={approval.id}
+                approval={approval}
+                showActions={approval.status === 'pending'}
+              />
             ))}
           </div>
         ) : (

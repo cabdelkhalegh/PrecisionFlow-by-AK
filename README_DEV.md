@@ -1,4 +1,4 @@
-# TiKiT OS - README for Developers
+# PrecisionFlow - README for Developers
 
 ## 🚀 Quick Start
 

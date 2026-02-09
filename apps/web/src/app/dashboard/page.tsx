@@ -17,6 +17,14 @@ export default function DashboardPage() {
     offset: 0,
   });
 
+  const creatorsQuery = trpc.creators.list.useQuery({
+    limit: 1,
+    offset: 0,
+    status: 'active',
+  });
+
+  const pendingApprovalsQuery = trpc.approvals.countPending.useQuery();
+
   return (
     <AppLayout>
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -42,8 +50,18 @@ export default function DashboardPage() {
             loading={clientsQuery.isLoading}
             color="green"
           />
-          <StatCard title="Active Briefs" value={0} loading={false} color="purple" />
-          <StatCard title="Pending Approvals" value={0} loading={false} color="orange" />
+          <StatCard
+            title="Active Creators"
+            value={creatorsQuery.data?.total ?? 0}
+            loading={creatorsQuery.isLoading}
+            color="purple"
+          />
+          <StatCard
+            title="Pending Approvals"
+            value={pendingApprovalsQuery.data ?? 0}
+            loading={pendingApprovalsQuery.isLoading}
+            color="orange"
+          />
         </div>
 
         {/* Quick Actions */}
@@ -65,11 +83,11 @@ export default function DashboardPage() {
               <div className="mt-2 font-medium text-gray-900">New Client</div>
             </Link>
             <Link
-              href="/briefs/upload"
+              href="/creators/new"
               className="rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-purple-500 hover:bg-purple-50 transition-colors"
             >
-              <div className="text-2xl">📄</div>
-              <div className="mt-2 font-medium text-gray-900">Upload Brief</div>
+              <div className="text-2xl">🎬</div>
+              <div className="mt-2 font-medium text-gray-900">Add Creator</div>
             </Link>
             <Link
               href="/approvals"
@@ -98,14 +116,15 @@ export default function DashboardPage() {
           ) : (
             <div className="space-y-3">
               {campaignsQuery.data?.campaigns.map((campaign) => (
-                <div
+                <Link
                   key={campaign.id}
-                  className="flex items-center justify-between rounded-lg border border-gray-200 p-4 hover:bg-gray-50"
+                  href={`/campaigns/${campaign.id}`}
+                  className="flex items-center justify-between rounded-lg border border-gray-200 p-4 hover:bg-gray-50 transition-colors"
                 >
                   <div>
                     <h3 className="font-medium text-gray-900">{campaign.name}</h3>
                     <p className="text-sm text-gray-500">
-                      Status: <span className="capitalize">{campaign.status}</span>
+                      Status: <span className="capitalize">{campaign.status?.replace(/_/g, ' ')}</span>
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -123,7 +142,7 @@ export default function DashboardPage() {
                       {campaign.risk_level}
                     </Badge>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}
@@ -146,9 +165,10 @@ export default function DashboardPage() {
           ) : (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {clientsQuery.data?.clients.map((client) => (
-                <div
+                <Link
                   key={client.id}
-                  className="rounded-lg border border-gray-200 p-4 hover:bg-gray-50"
+                  href={`/clients/${client.id}`}
+                  className="rounded-lg border border-gray-200 p-4 hover:bg-gray-50 transition-colors"
                 >
                   <h3 className="font-medium text-gray-900">{client.name}</h3>
                   {client.company_name && (
@@ -169,7 +189,7 @@ export default function DashboardPage() {
                       {client.tier}
                     </Badge>
                   )}
-                </div>
+                </Link>
               ))}
             </div>
           )}

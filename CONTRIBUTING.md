@@ -1,6 +1,6 @@
-# Contributing to TiKiT OS
+# Contributing to PrecisionFlow
 
-Thank you for your interest in contributing to TiKiT OS! This document provides guidelines for contributing to the project.
+Thank you for your interest in contributing to PrecisionFlow! This document provides guidelines for contributing to the project.
 
 ---
 
@@ -438,6 +438,6 @@ Please align contributions with our roadmap in [NEXT_STEPS.md](./NEXT_STEPS.md):
 
 ---
 
-Thank you for contributing to TiKiT OS! 🚀
+Thank you for contributing to PrecisionFlow! 🚀
 
 *Last updated: February 6, 2026*

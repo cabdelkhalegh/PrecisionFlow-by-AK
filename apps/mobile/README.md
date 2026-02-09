@@ -1,16 +1,34 @@
-# @tikit/mobile - TiKiT OS Mobile App
+# PrecisionFlow Mobile App
 
-React Native mobile app built with Expo and expo-router.
+React Native mobile app built with Expo and expo-router for the PrecisionFlow campaign management platform.
 
 ## Features
 
 - 📱 Cross-platform (iOS & Android)
-- 🔐 Authentication with secure token storage
-- 📊 Campaign management
-- ✅ Approval workflows
-- 🔄 Pull-to-refresh
+- 🔐 Supabase authentication with secure token storage
+- 📊 Campaign management with detail views
+- 👥 Client directory with contact integration
+- 🎬 Creator roster with social stats
+- ✅ Approval workflows with approve/reject actions
+- 🔄 Pull-to-refresh on all list screens
 - 🎯 Type-safe API with tRPC
-- 📦 90%+ code sharing with web app
+- 📦 Shared codebase with web app
+
+## Screens (11 total)
+
+| Screen | Route | Description |
+|--------|-------|-------------|
+| Splash | `/` | Auth check, auto-redirect |
+| Login | `/(auth)/login` | Supabase email/password auth |
+| Dashboard | `/(tabs)/` | Stats grid, recent campaigns |
+| Campaigns | `/(tabs)/campaigns` | List with status badges |
+| Clients | `/(tabs)/clients` | List with tier badges |
+| Creators | `/(tabs)/creators` | List with follower stats |
+| Approvals | `/(tabs)/approvals` | Pending with approve/reject |
+| Profile | `/(tabs)/profile` | Account info, logout |
+| Campaign Detail | `/campaign/[id]` | Budget, timeline, tags |
+| Client Detail | `/client/[id]` | Contact, address, tags |
+| Creator Detail | `/creator/[id]` | Metrics, socials, rate card |
 
 ## Getting Started
 
@@ -18,7 +36,7 @@ React Native mobile app built with Expo and expo-router.
 
 - Node.js 18+
 - pnpm
-- Expo CLI
+- Expo CLI (`npx expo`)
 - iOS Simulator (macOS) or Android Emulator
 
 ### Installation
@@ -47,68 +65,47 @@ pnpm web
 
 ## Configuration
 
-Create `.env` file:
+Create `.env` file from `.env.example`:
 
 ```env
 EXPO_PUBLIC_API_URL=http://localhost:3000/api/trpc
+EXPO_PUBLIC_SUPABASE_URL=your-supabase-url
+EXPO_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
 ## Architecture
 
 ### Code Sharing
 
-- `@tikit/api` - tRPC client and routers (shared)
-- `@tikit/types` - TypeScript types (shared)
-- `@tikit/ui` - UI utilities (shared)
-- Platform-specific UI components
+- `@precisionflow/api` — tRPC client and routers (shared with web)
+- `@precisionflow/types` — TypeScript types (shared)
+- `@precisionflow/ui` — UI utilities (shared)
+- Platform-specific UI in `app/` directory
 
 ### Navigation
 
 Uses `expo-router` for file-based routing:
 
-- `app/(auth)/login.tsx` - Login screen
-- `app/(tabs)/` - Main app tabs
-  - `index.tsx` - Home/Dashboard
-  - `campaigns.tsx` - Campaigns list
-  - `approvals.tsx` - Approvals
-  - `profile.tsx` - Profile
+- `app/(auth)/` — Authentication screens
+- `app/(tabs)/` — 6-tab bottom navigation (Home, Campaigns, Clients, Creators, Approvals, Profile)
+- `app/campaign/[id]` — Campaign detail stack screen
+- `app/client/[id]` — Client detail stack screen
+- `app/creator/[id]` — Creator detail stack screen
 
 ### Authentication
 
-Secure token storage with `expo-secure-store`:
-- Token persisted securely
-- Auto-navigation based on auth state
-- Logout clears all auth data
-
-## Development
-
-```bash
-# Start development server
-pnpm start
-
-# Type check
-pnpm type-check
-
-# Lint
-pnpm lint
-```
-
-## Build for Production
-
-```bash
-# Build for iOS
-expo build:ios
-
-# Build for Android
-expo build:android
-```
+- **Supabase Auth** — email/password via `@supabase/supabase-js`
+- **Secure storage** — tokens in `expo-secure-store`
+- **Auto-navigation** — redirect based on auth state
+- **JWT headers** — sent with every tRPC request
 
 ## Tech Stack
 
-- **Expo ~54.0** - React Native framework
-- **expo-router** - File-based routing
-- **React Native 0.81.5** - Mobile framework
-- **React 19** - UI library
-- **tRPC** - Type-safe API
-- **React Query** - Data fetching
-- **expo-secure-store** - Secure storage
+- **Expo ~54.0** — React Native framework
+- **expo-router** — File-based routing
+- **React Native 0.81.5** — Mobile framework
+- **React 19** — UI library
+- **tRPC** — Type-safe API
+- **React Query** — Data fetching
+- **Supabase** — Authentication
+- **expo-secure-store** — Secure token storage

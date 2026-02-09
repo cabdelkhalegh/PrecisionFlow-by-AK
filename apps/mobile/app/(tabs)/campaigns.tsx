@@ -6,7 +6,7 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity, RefreshControl } 
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { trpc } from '../../lib/trpc';
-import { getRiskBadgeVariant, getStatusBadgeVariant } from '@tikit/ui';
+import { getRiskBadgeVariant, getStatusBadgeVariant } from '@precisionflow/ui';
 
 export default function CampaignsScreen() {
   const router = useRouter();

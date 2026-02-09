@@ -22,7 +22,7 @@ export const contentArtifactsRouter = router({
   upload: protectedProcedure
     .input(uploadArtifactSchema)
     .mutation(async ({ ctx, input }) => {
-      const { db, user } = ctx;
+      const { supabase: db, user } = ctx;
       
       // Get current version number and ID in a single query
       const { data: existingVersions } = await db
@@ -89,7 +89,7 @@ export const contentArtifactsRouter = router({
       artifact_type: z.enum(['script', 'draft', 'final', 'thumbnail', 'caption', 'other']).optional(),
     }))
     .query(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       let query = db
         .from('content_artifacts')
@@ -120,7 +120,7 @@ export const contentArtifactsRouter = router({
       artifact_type: z.enum(['script', 'draft', 'final', 'thumbnail', 'caption', 'other']),
     }))
     .query(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const { data, error } = await db
         .from('content_artifacts')
@@ -145,7 +145,7 @@ export const contentArtifactsRouter = router({
       comments: z.string().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { db, user } = ctx;
+      const { supabase: db, user } = ctx;
       
       const { data, error } = await db
         .from('content_artifacts')
@@ -172,7 +172,7 @@ export const contentArtifactsRouter = router({
       comments: z.string().min(1),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { db, user } = ctx;
+      const { supabase: db, user } = ctx;
       
       const { data, error } = await db
         .from('content_artifacts')
@@ -199,7 +199,7 @@ export const contentArtifactsRouter = router({
       artifact_type: z.enum(['script', 'draft', 'final', 'thumbnail', 'caption', 'other']),
     }))
     .query(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const { data, error } = await db
         .from('content_artifacts')

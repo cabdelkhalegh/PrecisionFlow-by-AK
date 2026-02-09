@@ -1,5 +1,5 @@
 /**
- * Shared TypeScript types for TiKiT OS
+ * Shared TypeScript types for PrecisionFlow
  */
 
 export * from './campaign';

@@ -27,7 +27,7 @@ export const contentTasksRouter = router({
   create: protectedProcedure
     .input(createContentTaskSchema)
     .mutation(async ({ ctx, input }) => {
-      const { db, user } = ctx;
+      const { supabase: db, user } = ctx;
       
       const { data, error } = await db
         .from('content_tasks')
@@ -57,7 +57,7 @@ export const contentTasksRouter = router({
       ]).optional(),
     }))
     .query(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       let query = db
         .from('content_tasks')
@@ -85,7 +85,7 @@ export const contentTasksRouter = router({
   getByCreator: protectedProcedure
     .input(z.object({ creator_id: z.string().uuid() }))
     .query(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const { data, error } = await db
         .from('content_tasks')
@@ -106,7 +106,7 @@ export const contentTasksRouter = router({
   getById: protectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .query(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const { data, error } = await db
         .from('content_tasks')
@@ -138,7 +138,7 @@ export const contentTasksRouter = router({
       feedback: z.string().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       const updateData: any = { status: input.status };
       
@@ -167,7 +167,7 @@ export const contentTasksRouter = router({
       comments: z.string().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { db, user } = ctx;
+      const { supabase: db, user } = ctx;
       
       const updateData: any = {
         status: input.approved ? 'script_approved' : 'changes_requested',
@@ -204,7 +204,7 @@ export const contentTasksRouter = router({
       comments: z.string().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { db, user } = ctx;
+      const { supabase: db, user } = ctx;
       
       const updateData: any = {
         status: input.approved ? 'draft_approved' : 'changes_requested',
@@ -241,7 +241,7 @@ export const contentTasksRouter = router({
       comments: z.string().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { db, user } = ctx;
+      const { supabase: db, user } = ctx;
       
       const updateData: any = {
         status: input.approved ? 'approved' : 'changes_requested',
@@ -277,7 +277,7 @@ export const contentTasksRouter = router({
       revision_notes: z.string().min(1),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { supabase: db } = ctx;
       
       // Get current revision notes
       const { data: task } = await db

@@ -2,19 +2,49 @@
  * Approvals Screen
  */
 
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, RefreshControl } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, RefreshControl, Alert } from 'react-native';
 import { useState } from 'react';
 import { trpc } from '../../lib/trpc';
-import { getApprovalBadgeVariant } from '@tikit/ui';
+import { getApprovalBadgeVariant } from '@precisionflow/ui';
 
 export default function ApprovalsScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const { data: approvals, isLoading, refetch } = trpc.approvals.getPendingForUser.useQuery();
 
+  const approveMutation = trpc.approvals.approve.useMutation({
+    onSuccess: () => {
+      refetch();
+      Alert.alert('Success', 'Approval granted');
+    },
+    onError: (err) => Alert.alert('Error', err.message),
+  });
+
+  const rejectMutation = trpc.approvals.reject.useMutation({
+    onSuccess: () => {
+      refetch();
+      Alert.alert('Success', 'Approval rejected');
+    },
+    onError: (err) => Alert.alert('Error', err.message),
+  });
+
   const onRefresh = async () => {
     setRefreshing(true);
     await refetch();
     setRefreshing(false);
+  };
+
+  const handleApprove = (id: string) => {
+    Alert.alert('Confirm', 'Approve this item?', [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Approve', onPress: () => approveMutation.mutate({ id, notes: 'Approved via mobile' }) },
+    ]);
+  };
+
+  const handleReject = (id: string) => {
+    Alert.alert('Confirm', 'Reject this item?', [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Reject', style: 'destructive', onPress: () => rejectMutation.mutate({ id, notes: 'Rejected via mobile' }) },
+    ]);
   };
 
   const getBadgeColor = (variant: string) => {
@@ -67,10 +97,16 @@ export default function ApprovalsScreen() {
             )}
 
             <View style={styles.actions}>
-              <TouchableOpacity style={styles.approveButton}>
+              <TouchableOpacity
+                style={styles.approveButton}
+                onPress={() => handleApprove(approval.id)}
+              >
                 <Text style={styles.buttonText}>Approve</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.rejectButton}>
+              <TouchableOpacity
+                style={styles.rejectButton}
+                onPress={() => handleReject(approval.id)}
+              >
                 <Text style={styles.buttonText}>Reject</Text>
               </TouchableOpacity>
             </View>

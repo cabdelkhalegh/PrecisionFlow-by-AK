@@ -16,7 +16,7 @@ describe('Campaigns List Page', () => {
   it('renders page header correctly', () => {
     renderWithProviders(<CampaignsPage />);
     
-    expect(screen.getByText('Campaigns')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Campaigns' })).toBeInTheDocument();
     expect(screen.getByText('Manage your influencer marketing campaigns')).toBeInTheDocument();
     expect(screen.getByText('+ New Campaign')).toBeInTheDocument();
   });
@@ -149,12 +149,12 @@ describe('Campaigns List Page', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Campaign')).toBeInTheDocument();
-      expect(screen.getByText('Client')).toBeInTheDocument();
-      expect(screen.getByText('Status')).toBeInTheDocument();
-      expect(screen.getByText('Risk')).toBeInTheDocument();
-      expect(screen.getByText('Budget')).toBeInTheDocument();
-      expect(screen.getByText('Dates')).toBeInTheDocument();
+      expect(screen.getByRole('columnheader', { name: /Campaign/i })).toBeInTheDocument();
+      expect(screen.getByRole('columnheader', { name: /Client/i })).toBeInTheDocument();
+      expect(screen.getByRole('columnheader', { name: /Status/i })).toBeInTheDocument();
+      expect(screen.getByRole('columnheader', { name: /Risk/i })).toBeInTheDocument();
+      expect(screen.getByRole('columnheader', { name: /Budget/i })).toBeInTheDocument();
+      expect(screen.getByRole('columnheader', { name: /Dates/i })).toBeInTheDocument();
     });
   });
 

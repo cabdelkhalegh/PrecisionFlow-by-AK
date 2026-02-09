@@ -1,20 +1,41 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { trpc } from '@/lib/trpc';
+import { useAuth } from '@/lib/auth-provider';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: '📊' },
   { name: 'Campaigns', href: '/campaigns', icon: '📋' },
   { name: 'Clients', href: '/clients', icon: '👥' },
+  { name: 'Creators', href: '/creators', icon: '🎬' },
   { name: 'Briefs', href: '/briefs', icon: '📄' },
   { name: 'Approvals', href: '/approvals', icon: '✓', showBadge: true },
+  { name: 'Finance', href: '/finance', icon: '💰' },
+  { name: 'Reports', href: '/reports', icon: '📈' },
+  { name: 'Activity', href: '/activity', icon: '🔔' },
+  { name: 'Settings', href: '/settings', icon: '⚙️' },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, signOut } = useAuth();
   const { data: pendingCount } = trpc.approvals.countPending.useQuery();
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push('/login');
+  };
+
+  const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Guest';
+  const initials = displayName
+    .split(' ')
+    .map((w: string) => w[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -26,7 +47,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               {/* Logo */}
               <div className="flex flex-shrink-0 items-center">
                 <Link href="/dashboard" className="text-xl font-bold text-blue-600">
-                  🎯 TiKiT OS
+                  🎯 PrecisionFlow
                 </Link>
               </div>
               {/* Navigation Links */}
@@ -57,13 +78,30 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               </div>
             </div>
             {/* User Menu */}
-            <div className="flex items-center">
-              <div className="flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2">
-                <span className="text-sm text-gray-700">Campaign Manager</span>
-                <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-medium">
-                  CM
-                </div>
-              </div>
+            <div className="flex items-center gap-3">
+              {user ? (
+                <>
+                  <div className="flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2">
+                    <span className="text-sm text-gray-700">{displayName}</span>
+                    <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-medium">
+                      {initials}
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleSignOut}
+                    className="text-sm text-gray-500 hover:text-gray-700"
+                  >
+                    Sign out
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
           </div>
         </div>

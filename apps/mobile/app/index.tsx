@@ -27,7 +27,7 @@ export default function IndexScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>TiKiT OS</Text>
+      <Text style={styles.title}>PrecisionFlow</Text>
       <ActivityIndicator size="large" color="#3b82f6" style={styles.loader} />
       <Text style={styles.subtitle}>Loading...</Text>
     </View>

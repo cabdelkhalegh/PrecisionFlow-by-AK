@@ -1,9 +1,9 @@
 /**
- * tRPC configuration and context for TiKiT OS
+ * tRPC configuration and context for PrecisionFlow
  */
 
 import { initTRPC, TRPCError } from '@trpc/server';
-import { supabase } from '@tikit/database';
+import { supabase } from '@precisionflow/database';
 import type { User } from '@supabase/supabase-js';
 
 /**

@@ -1,5 +1,5 @@
 /**
- * @tikit/ui - Shared UI utilities and types
+ * @precisionflow/ui - Shared UI utilities and types
  * Platform-agnostic UI primitives for web and mobile
  */
 

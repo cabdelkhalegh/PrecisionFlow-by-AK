@@ -50,6 +50,8 @@ coverage/
 htmlcov/
 junit.xml
 test-results/
+playwright-report/
+blob-report/
 
 # Temporary files
 tmp/
@@ -57,10 +59,9 @@ temp/
 *.tmp
 .cache/
 
-# Database
+# Database (keep supabase migration .sql files)
 *.sqlite
 *.db
-*.sql
 
 # OS files
 Thumbs.db
@@ -97,6 +98,9 @@ next-env.d.ts
 
 # Turbo
 .turbo/
+
+# TypeScript build info
+*.tsbuildinfo
 
 # Nuxt.js
 .nuxt

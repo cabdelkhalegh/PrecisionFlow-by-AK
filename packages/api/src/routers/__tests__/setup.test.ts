@@ -19,7 +19,7 @@ describe('Test Infrastructure', () => {
 
   it('should create mock user', () => {
     const user = createMockUser();
-    expect(user.id).toBe('test-user-id');
+    expect(user.id).toBe('a0000000-0000-0000-0000-000000000001');
     expect(user.email).toBe('test@example.com');
   });
 

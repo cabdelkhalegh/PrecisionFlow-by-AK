@@ -29,7 +29,7 @@ describe('Campaigns Router', () => {
 
   describe('list', () => {
     it('should list campaigns with default pagination', async () => {
-      const mockCampaigns = [createMockCampaign(), createMockCampaign({ id: 'campaign-456' })];
+      const mockCampaigns = [createMockCampaign(), createMockCampaign({ id: 'b0000000-0000-0000-0000-000000000002' })];
       
       mockSupabase.from.mockReturnValue({
         select: vi.fn().mockReturnValue({
@@ -39,7 +39,7 @@ describe('Campaigns Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       const result = await caller.list({ limit: 50, offset: 0 });
@@ -51,19 +51,19 @@ describe('Campaigns Router', () => {
     it('should filter campaigns by status', async () => {
       const mockCampaigns = [createMockCampaign({ status: 'active' })];
       
-      const eqSpy = vi.fn().mockReturnValue({
-        range: vi.fn().mockResolvedValue(mockSuccessResponse(mockCampaigns)),
-      });
+      const eqSpy = vi.fn().mockResolvedValue(mockSuccessResponse(mockCampaigns));
 
       mockSupabase.from.mockReturnValue({
         select: vi.fn().mockReturnValue({
           is: vi.fn().mockReturnValue({
             order: vi.fn().mockReturnValue({
-              eq: eqSpy,
+              range: vi.fn().mockReturnValue({
+                eq: eqSpy,
+              }),
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       await caller.list({ limit: 50, offset: 0, status: 'active' });
@@ -72,26 +72,26 @@ describe('Campaigns Router', () => {
     });
 
     it('should filter campaigns by client ID', async () => {
-      const mockCampaigns = [createMockCampaign({ client_id: 'client-123' })];
+      const mockCampaigns = [createMockCampaign({ client_id: 'c0000000-0000-0000-0000-000000000001' })];
       
-      const eqSpy = vi.fn().mockReturnValue({
-        range: vi.fn().mockResolvedValue(mockSuccessResponse(mockCampaigns)),
-      });
+      const eqSpy = vi.fn().mockResolvedValue(mockSuccessResponse(mockCampaigns));
 
       mockSupabase.from.mockReturnValue({
         select: vi.fn().mockReturnValue({
           is: vi.fn().mockReturnValue({
             order: vi.fn().mockReturnValue({
-              eq: eqSpy,
+              range: vi.fn().mockReturnValue({
+                eq: eqSpy,
+              }),
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
-      await caller.list({ limit: 50, offset: 0, clientId: 'client-123' });
+      await caller.list({ limit: 50, offset: 0, clientId: 'c0000000-0000-0000-0000-000000000001' });
 
-      expect(eqSpy).toHaveBeenCalledWith('client_id', 'client-123');
+      expect(eqSpy).toHaveBeenCalledWith('client_id', 'c0000000-0000-0000-0000-000000000001');
     });
 
     it('should exclude soft-deleted campaigns', async () => {
@@ -105,7 +105,7 @@ describe('Campaigns Router', () => {
         select: vi.fn().mockReturnValue({
           is: isSpy,
         }),
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       await caller.list({ limit: 50, offset: 0 });
@@ -122,7 +122,7 @@ describe('Campaigns Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       
@@ -142,10 +142,10 @@ describe('Campaigns Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
-      const result = await caller.getById({ id: 'campaign-123' });
+      const result = await caller.getById({ id: 'b0000000-0000-0000-0000-000000000001' });
 
       expect(result).toEqual(mockCampaign);
       expect(mockSupabase.from).toHaveBeenCalledWith('campaigns');
@@ -160,11 +160,11 @@ describe('Campaigns Router', () => {
             }),
           }),
         }),
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       
-      await expect(caller.getById({ id: 'non-existent' })).rejects.toThrow();
+      await expect(caller.getById({ id: 'f0000000-0000-0000-0000-000000000099' })).rejects.toThrow();
     });
   });
 
@@ -178,12 +178,12 @@ describe('Campaigns Router', () => {
             single: vi.fn().mockResolvedValue(mockSuccessResponse(mockCampaign)),
           }),
         }),
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       const result = await caller.create({
         name: 'Test Campaign',
-        clientId: 'client-123',
+        clientId: 'c0000000-0000-0000-0000-000000000001',
         startDate: '2024-01-01',
         endDate: '2024-12-31',
         budgetTotal: 10000,
@@ -203,12 +203,12 @@ describe('Campaigns Router', () => {
 
       mockSupabase.from.mockReturnValue({
         insert: insertSpy,
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       await caller.create({
         name: 'Test Campaign',
-        clientId: 'client-123',
+        clientId: 'c0000000-0000-0000-0000-000000000001',
       });
 
       expect(insertSpy).toHaveBeenCalledWith(expect.objectContaining({
@@ -225,12 +225,12 @@ describe('Campaigns Router', () => {
 
       mockSupabase.from.mockReturnValue({
         insert: insertSpy,
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       await caller.create({
         name: 'Test Campaign',
-        clientId: 'client-123',
+        clientId: 'c0000000-0000-0000-0000-000000000001',
       });
 
       expect(insertSpy).toHaveBeenCalledWith(expect.objectContaining({
@@ -243,7 +243,7 @@ describe('Campaigns Router', () => {
       
       await expect(caller.create({
         name: '', // Empty name should fail
-        clientId: 'client-123',
+        clientId: 'c0000000-0000-0000-0000-000000000001',
       } as any)).rejects.toThrow();
     });
   });
@@ -263,12 +263,17 @@ describe('Campaigns Router', () => {
       });
 
       mockSupabase.from.mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            single: vi.fn().mockResolvedValue(mockSuccessResponse(mockCampaign)),
+          }),
+        }),
         update: updateSpy,
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       const result = await caller.update({
-        id: 'campaign-123',
+        id: 'b0000000-0000-0000-0000-000000000001',
         name: 'Updated Campaign',
         status: 'active',
       });
@@ -292,12 +297,17 @@ describe('Campaigns Router', () => {
       });
 
       mockSupabase.from.mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            single: vi.fn().mockResolvedValue(mockSuccessResponse(createMockCampaign())),
+          }),
+        }),
         update: updateSpy,
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       await caller.update({
-        id: 'campaign-123',
+        id: 'b0000000-0000-0000-0000-000000000001',
         name: 'Updated Name',
       });
 
@@ -309,16 +319,22 @@ describe('Campaigns Router', () => {
 
   describe('delete', () => {
     it('should soft delete campaign', async () => {
+      const mockCampaign = createMockCampaign();
       const updateSpy = vi.fn().mockReturnValue({
         eq: vi.fn().mockResolvedValue(mockSuccessResponse(null)),
       });
 
       mockSupabase.from.mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            single: vi.fn().mockResolvedValue(mockSuccessResponse(mockCampaign)),
+          }),
+        }),
         update: updateSpy,
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
-      const result = await caller.delete({ id: 'campaign-123' });
+      const result = await caller.delete({ id: 'b0000000-0000-0000-0000-000000000001' });
 
       expect(result.success).toBe(true);
       expect(updateSpy).toHaveBeenCalledWith(expect.objectContaining({
@@ -327,15 +343,21 @@ describe('Campaigns Router', () => {
     });
 
     it('should handle delete errors', async () => {
+      const mockCampaign = createMockCampaign();
       mockSupabase.from.mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            single: vi.fn().mockResolvedValue(mockSuccessResponse(mockCampaign)),
+          }),
+        }),
         update: vi.fn().mockReturnValue({
           eq: vi.fn().mockResolvedValue(mockErrorResponse('Delete failed')),
         }),
-      } as any);
+      });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       
-      await expect(caller.delete({ id: 'campaign-123' })).rejects.toThrow('Delete failed');
+      await expect(caller.delete({ id: 'b0000000-0000-0000-0000-000000000001' })).rejects.toThrow('Delete failed');
     });
   });
 
@@ -365,7 +387,7 @@ describe('Campaigns Router', () => {
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       await caller.create({
         name: 'Test Campaign',
-        clientId: 'client-123',
+        clientId: 'c0000000-0000-0000-0000-000000000001',
       });
 
       expect(auditInsertSpy).toHaveBeenCalledWith(expect.objectContaining({
@@ -409,13 +431,13 @@ describe('Campaigns Router', () => {
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       await caller.update({
-        id: 'campaign-123',
+        id: 'b0000000-0000-0000-0000-000000000001',
         name: 'Updated',
       });
 
       expect(auditInsertSpy).toHaveBeenCalledWith(expect.objectContaining({
         table_name: 'campaigns',
-        record_id: 'campaign-123',
+        record_id: 'b0000000-0000-0000-0000-000000000001',
         action: 'updated',
         user_id: mockUser.id,
       }));
@@ -447,11 +469,11 @@ describe('Campaigns Router', () => {
       });
 
       const caller = campaignsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
-      await caller.delete({ id: 'campaign-123' });
+      await caller.delete({ id: 'b0000000-0000-0000-0000-000000000001' });
 
       expect(auditInsertSpy).toHaveBeenCalledWith(expect.objectContaining({
         table_name: 'campaigns',
-        record_id: 'campaign-123',
+        record_id: 'b0000000-0000-0000-0000-000000000001',
         action: 'deleted',
         user_id: mockUser.id,
       }));
@@ -483,7 +505,7 @@ describe('Campaigns Router', () => {
       // Should still succeed even if audit log fails
       const result = await caller.create({
         name: 'Test Campaign',
-        clientId: 'client-123',
+        clientId: 'c0000000-0000-0000-0000-000000000001',
       });
 
       expect(result).toEqual(mockCampaign);

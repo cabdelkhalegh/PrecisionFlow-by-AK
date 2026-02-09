@@ -1,6 +1,6 @@
-# 🏗️ TiKiT OS - Technical Architecture
+# 🏗️ PrecisionFlow - Technical Architecture
 
-**Product:** TiKiT OS — Campaign Execution & Intelligence  
+**Product:** PrecisionFlow — Campaign Execution & Intelligence  
 **Version:** 1.0  
 **Date:** February 2026  
 **Status:** Approved Architecture
@@ -9,7 +9,7 @@
 
 ## 🎯 Executive Summary
 
-This document presents the technical architecture for TiKiT OS, designed to be:
+This document presents the technical architecture for PrecisionFlow, designed to be:
 - **Free-tier optimized** using Supabase and Vercel
 - **Cross-platform** supporting web and mobile (iOS/Android)
 - **Flagship quality** with clean, maintainable, and scalable code
@@ -310,7 +310,7 @@ const subscription = supabase
 
 **Project Structure:**
 ```
-tikit-os/
+precisionflow/
 ├── apps/
 │   ├── web/              # Next.js web app
 │   ├── mobile/           # Expo React Native app
@@ -787,4 +787,4 @@ test(brief): add AI brief parsing tests
 
 ---
 
-*This architecture is designed to evolve. As TiKiT OS grows, we'll continuously evaluate and upgrade components while maintaining backward compatibility and code quality.*
+*This architecture is designed to evolve. As PrecisionFlow grows, we'll continuously evaluate and upgrade components while maintaining backward compatibility and code quality.*

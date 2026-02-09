@@ -1,7 +1,7 @@
-# Supabase Configuration for TiKiT OS
-# Project: TiKiT OS - Campaign Execution & Intelligence
+# Supabase Configuration for PrecisionFlow
+# Project: PrecisionFlow - Campaign Execution & Intelligence
 
-project_id = "tikit-os"
+project_id = "precisionflow"
 
 [api]
 enabled = true
