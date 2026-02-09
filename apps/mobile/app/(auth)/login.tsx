@@ -1,5 +1,5 @@
 /**
- * Login Screen
+ * Login Screen — Supabase Auth
  */
 
 import { useState } from 'react';
@@ -14,7 +14,14 @@ import {
   Platform,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { createClient } from '@supabase/supabase-js';
 import { saveAuthToken, saveAuthUser } from '../../lib/auth';
+
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabase = supabaseUrl && supabaseAnonKey
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null;
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -31,22 +38,34 @@ export default function LoginScreen() {
     setLoading(true);
 
     try {
-      // TODO: Replace with actual Supabase auth
-      // For now, simulating login
-      const mockToken = 'mock-jwt-token';
-      const mockUser = {
-        id: '1',
-        email: email,
-        role: 'campaign_manager',
-      };
+      if (supabase) {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-      await saveAuthToken(mockToken);
-      await saveAuthUser(mockUser);
+        if (error) {
+          Alert.alert('Login Failed', error.message);
+          return;
+        }
 
-      // Navigate to main app
-      router.replace('/(tabs)');
+        if (data.session) {
+          await saveAuthToken(data.session.access_token);
+          await saveAuthUser({
+            id: data.user.id,
+            email: data.user.email || email,
+            role: (data.user.user_metadata?.role as string) || 'campaign_manager',
+          });
+          router.replace('/(tabs)');
+        }
+      } else {
+        // Fallback when Supabase env vars not configured
+        await saveAuthToken('dev-token');
+        await saveAuthUser({ id: 'dev-user', email, role: 'campaign_manager' });
+        router.replace('/(tabs)');
+      }
     } catch (error) {
-      Alert.alert('Error', 'Login failed. Please try again.');
+      Alert.alert('Error', 'Login failed. Please check your connection.');
     } finally {
       setLoading(false);
     }
@@ -58,7 +77,7 @@ export default function LoginScreen() {
       style={styles.container}
     >
       <View style={styles.content}>
-        <Text style={styles.title}>TiKiT OS</Text>
+        <Text style={styles.title}>PrecisionFlow</Text>
         <Text style={styles.subtitle}>Campaign Management Platform</Text>
 
         <View style={styles.form}>
@@ -88,13 +107,15 @@ export default function LoginScreen() {
             disabled={loading}
           >
             <Text style={styles.buttonText}>
-              {loading ? 'Logging in...' : 'Log In'}
+              {loading ? 'Signing in...' : 'Sign In'}
             </Text>
           </TouchableOpacity>
 
-          <Text style={styles.hint}>
-            Demo: Use any email/password to login
-          </Text>
+          {!supabase && (
+            <Text style={styles.hint}>
+              Dev mode: Supabase not configured, using local auth
+            </Text>
+          )}
         </View>
       </View>
     </KeyboardAvoidingView>

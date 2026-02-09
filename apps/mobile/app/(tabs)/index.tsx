@@ -10,40 +10,58 @@ export default function HomeScreen() {
   const router = useRouter();
   const { data: campaignsData, isLoading } = trpc.campaigns.list.useQuery({ limit: 5, offset: 0 });
   const { data: clientsData } = trpc.clients.list.useQuery({ limit: 5, offset: 0 });
+  const { data: creatorsData } = trpc.creators.list.useQuery({ limit: 5, offset: 0 });
+  const { data: pendingCount } = trpc.approvals.countPending.useQuery();
 
   const campaigns = campaignsData?.campaigns || [];
   const clients = clientsData?.clients || [];
+  const creators = creatorsData?.creators || [];
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Dashboard</Text>
-        <Text style={styles.subtitle}>Welcome to TiKiT OS</Text>
+        <Text style={styles.subtitle}>Welcome to PrecisionFlow</Text>
       </View>
 
-      {/* Stats */}
-      <View style={styles.stats}>
-        <View style={styles.statCard}>
+      {/* Stats Grid */}
+      <View style={styles.statsGrid}>
+        <TouchableOpacity style={styles.statCard} onPress={() => router.push('/(tabs)/campaigns')}>
           <Text style={styles.statValue}>{campaigns.length || 0}</Text>
           <Text style={styles.statLabel}>Campaigns</Text>
-        </View>
-        <View style={styles.statCard}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.statCard} onPress={() => router.push('/(tabs)/clients')}>
           <Text style={styles.statValue}>{clients.length || 0}</Text>
           <Text style={styles.statLabel}>Clients</Text>
-        </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.statCard} onPress={() => router.push('/(tabs)/creators')}>
+          <Text style={[styles.statValue, { color: '#8b5cf6' }]}>{creators.length || 0}</Text>
+          <Text style={styles.statLabel}>Creators</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.statCard} onPress={() => router.push('/(tabs)/approvals')}>
+          <Text style={[styles.statValue, { color: pendingCount ? '#f59e0b' : '#10b981' }]}>
+            {pendingCount || 0}
+          </Text>
+          <Text style={styles.statLabel}>Pending</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Recent Campaigns */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Recent Campaigns</Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Recent Campaigns</Text>
+          <TouchableOpacity onPress={() => router.push('/(tabs)/campaigns')}>
+            <Text style={styles.seeAll}>See All →</Text>
+          </TouchableOpacity>
+        </View>
         {isLoading ? (
           <Text style={styles.loading}>Loading...</Text>
-        ) : campaigns && campaigns.length > 0 ? (
+        ) : campaigns.length > 0 ? (
           campaigns.map((campaign: any) => (
             <TouchableOpacity
               key={campaign.id}
               style={styles.card}
-              onPress={() => router.push(`/(tabs)/campaigns/${campaign.id}` as any)}
+              onPress={() => router.push(`/campaign/${campaign.id}` as any)}
             >
               <Text style={styles.cardTitle}>{campaign.name}</Text>
               <Text style={styles.cardSubtitle}>{campaign.status}</Text>
@@ -78,13 +96,14 @@ const styles = StyleSheet.create({
     color: '#6b7280',
     marginTop: 4,
   },
-  stats: {
+  statsGrid: {
     flexDirection: 'row',
-    padding: 16,
+    flexWrap: 'wrap',
+    padding: 12,
     gap: 12,
   },
   statCard: {
-    flex: 1,
+    width: '47%',
     backgroundColor: '#ffffff',
     padding: 20,
     borderRadius: 12,
@@ -108,11 +127,21 @@ const styles = StyleSheet.create({
   section: {
     padding: 16,
   },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#1f2937',
-    marginBottom: 12,
+  },
+  seeAll: {
+    fontSize: 14,
+    color: '#3b82f6',
+    fontWeight: '500',
   },
   card: {
     backgroundColor: '#ffffff',
@@ -134,6 +163,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6b7280',
     marginTop: 4,
+    textTransform: 'capitalize',
   },
   loading: {
     textAlign: 'center',

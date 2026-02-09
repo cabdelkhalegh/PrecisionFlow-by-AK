@@ -10,6 +10,7 @@ export default function TabsLayout() {
       screenOptions={{
         headerShown: true,
         tabBarActiveTintColor: '#3b82f6',
+        tabBarInactiveTintColor: '#9ca3af',
       }}
     >
       <Tabs.Screen
@@ -17,6 +18,7 @@ export default function TabsLayout() {
         options={{
           title: 'Home',
           tabBarLabel: 'Home',
+          tabBarIcon: () => null,
         }}
       />
       <Tabs.Screen
@@ -24,6 +26,23 @@ export default function TabsLayout() {
         options={{
           title: 'Campaigns',
           tabBarLabel: 'Campaigns',
+          tabBarIcon: () => null,
+        }}
+      />
+      <Tabs.Screen
+        name="clients"
+        options={{
+          title: 'Clients',
+          tabBarLabel: 'Clients',
+          tabBarIcon: () => null,
+        }}
+      />
+      <Tabs.Screen
+        name="creators"
+        options={{
+          title: 'Creators',
+          tabBarLabel: 'Creators',
+          tabBarIcon: () => null,
         }}
       />
       <Tabs.Screen
@@ -31,6 +50,7 @@ export default function TabsLayout() {
         options={{
           title: 'Approvals',
           tabBarLabel: 'Approvals',
+          tabBarIcon: () => null,
         }}
       />
       <Tabs.Screen
@@ -38,6 +58,7 @@ export default function TabsLayout() {
         options={{
           title: 'Profile',
           tabBarLabel: 'Profile',
+          tabBarIcon: () => null,
         }}
       />
     </Tabs>
