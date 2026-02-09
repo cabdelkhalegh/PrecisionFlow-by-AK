@@ -2,13 +2,22 @@ import { render, RenderOptions } from '@testing-library/react';
 import { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
+  trpcMocks?: Record<string, any>;
+}
+
 /**
  * Custom render function that wraps components with necessary providers
  */
 export function renderWithProviders(
   ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>
+  options?: CustomRenderOptions
 ) {
+  const { trpcMocks, ...renderOptions } = options || {};
+  
+  // Set up tRPC mock data
+  (globalThis as any).__trpcMockData = trpcMocks || {};
+
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -25,7 +34,7 @@ export function renderWithProviders(
     );
   }
 
-  return render(ui, { wrapper: Wrapper, ...options });
+  return render(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
 /**

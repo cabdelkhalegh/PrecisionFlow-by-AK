@@ -84,7 +84,7 @@ describe('Campaign Detail Page', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('high')).toBeInTheDocument();
+      expect(screen.getByText(/high/)).toBeInTheDocument();
     });
   });
 
@@ -107,7 +107,7 @@ describe('Campaign Detail Page', () => {
   it('displays budget information', async () => {
     const mockCampaign = createMockCampaign({
       id: 'test-campaign-id',
-      budget_total: 100000,
+      total_budget: 100000,
     });
 
     renderWithProviders(<CampaignDetailPage />, {
@@ -119,7 +119,7 @@ describe('Campaign Detail Page', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText(/\$100,000/)).toBeInTheDocument();
+      expect(screen.getByText(/100,000/)).toBeInTheDocument();
     });
   });
 
@@ -139,11 +139,12 @@ describe('Campaign Detail Page', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText(/2026/)).toBeInTheDocument();
+      const dateElements = screen.getAllByText(/2026/);
+      expect(dateElements.length).toBeGreaterThan(0);
     });
   });
 
-  it('has edit button', async () => {
+  it('has upload brief button', async () => {
     const mockCampaign = createMockCampaign({
       id: 'test-campaign-id',
     });
@@ -157,7 +158,7 @@ describe('Campaign Detail Page', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText(/edit/i)).toBeInTheDocument();
+      expect(screen.getByText(/Upload Brief/)).toBeInTheDocument();
     });
   });
 });

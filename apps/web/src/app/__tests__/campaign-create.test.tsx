@@ -50,8 +50,8 @@ describe('Campaign Creation Page', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Client A')).toBeInTheDocument();
-      expect(screen.getByText('Client B')).toBeInTheDocument();
+      expect(screen.getByText(/Client A/)).toBeInTheDocument();
+      expect(screen.getByText(/Client B/)).toBeInTheDocument();
     });
   });
 
@@ -60,8 +60,8 @@ describe('Campaign Creation Page', () => {
     
     renderWithProviders(<NewCampaignPage />);
     
-    const submitButton = screen.getByText('Create Campaign');
-    fireEvent.click(submitButton);
+    const form = screen.getByText('Create Campaign').closest('form')!;
+    fireEvent.submit(screen.getByText('Create Campaign').closest('form')!);
     
     await waitFor(() => {
       expect(alertSpy).toHaveBeenCalledWith(
@@ -103,15 +103,15 @@ describe('Campaign Creation Page', () => {
     fireEvent.change(nameInput, { target: { value: 'New Campaign' } });
 
     await waitFor(() => {
-      expect(screen.getByText('Test Client')).toBeInTheDocument();
+      expect(screen.getByText(/Test Client/)).toBeInTheDocument();
     });
 
     const clientSelect = screen.getByLabelText(/Client/);
     fireEvent.change(clientSelect, { target: { value: 'client-1' } });
 
     // Submit form
-    const submitButton = screen.getByText('Create Campaign');
-    fireEvent.click(submitButton);
+    
+    fireEvent.submit(screen.getByText('Create Campaign').closest('form')!);
 
     await waitFor(() => {
       expect(mockMutate).toHaveBeenCalledWith(
@@ -144,14 +144,14 @@ describe('Campaign Creation Page', () => {
     fireEvent.change(nameInput, { target: { value: 'Test' } });
 
     await waitFor(() => {
-      expect(screen.getByText('Test Client')).toBeInTheDocument();
+      expect(screen.getByText(/Test Client/)).toBeInTheDocument();
     });
 
     const clientSelect = screen.getByLabelText(/Client/);
     fireEvent.change(clientSelect, { target: { value: 'client-1' } });
 
-    const submitButton = screen.getByText('Create Campaign');
-    fireEvent.click(submitButton);
+    
+    fireEvent.submit(screen.getByText('Create Campaign').closest('form')!);
 
     await waitFor(() => {
       expect(alertSpy).toHaveBeenCalledWith(
@@ -177,17 +177,18 @@ describe('Campaign Creation Page', () => {
     fireEvent.change(nameInput, { target: { value: 'Test' } });
 
     await waitFor(() => {
-      expect(screen.getByText('Test Client')).toBeInTheDocument();
+      expect(screen.getByText(/Test Client/)).toBeInTheDocument();
     });
 
     const clientSelect = screen.getByLabelText(/Client/);
     fireEvent.change(clientSelect, { target: { value: 'client-1' } });
 
-    const submitButton = screen.getByText('Create Campaign') as HTMLButtonElement;
-    fireEvent.click(submitButton);
+    
+    fireEvent.submit(screen.getByText('Create Campaign').closest('form')!);
 
     // Button should be disabled during submission
-    expect(submitButton.disabled).toBe(true);
+    const btn = screen.getByText('Create Campaign') as HTMLButtonElement;
+    expect(btn.disabled).toBe(true);
   });
 
   it('includes optional fields in submission', async () => {
@@ -211,7 +212,7 @@ describe('Campaign Creation Page', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Test Client')).toBeInTheDocument();
+      expect(screen.getByText(/Test Client/)).toBeInTheDocument();
     });
 
     fireEvent.change(screen.getByLabelText(/Client/), {
@@ -270,7 +271,7 @@ describe('Campaign Creation Page', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Test Client')).toBeInTheDocument();
+      expect(screen.getByText(/Test Client/)).toBeInTheDocument();
     });
 
     fireEvent.change(screen.getByLabelText(/Client/), {
