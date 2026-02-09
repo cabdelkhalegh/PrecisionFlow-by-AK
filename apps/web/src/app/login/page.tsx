@@ -38,7 +38,7 @@ export default function LoginPage() {
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-gray-900">🎯 PrecisionFlow</h1>
-          <p className="mt-2 text-gray-600">Sign in to your account</p>
+          <h2 className="mt-2 text-xl font-normal text-gray-600">Sign in to your account</h2>
         </div>
 
         {/* Form Card */}
@@ -94,7 +94,7 @@ export default function LoginPage() {
           <div className="mt-6 text-center text-sm text-gray-500">
             Don&apos;t have an account?{' '}
             <Link href="/signup" className="font-medium text-blue-600 hover:text-blue-500">
-              Create one
+              Sign up
             </Link>
           </div>
         </div>

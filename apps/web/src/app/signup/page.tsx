@@ -58,7 +58,7 @@ export default function SignupPage() {
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-gray-900">🎯 PrecisionFlow</h1>
-          <p className="mt-2 text-gray-600">Create your account</p>
+          <h2 className="mt-2 text-xl font-normal text-gray-600">Create your account</h2>
         </div>
 
         {/* Form Card */}

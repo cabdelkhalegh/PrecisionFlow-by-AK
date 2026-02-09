@@ -13,6 +13,7 @@ test.describe('Public Navigation', () => {
 
   test('should have working login link on home page', async ({ page }) => {
     await page.goto('/');
+    await page.waitForLoadState('networkidle');
     const loginLink = page.getByRole('link', { name: /sign in|get started|login/i }).first();
     await loginLink.click();
     await expect(page).toHaveURL(/\/login/);

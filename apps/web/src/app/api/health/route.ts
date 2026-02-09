@@ -12,6 +12,7 @@ export async function GET() {
     status: 'ok',
     timestamp: new Date().toISOString(),
     service: 'precisionflow-web',
+    environment: process.env.NODE_ENV || 'development',
   };
 
   // Verify Supabase connectivity (only reports connected/unavailable, no data counts)
