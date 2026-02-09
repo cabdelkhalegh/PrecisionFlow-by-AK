@@ -13,6 +13,9 @@ import { shortlistsRouter } from './routers/shortlists';
 import { contentTasksRouter } from './routers/contentTasks';
 import { contentArtifactsRouter } from './routers/contentArtifacts';
 import { activityLogsRouter } from './routers/activityLogs';
+import { budgetsRouter } from './routers/budgets';
+import { expensesRouter } from './routers/expenses';
+import { invoicesRouter } from './routers/invoices';
 
 export const appRouter = router({
   campaigns: campaignsRouter,
@@ -24,6 +27,9 @@ export const appRouter = router({
   contentTasks: contentTasksRouter,
   contentArtifacts: contentArtifactsRouter,
   activityLogs: activityLogsRouter,
+  budgets: budgetsRouter,
+  expenses: expensesRouter,
+  invoices: invoicesRouter,
 });
 
 export type AppRouter = typeof appRouter;

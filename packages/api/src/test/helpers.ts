@@ -266,6 +266,83 @@ export function createMockContentArtifact(overrides = {}) {
 }
 
 /**
+ * Create mock budget data
+ */
+export function createMockBudget(overrides = {}) {
+  return {
+    id: 'ac000000-0000-0000-0000-000000000001',
+    campaign_id: 'b0000000-0000-0000-0000-000000000001',
+    original_amount: 10000,
+    current_amount: 10000,
+    currency: 'USD',
+    breakdown: { creator_fees: 6000, production: 2500, platform_fees: 1500 },
+    status: 'draft',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    ...overrides,
+  };
+}
+
+/**
+ * Create mock expense data
+ */
+export function createMockExpense(overrides = {}) {
+  return {
+    id: 'ad000000-0000-0000-0000-000000000001',
+    campaign_id: 'b0000000-0000-0000-0000-000000000001',
+    category: 'creator_payment',
+    amount: 500,
+    currency: 'USD',
+    description: 'Creator fee for TikTok reel',
+    receipt_url: null,
+    approval_status: 'pending',
+    payment_status: 'pending',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    created_by: 'a0000000-0000-0000-0000-000000000001',
+    ...overrides,
+  };
+}
+
+/**
+ * Create mock invoice data
+ */
+export function createMockInvoice(overrides = {}) {
+  return {
+    id: 'ae000000-0000-0000-0000-000000000001',
+    campaign_id: 'b0000000-0000-0000-0000-000000000001',
+    creator_id: 'f0000000-0000-0000-0000-000000000001',
+    invoice_number: 'INV-2024-001',
+    amount: 1500,
+    currency: 'USD',
+    status: 'draft',
+    due_date: '2024-06-30',
+    paid_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    ...overrides,
+  };
+}
+
+/**
+ * Create mock payment data
+ */
+export function createMockPayment(overrides = {}) {
+  return {
+    id: 'af000000-0000-0000-0000-000000000001',
+    invoice_id: 'ae000000-0000-0000-0000-000000000001',
+    amount: 1500,
+    currency: 'USD',
+    payment_method: 'bank_transfer',
+    transaction_reference: 'TXN-12345',
+    payment_date: new Date().toISOString(),
+    notes: null,
+    created_at: new Date().toISOString(),
+    ...overrides,
+  };
+}
+
+/**
  * Setup mock successful database response
  */
 export function mockSuccessResponse(data: any, count: number | null = null) {

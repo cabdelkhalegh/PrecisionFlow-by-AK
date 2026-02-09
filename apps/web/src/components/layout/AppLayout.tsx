@@ -12,6 +12,7 @@ const navigation = [
   { name: 'Creators', href: '/creators', icon: '🎬' },
   { name: 'Briefs', href: '/briefs', icon: '📄' },
   { name: 'Approvals', href: '/approvals', icon: '✓', showBadge: true },
+  { name: 'Finance', href: '/finance', icon: '💰' },
   { name: 'Reports', href: '/reports', icon: '📈' },
   { name: 'Activity', href: '/activity', icon: '🔔' },
   { name: 'Settings', href: '/settings', icon: '⚙️' },
