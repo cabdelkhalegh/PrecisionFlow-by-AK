@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { applySecurityHeaders, checkRateLimit, getClientIp } from '@/lib/security';
 
 /**
  * Public routes that don't require authentication
@@ -14,14 +15,22 @@ const API_ROUTES = ['/api/trpc'];
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow public routes
+  // Rate limiting for API routes
+  if (pathname.startsWith('/api/')) {
+    const clientIp = getClientIp(request);
+    if (!checkRateLimit(clientIp)) {
+      return new NextResponse('Too Many Requests', { status: 429 });
+    }
+  }
+
+  // Allow public routes — apply security headers
   if (PUBLIC_ROUTES.some((route) => pathname === route)) {
-    return NextResponse.next();
+    return applySecurityHeaders(NextResponse.next());
   }
 
   // Allow API routes (they handle auth via tRPC middleware)
   if (API_ROUTES.some((route) => pathname.startsWith(route))) {
-    return NextResponse.next();
+    return applySecurityHeaders(NextResponse.next());
   }
 
   // Allow static assets and Next.js internals
@@ -41,7 +50,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  return NextResponse.next();
+  return applySecurityHeaders(NextResponse.next());
 }
 
 export const config = {
