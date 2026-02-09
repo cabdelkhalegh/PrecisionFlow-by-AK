@@ -10,12 +10,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@expo/vector-icons": "^14.0.0",
     "@precisionflow/api": "workspace:*",
     "@precisionflow/types": "workspace:*",
     "@precisionflow/ui": "workspace:*",
-    "@supabase/supabase-js": "^2.49.1",
-    "@expo/vector-icons": "^14.0.0",
     "@react-navigation/native": "^7.0.1",
+    "@supabase/supabase-js": "^2.49.1",
     "@tanstack/react-query": "^5.62.14",
     "@trpc/client": "^11.0.0",
     "@trpc/react-query": "^11.0.0",
@@ -24,9 +24,11 @@
     "expo-secure-store": "~14.0.0",
     "expo-status-bar": "~3.0.9",
     "react": "19.1.0",
+    "react-dom": "19.1.0",
     "react-native": "0.81.5",
     "react-native-safe-area-context": "~5.6.0",
-    "react-native-screens": "~4.5.0"
+    "react-native-screens": "~4.5.0",
+    "react-native-web": "~0.21.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
