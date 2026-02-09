@@ -14,6 +14,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.39.7",
     "@tikit/types": "workspace:*",
     "@tikit/api": "workspace:*",
     "@tikit/database": "workspace:*",

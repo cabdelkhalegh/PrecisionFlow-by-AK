@@ -152,6 +152,9 @@ export default function CampaignDetailPage() {
               <Button variant="primary" onClick={() => setIsUploadModalOpen(true)}>
                 📄 Upload Brief
               </Button>
+              <Button variant="secondary" onClick={() => router.push(`/campaigns/${campaignId}/brief`)}>
+                🤖 AI Brief
+              </Button>
             </div>
           </div>
           <div className="flex items-center gap-3">

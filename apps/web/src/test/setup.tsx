@@ -101,6 +101,26 @@ vi.mock('@/components/briefs/BriefViewer', () => ({
   BriefViewer: () => null,
 }));
 
+// Mock Supabase browser client (used by auth-provider and trpc-provider)
+vi.mock('@/lib/supabase-browser', () => ({
+  supabaseBrowser: {
+    auth: {
+      getSession: vi.fn().mockResolvedValue({ data: { session: null } }),
+      getUser: vi.fn().mockResolvedValue({ data: { user: null } }),
+      onAuthStateChange: vi.fn().mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } }),
+      signInWithPassword: vi.fn(),
+      signUp: vi.fn(),
+      signOut: vi.fn(),
+    },
+  },
+}));
+
+// Mock auth provider
+vi.mock('@/lib/auth-provider', () => ({
+  AuthProvider: ({ children }: any) => children,
+  useAuth: () => ({ user: null, session: null, loading: false, signOut: vi.fn() }),
+}));
+
 // Mock Next.js router
 vi.mock('next/navigation', () => ({
   useRouter() {

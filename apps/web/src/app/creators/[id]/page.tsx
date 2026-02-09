@@ -85,6 +85,9 @@ export default function CreatorDetailPage() {
                 >
                   {creator.status || 'active'}
                 </Badge>
+                <Link href={`/creators/${id}/edit`}>
+                  <Button size="sm" variant="secondary">✏️ Edit</Button>
+                </Link>
               </div>
               {creator.bio && (
                 <p className="mt-2 text-gray-600">{creator.bio}</p>

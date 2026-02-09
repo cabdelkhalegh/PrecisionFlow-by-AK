@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { TRPCProvider } from '@/lib/trpc-provider';
 import { ToastProvider } from '@/components/ui/Toast';
+import { AuthProvider } from '@/lib/auth-provider';
 
 export const metadata: Metadata = {
   title: 'TiKiT OS - Campaign Execution & Intelligence',
@@ -16,11 +17,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <TRPCProvider>
-          <ToastProvider>
-            {children}
-          </ToastProvider>
-        </TRPCProvider>
+        <AuthProvider>
+          <TRPCProvider>
+            <ToastProvider>
+              {children}
+            </ToastProvider>
+          </TRPCProvider>
+        </AuthProvider>
       </body>
     </html>
   );
