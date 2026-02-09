@@ -56,7 +56,7 @@ Required variables:
 - `SUPABASE_SERVICE_ROLE_KEY` - Your Supabase service role key (for server-side)
 
 Optional variables:
-- `GOOGLE_GEMINI_API_KEY` - For AI brief processing features
+- `GEMINI_API_KEY` - For AI brief processing features
 
 ### 4. Run Database Migrations
 

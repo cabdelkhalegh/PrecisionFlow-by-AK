@@ -35,7 +35,7 @@ cp .env.production.example .env.production
 - `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anon key
 - `SUPABASE_SERVICE_ROLE_KEY` - Supabase service role key
-- `GOOGLE_GEMINI_API_KEY` - Google Gemini API key
+- `GEMINI_API_KEY` - Google Gemini API key
 - `NEXTAUTH_SECRET` - Strong random secret for authentication
 - `NEXTAUTH_URL` - Production URL
 
