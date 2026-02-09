@@ -133,6 +133,21 @@ node .next/standalone/server.js
 
 ---
 
+## CI/CD (GitHub Actions)
+
+The CI workflow uses Supabase environment variables for building the Next.js app and
+running E2E tests. Placeholder values are provided by default so CI passes without
+any extra configuration. To use a real Supabase project in CI, add these secrets
+under **Settings → Secrets and variables → Actions**:
+
+| Secret | Description |
+|--------|-------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous (public) key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key |
+
+---
+
 ## Database Setup
 
 ### Apply Migrations
