@@ -102,9 +102,15 @@ importers:
       '@types/react':
         specifier: ~19.1.0
         version: 19.1.17
+      '@vitest/coverage-v8':
+        specifier: ^1.2.0
+        version: 1.6.1(vitest@1.6.1)
       typescript:
         specifier: ~5.9.2
         version: 5.9.3
+      vitest:
+        specifier: ^1.2.0
+        version: 1.6.1(@types/node@20.19.32)(@vitest/ui@1.6.1)(jsdom@23.2.0)
 
   apps/web:
     dependencies:

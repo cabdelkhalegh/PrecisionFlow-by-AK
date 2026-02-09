@@ -27,6 +27,8 @@
     "build:web": "turbo run build --filter=web",
     "build:mobile": "turbo run build --filter=mobile",
     "test": "turbo run test",
+    "test:web": "turbo run test --filter=web --filter=api",
+    "test:mobile": "turbo run test --filter=@precisionflow/mobile",
     "test:unit": "turbo run test:unit",
     "test:e2e": "turbo run test:e2e",
     "test:watch": "turbo run test:watch",
