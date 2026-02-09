@@ -107,7 +107,7 @@ describe('Campaign Detail Page', () => {
   it('displays budget information', async () => {
     const mockCampaign = createMockCampaign({
       id: 'test-campaign-id',
-      total_budget: 100000,
+      budget_total: 100000,
     });
 
     renderWithProviders(<CampaignDetailPage />, {

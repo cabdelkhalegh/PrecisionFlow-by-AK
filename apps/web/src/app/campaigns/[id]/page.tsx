@@ -150,7 +150,7 @@ export default function CampaignDetailPage() {
             <div>
               <h3 className="text-sm font-medium text-gray-500 mb-1">Budget</h3>
               <p className="text-gray-900">
-                ${campaign.total_budget?.toLocaleString() || '0'}
+                ${campaign.budget_total?.toLocaleString() || '0'}
               </p>
             </div>
             <div>
