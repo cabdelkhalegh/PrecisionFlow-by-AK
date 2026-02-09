@@ -146,6 +146,9 @@ export default function CampaignDetailPage() {
               <Button variant="secondary" onClick={() => router.push('/campaigns')}>
                 Back
               </Button>
+              <Button variant="secondary" onClick={() => router.push(`/campaigns/${campaignId}/edit`)}>
+                ✏️ Edit
+              </Button>
               <Button variant="primary" onClick={() => setIsUploadModalOpen(true)}>
                 📄 Upload Brief
               </Button>

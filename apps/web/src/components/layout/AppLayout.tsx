@@ -11,6 +11,8 @@ const navigation = [
   { name: 'Creators', href: '/creators', icon: '🎬' },
   { name: 'Briefs', href: '/briefs', icon: '📄' },
   { name: 'Approvals', href: '/approvals', icon: '✓', showBadge: true },
+  { name: 'Reports', href: '/reports', icon: '📈' },
+  { name: 'Settings', href: '/settings', icon: '⚙️' },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
