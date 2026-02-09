@@ -18,7 +18,7 @@ test.describe('API Endpoints', () => {
       '/api/trpc/campaigns.list?batch=1&input=%7B%220%22%3A%7B%7D%7D'
     );
     // Should get a response (401, error, or 500 if DB not configured)
-    expect(response.status()).toBeDefined();
+    expect([401, 500]).toContain(response.status());
   });
 
   test('unknown API routes return appropriate status', async ({ request }) => {
@@ -37,7 +37,7 @@ test.describe('API Security', () => {
     // Should not return 200 with valid data (should be 401, error, or 500 if DB not configured)
     const body = await response.text();
     // tRPC returns errors in its own format
-    expect(response.status()).not.toBe(200);
+    expect([401, 500]).toContain(response.status());
   });
 
   test('health endpoint does not leak sensitive info', async ({ request }) => {
