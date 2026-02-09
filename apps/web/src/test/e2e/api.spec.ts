@@ -22,9 +22,10 @@ test.describe('API Endpoints', () => {
   });
 
   test('unknown API routes return appropriate status', async ({ request }) => {
-    const response = await request.get('/api/nonexistent');
-    // Next.js may return 404 or redirect to a page depending on middleware config
-    expect([200, 404]).toContain(response.status());
+    const response = await request.get('/api/nonexistent', { maxRedirects: 0 });
+    // Middleware redirects unauthenticated non-public routes to /login (302)
+    // or Next.js returns 404 for truly unknown API routes
+    expect([302, 404]).toContain(response.status());
   });
 });
 
