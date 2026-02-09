@@ -126,7 +126,7 @@ CREATE POLICY content_artifacts_select_policy ON public.content_artifacts
                 EXISTS (
                     SELECT 1 FROM public.users
                     WHERE users.id = auth.uid()
-                    AND (users.director = true OR users.admin = true)
+                    AND users.role IN ('director', 'admin')
                 )
                 OR
                 -- The assigned creator
@@ -154,7 +154,7 @@ CREATE POLICY content_artifacts_insert_policy ON public.content_artifacts
                 EXISTS (
                     SELECT 1 FROM public.users
                     WHERE users.id = auth.uid()
-                    AND (users.director = true OR users.admin = true)
+                    AND users.role IN ('director', 'admin')
                 )
                 OR
                 -- The assigned creator
@@ -180,7 +180,7 @@ CREATE POLICY content_artifacts_update_policy ON public.content_artifacts
                 OR EXISTS (
                     SELECT 1 FROM public.users
                     WHERE users.id = auth.uid()
-                    AND (users.director = true OR users.admin = true)
+                    AND users.role IN ('director', 'admin')
                 )
             )
         )

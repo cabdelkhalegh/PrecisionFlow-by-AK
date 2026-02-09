@@ -79,7 +79,7 @@ CREATE POLICY campaign_shortlists_select_policy ON public.campaign_shortlists
             EXISTS (
                 SELECT 1 FROM public.users
                 WHERE users.id = auth.uid()
-                AND (users.director = true OR users.admin = true)
+                AND users.role IN ('director', 'admin')
             )
             OR
             -- Campaign manager for this campaign
@@ -103,7 +103,7 @@ CREATE POLICY campaign_shortlists_insert_policy ON public.campaign_shortlists
                 OR EXISTS (
                     SELECT 1 FROM public.users
                     WHERE users.id = auth.uid()
-                    AND (users.director = true OR users.admin = true)
+                    AND users.role IN ('director', 'admin')
                 )
             )
         )
@@ -122,7 +122,7 @@ CREATE POLICY campaign_shortlists_update_policy ON public.campaign_shortlists
                 OR EXISTS (
                     SELECT 1 FROM public.users
                     WHERE users.id = auth.uid()
-                    AND (users.director = true OR users.admin = true)
+                    AND users.role IN ('director', 'admin')
                 )
             )
         )

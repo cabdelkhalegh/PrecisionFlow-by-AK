@@ -20,10 +20,14 @@ pnpm setup              # Interactive setup wizard
 cp apps/web/.env.example apps/web/.env.local
 # Edit .env.local with your Supabase + Gemini credentials
 
-# 3. Start development
+# 3. Create database tables
+# Open Supabase SQL Editor and run supabase/setup.sql
+# OR use the CLI:  supabase link && supabase db push
+
+# 4. Start development
 pnpm dev                # http://localhost:3000
 
-# 4. Run tests
+# 5. Run tests
 pnpm test               # 236+ unit & integration tests
 ```
 
