@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@precisionflow/eslint-config": "workspace:*",
     "typescript": "^5.3.3"
   }
 }

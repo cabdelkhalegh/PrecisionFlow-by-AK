@@ -279,6 +279,9 @@ importers:
 
   packages/types:
     devDependencies:
+      '@precisionflow/eslint-config':
+        specifier: workspace:*
+        version: link:../config/eslint
       typescript:
         specifier: ^5.3.3
         version: 5.9.3
