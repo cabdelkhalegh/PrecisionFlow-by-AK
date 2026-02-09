@@ -449,7 +449,8 @@ function ContentTasksSection({ tasks, campaignId }: { tasks: any[]; campaignId: 
       {/* Task List */}
       <div className="space-y-3">
         {tasks.map((task: any) => (
-          <Card key={task.id} className="hover:shadow-md transition-shadow">
+          <Link key={task.id} href={`/campaigns/${campaignId}/tasks/${task.id}`}>
+            <Card className="hover:shadow-md transition-shadow cursor-pointer">
             <div className="flex items-start justify-between">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
@@ -519,6 +520,7 @@ function ContentTasksSection({ tasks, campaignId }: { tasks: any[]; campaignId: 
               </div>
             )}
           </Card>
+          </Link>
         ))}
       </div>
     </div>

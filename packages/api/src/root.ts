@@ -12,6 +12,7 @@ import { creatorsRouter } from './routers/creators';
 import { shortlistsRouter } from './routers/shortlists';
 import { contentTasksRouter } from './routers/contentTasks';
 import { contentArtifactsRouter } from './routers/contentArtifacts';
+import { activityLogsRouter } from './routers/activityLogs';
 
 export const appRouter = router({
   campaigns: campaignsRouter,
@@ -22,6 +23,7 @@ export const appRouter = router({
   shortlists: shortlistsRouter,
   contentTasks: contentTasksRouter,
   contentArtifacts: contentArtifactsRouter,
+  activityLogs: activityLogsRouter,
 });
 
 export type AppRouter = typeof appRouter;

@@ -18,13 +18,16 @@ export default function EditClientPage() {
 
   const [formData, setFormData] = useState({
     name: '',
-    company: '',
+    companyName: '',
     email: '',
     phone: '',
     website: '',
-    address: '',
     industry: '',
     tier: 'bronze' as 'bronze' | 'silver' | 'gold' | 'platinum',
+    street: '',
+    city: '',
+    country: '',
+    postalCode: '',
   });
 
   const { data: client, isLoading } = trpc.clients.getById.useQuery(
@@ -45,25 +48,44 @@ export default function EditClientPage() {
 
   useEffect(() => {
     if (client) {
+      const addr = typeof client.address === 'object' && client.address ? client.address as Record<string, string> : {};
       setFormData({
         name: client.name || '',
-        company: client.company || '',
+        companyName: client.company_name || '',
         email: client.email || '',
         phone: client.phone || '',
         website: client.website || '',
-        address: client.address || '',
         industry: client.industry || '',
         tier: client.tier || 'bronze',
+        street: addr.street || '',
+        city: addr.city || '',
+        country: addr.country || '',
+        postalCode: addr.postal_code || '',
       });
     }
   }, [client]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    updateMutation.mutate({
+    const payload: any = {
       id: clientId,
-      ...formData,
-    });
+      name: formData.name,
+      email: formData.email,
+    };
+    if (formData.companyName) payload.companyName = formData.companyName;
+    if (formData.phone) payload.phone = formData.phone;
+    if (formData.industry) payload.industry = formData.industry;
+    if (formData.website) payload.website = formData.website;
+    if (formData.tier) payload.tier = formData.tier;
+    if (formData.street || formData.city || formData.country || formData.postalCode) {
+      payload.address = {
+        street: formData.street || undefined,
+        city: formData.city || undefined,
+        country: formData.country || undefined,
+        postal_code: formData.postalCode || undefined,
+      };
+    }
+    updateMutation.mutate(payload);
   };
 
   const handleChange = (field: string, value: string) => {
@@ -134,9 +156,8 @@ export default function EditClientPage() {
               <Input
                 label="Company Name"
                 type="text"
-                value={formData.company}
-                onChange={(e) => handleChange('company', e.target.value)}
-                required
+                value={formData.companyName}
+                onChange={(e) => handleChange('companyName', e.target.value)}
               />
               <Input
                 label="Industry"
@@ -152,13 +173,6 @@ export default function EditClientPage() {
                 onChange={(e) => handleChange('website', e.target.value)}
                 placeholder="https://example.com"
               />
-              <Input
-                label="Address"
-                type="text"
-                value={formData.address}
-                onChange={(e) => handleChange('address', e.target.value)}
-                placeholder="Full address"
-              />
               <Select
                 label="Client Tier"
                 value={formData.tier}
@@ -169,6 +183,38 @@ export default function EditClientPage() {
                 <option value="gold">Gold</option>
                 <option value="platinum">Platinum</option>
               </Select>
+            </div>
+          </Card>
+
+          <Card className="mb-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Address</h2>
+            <div className="space-y-4">
+              <Input
+                label="Street"
+                type="text"
+                value={formData.street}
+                onChange={(e) => handleChange('street', e.target.value)}
+              />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Input
+                  label="City"
+                  type="text"
+                  value={formData.city}
+                  onChange={(e) => handleChange('city', e.target.value)}
+                />
+                <Input
+                  label="Country"
+                  type="text"
+                  value={formData.country}
+                  onChange={(e) => handleChange('country', e.target.value)}
+                />
+                <Input
+                  label="Postal Code"
+                  type="text"
+                  value={formData.postalCode}
+                  onChange={(e) => handleChange('postalCode', e.target.value)}
+                />
+              </div>
             </div>
           </Card>
 
