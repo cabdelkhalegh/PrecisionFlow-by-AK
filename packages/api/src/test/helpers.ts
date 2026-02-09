@@ -78,6 +78,7 @@ export function createMockClient(overrides = {}) {
     contact_name: 'John Doe',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
+    deleted_at: null,
     ...overrides,
   };
 }
@@ -99,6 +100,7 @@ export function createMockBrief(overrides = {}) {
     missing_info: [],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
+    deleted_at: null,
     ...overrides,
   };
 }

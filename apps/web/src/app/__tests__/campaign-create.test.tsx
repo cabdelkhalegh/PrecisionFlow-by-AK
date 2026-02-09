@@ -61,7 +61,7 @@ describe('Campaign Creation Page', () => {
     renderWithProviders(<NewCampaignPage />);
     
     const form = screen.getByText('Create Campaign').closest('form')!;
-    fireEvent.submit(screen.getByText('Create Campaign').closest('form')!);
+    fireEvent.submit(form);
     
     await waitFor(() => {
       expect(alertSpy).toHaveBeenCalledWith(
