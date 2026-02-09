@@ -3,9 +3,9 @@
  */
 
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-import { appRouter } from '@tikit/api';
-import type { Context } from '@tikit/api';
-import { supabase } from '@tikit/database';
+import { appRouter } from '@precisionflow/api';
+import type { Context } from '@precisionflow/api';
+import { supabase } from '@precisionflow/database';
 
 const handler = (req: Request) =>
   fetchRequestHandler({

@@ -4,7 +4,7 @@
 
 import { vi } from 'vitest';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { Database } from '@tikit/database';
+import type { Database } from '@precisionflow/database';
 
 /**
  * Create a mock Supabase client for testing

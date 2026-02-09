@@ -178,7 +178,7 @@ export const briefsRouter = router({
 
       try {
         // Import and use AI package
-        const { parseBrief, calculateRiskLevel } = await import('@tikit/ai');
+        const { parseBrief, calculateRiskLevel } = await import('@precisionflow/ai');
         structuredData = await parseBrief(brief.raw_content);
         riskLevel = calculateRiskLevel(structuredData.missing_info);
       } catch (aiError) {

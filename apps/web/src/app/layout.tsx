@@ -5,7 +5,7 @@ import { ToastProvider } from '@/components/ui/Toast';
 import { AuthProvider } from '@/lib/auth-provider';
 
 export const metadata: Metadata = {
-  title: 'TiKiT OS - Campaign Execution & Intelligence',
+  title: 'PrecisionFlow - Campaign Execution & Intelligence',
   description: 'Enterprise-grade operating system for influencer marketing agencies',
 };
 

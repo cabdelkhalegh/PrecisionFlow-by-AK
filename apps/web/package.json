@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.7",
-    "@tikit/types": "workspace:*",
-    "@tikit/api": "workspace:*",
-    "@tikit/database": "workspace:*",
+    "@precisionflow/types": "workspace:*",
+    "@precisionflow/api": "workspace:*",
+    "@precisionflow/database": "workspace:*",
     "@trpc/client": "^11.0.0",
     "@trpc/server": "^11.0.0",
     "@trpc/react-query": "^11.0.0",

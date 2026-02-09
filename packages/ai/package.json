@@ -1,5 +1,5 @@
 {
-  "name": "@tikit/ai",
+  "name": "@precisionflow/ai",
   "version": "0.0.0",
   "private": true,
   "main": "./src/index.ts",

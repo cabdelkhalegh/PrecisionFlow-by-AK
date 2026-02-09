@@ -77,9 +77,9 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 
 ### Code Sharing
 
-- `@tikit/api` — tRPC client and routers (shared with web)
-- `@tikit/types` — TypeScript types (shared)
-- `@tikit/ui` — UI utilities (shared)
+- `@precisionflow/api` — tRPC client and routers (shared with web)
+- `@precisionflow/types` — TypeScript types (shared)
+- `@precisionflow/ui` — UI utilities (shared)
 - Platform-specific UI in `app/` directory
 
 ### Navigation

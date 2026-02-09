@@ -1,6 +1,6 @@
 # 🎯 PrecisionFlow by AK
 
-**TiKiT OS — Campaign Execution & Intelligence Platform**
+**PrecisionFlow — Campaign Execution & Intelligence Platform**
 
 An enterprise-grade operating system for influencer marketing agencies. Built with campaign-centric design, AI-powered brief processing, multi-layer approval gates, and full financial traceability.
 
@@ -252,7 +252,7 @@ git commit -m "feat(scope): description"
 
 ## 📞 Contact
 
-**Product Owner:** TiKiT Product Team
+**Product Owner:** PrecisionFlow Team
 **Created by:** Adi Mustapha
 **Reviewed by:** Cherif Hamadi
 **Powered by:** PrecisionFlow by AK

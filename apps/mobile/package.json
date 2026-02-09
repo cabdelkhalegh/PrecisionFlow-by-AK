@@ -1,5 +1,5 @@
 {
-  "name": "@tikit/mobile",
+  "name": "@precisionflow/mobile",
   "version": "1.0.0",
   "main": "expo-router/entry",
   "scripts": {
@@ -10,9 +10,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@tikit/api": "workspace:*",
-    "@tikit/types": "workspace:*",
-    "@tikit/ui": "workspace:*",
+    "@precisionflow/api": "workspace:*",
+    "@precisionflow/types": "workspace:*",
+    "@precisionflow/ui": "workspace:*",
     "@supabase/supabase-js": "^2.49.1",
     "@expo/vector-icons": "^14.0.0",
     "@react-navigation/native": "^7.0.1",
@@ -30,8 +30,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@tikit/eslint-config": "workspace:*",
-    "@tikit/typescript-config": "workspace:*",
+    "@precisionflow/eslint-config": "workspace:*",
+    "@precisionflow/typescript-config": "workspace:*",
     "@types/react": "~19.1.0",
     "typescript": "~5.9.2"
   },

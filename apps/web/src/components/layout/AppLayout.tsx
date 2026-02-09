@@ -47,7 +47,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               {/* Logo */}
               <div className="flex flex-shrink-0 items-center">
                 <Link href="/dashboard" className="text-xl font-bold text-blue-600">
-                  🎯 TiKiT OS
+                  🎯 PrecisionFlow
                 </Link>
               </div>
               {/* Navigation Links */}

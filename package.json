@@ -1,8 +1,8 @@
 {
-  "name": "tikit-os",
-  "version": "0.1.0",
+  "name": "precisionflow",
+  "version": "1.0.0",
   "private": true,
-  "description": "TiKiT OS - Campaign Execution & Intelligence Platform",
+  "description": "PrecisionFlow - Campaign Execution & Intelligence Platform",
   "keywords": [
     "influencer-marketing",
     "campaign-management",

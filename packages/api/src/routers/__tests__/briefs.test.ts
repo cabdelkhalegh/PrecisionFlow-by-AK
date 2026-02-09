@@ -14,7 +14,7 @@ import {
 } from '../../test/helpers';
 
 // Mock the AI package
-vi.mock('@tikit/ai', () => ({
+vi.mock('@precisionflow/ai', () => ({
   parseBrief: vi.fn().mockResolvedValue({
     objectives: ['Test objective'],
     target_audience: 'Test audience',
@@ -411,7 +411,7 @@ describe('Briefs Router', () => {
     });
 
     it('should handle AI processing errors gracefully', async () => {
-      const { parseBrief } = await import('@tikit/ai');
+      const { parseBrief } = await import('@precisionflow/ai');
       vi.mocked(parseBrief).mockRejectedValueOnce(new Error('AI service unavailable'));
 
       const brief = createMockBrief({ raw_content: 'Test brief content' });

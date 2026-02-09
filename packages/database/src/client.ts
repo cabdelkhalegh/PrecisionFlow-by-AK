@@ -1,5 +1,5 @@
 /**
- * Supabase client configuration for TiKiT OS
+ * Supabase client configuration for PrecisionFlow
  * Provides type-safe database access with connection pooling
  *
  * Clients are lazily initialized so the module can be imported at build time

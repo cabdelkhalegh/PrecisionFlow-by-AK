@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to PrecisionFlow by AK (TiKiT OS) are documented in this file.
+All notable changes to PrecisionFlow by AK (PrecisionFlow) are documented in this file.
 
 ## [1.0.0] — 2026-02-09
 
@@ -15,7 +15,7 @@ All notable changes to PrecisionFlow by AK (TiKiT OS) are documented in this fil
 - Next.js 15 (App Router) + TypeScript strict mode
 - TailwindCSS styling system
 - ESLint + Prettier code quality tooling
-- Shared packages: `@tikit/api`, `@tikit/database`, `@tikit/types`, `@tikit/ui`, `@tikit/ai`
+- Shared packages: `@precisionflow/api`, `@precisionflow/database`, `@precisionflow/types`, `@precisionflow/ui`, `@precisionflow/ai`
 
 #### Phase 1: Backend Infrastructure
 - Supabase integration (PostgreSQL + Auth + Storage + RLS)

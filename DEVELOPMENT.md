@@ -1,4 +1,4 @@
-# TiKiT OS - Local Development Setup Guide
+# PrecisionFlow - Local Development Setup Guide
 
 ## Prerequisites
 
@@ -86,7 +86,7 @@ The app will be available at http://localhost:3000
 ## Project Structure
 
 ```
-tikit-os/
+precisionflow/
 ├── apps/
 │   ├── web/           # Next.js web application
 │   └── mobile/        # React Native mobile app (future)

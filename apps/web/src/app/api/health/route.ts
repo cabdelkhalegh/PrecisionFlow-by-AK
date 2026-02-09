@@ -5,7 +5,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import { getSupabase } from '@tikit/database';
+import { getSupabase } from '@precisionflow/database';
 
 export async function GET() {
   const health: Record<string, unknown> = {

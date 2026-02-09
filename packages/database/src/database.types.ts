@@ -1,5 +1,5 @@
 /**
- * Complete Database Type Definitions for TiKiT OS
+ * Complete Database Type Definitions for PrecisionFlow
  * Auto-generated types for Supabase database schema
  */
 

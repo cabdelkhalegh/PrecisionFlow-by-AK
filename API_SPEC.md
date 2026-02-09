@@ -1,6 +1,6 @@
-# 🌐 TiKiT OS - API Specification
+# 🌐 PrecisionFlow - API Specification
 
-**Product:** TiKiT OS — Campaign Execution & Intelligence  
+**Product:** PrecisionFlow — Campaign Execution & Intelligence  
 **API Version:** v1  
 **Date:** February 2026  
 **Protocol:** tRPC (Type-safe RPC) + REST fallback
@@ -9,7 +9,7 @@
 
 ## 📋 Overview
 
-This document defines the API specification for TiKiT OS, designed to serve both web and mobile applications with:
+This document defines the API specification for PrecisionFlow, designed to serve both web and mobile applications with:
 
 - ✅ End-to-end type safety (TypeScript)
 - ✅ Real-time subscriptions
@@ -42,12 +42,12 @@ This document defines the API specification for TiKiT OS, designed to serve both
 
 ```
 Production:
-- Web: https://tikit-os.vercel.app/api/trpc
-- Mobile: https://tikit-os.vercel.app/api/trpc
+- Web: https://precisionflow.vercel.app/api/trpc
+- Mobile: https://precisionflow.vercel.app/api/trpc
 
 Staging:
-- Web: https://staging-tikit-os.vercel.app/api/trpc
-- Mobile: https://staging-tikit-os.vercel.app/api/trpc
+- Web: https://staging-precisionflow.vercel.app/api/trpc
+- Mobile: https://staging-precisionflow.vercel.app/api/trpc
 
 Development:
 - Local: http://localhost:3000/api/trpc
@@ -1358,10 +1358,10 @@ await apiKeys.revoke({ apiKey });
 
 ```
 Allowed Origins:
-  - https://tikit-os.vercel.app
+  - https://precisionflow.vercel.app
   - https://*.vercel.app (preview deployments)
   - http://localhost:3000 (development)
-  - tikit-os:// (mobile app)
+  - precisionflow:// (mobile app)
 ```
 
 ---
@@ -1377,7 +1377,7 @@ import type { AppRouter } from './server/routers/_app';
 const client = createTRPCProxyClient<AppRouter>({
   links: [
     httpBatchLink({
-      url: 'https://tikit-os.vercel.app/api/trpc',
+      url: 'https://precisionflow.vercel.app/api/trpc',
       headers: () => ({
         authorization: `Bearer ${getToken()}`,
       }),
@@ -1428,7 +1428,7 @@ function CampaignList() {
 
 ```
 Development: http://localhost:3000/api/docs
-Production: https://tikit-os.vercel.app/api/docs
+Production: https://precisionflow.vercel.app/api/docs
 ```
 
 ---

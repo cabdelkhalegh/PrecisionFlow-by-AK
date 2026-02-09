@@ -21,7 +21,7 @@ export default function SettingsPage() {
   // Profile form
   const [profile, setProfile] = useState({
     fullName: 'Campaign Manager',
-    email: 'cm@tikit.agency',
+    email: 'cm@precisionflow.app',
     role: 'Campaign Manager',
     timezone: 'America/New_York',
     language: 'en',

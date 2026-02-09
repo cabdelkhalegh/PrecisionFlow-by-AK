@@ -5,7 +5,7 @@ export default function HomePage() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="mx-auto max-w-5xl px-6 py-12 text-center">
         <h1 className="mb-4 text-6xl font-bold text-gray-900">
-          🎯 TiKiT OS
+          🎯 PrecisionFlow
         </h1>
         <p className="mb-4 text-2xl text-gray-700">
           Campaign Execution &amp; Intelligence Platform

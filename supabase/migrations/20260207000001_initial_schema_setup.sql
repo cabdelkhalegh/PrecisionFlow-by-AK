@@ -1,5 +1,5 @@
 -- Migration: 00001_initial_schema_setup
--- Description: Create base functions and triggers for TiKiT OS
+-- Description: Create base functions and triggers for PrecisionFlow
 -- Created: 2026-02-07
 
 -- Enable UUID extension

@@ -1,6 +1,6 @@
-# 🗄️ TiKiT OS - Database Schema
+# 🗄️ PrecisionFlow - Database Schema
 
-**Product:** TiKiT OS — Campaign Execution & Intelligence  
+**Product:** PrecisionFlow — Campaign Execution & Intelligence  
 **Database:** PostgreSQL 15+ (Supabase)  
 **Version:** 1.0  
 **Date:** February 2026
@@ -9,7 +9,7 @@
 
 ## 📋 Overview
 
-This document defines the complete database schema for TiKiT OS, designed for PostgreSQL with Supabase. The schema implements the canonical data model from PRD.md with:
+This document defines the complete database schema for PrecisionFlow, designed for PostgreSQL with Supabase. The schema implements the canonical data model from PRD.md with:
 
 - ✅ Row Level Security (RLS) for multi-tenant isolation
 - ✅ Complete audit trails with triggers

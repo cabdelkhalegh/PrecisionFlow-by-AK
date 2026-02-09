@@ -1,4 +1,4 @@
--- Seed data for TiKiT OS development
+-- Seed data for PrecisionFlow development
 -- Populates the database with realistic test data for local development
 -- Run with: pnpm db:seed  (or via Supabase Studio)
 

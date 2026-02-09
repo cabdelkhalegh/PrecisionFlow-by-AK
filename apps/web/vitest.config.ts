@@ -29,8 +29,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@tikit/types': path.resolve(__dirname, '../../packages/types/src'),
-      '@tikit/api': path.resolve(__dirname, '../../packages/api/src'),
+      '@precisionflow/types': path.resolve(__dirname, '../../packages/types/src'),
+      '@precisionflow/api': path.resolve(__dirname, '../../packages/api/src'),
     },
   },
 });

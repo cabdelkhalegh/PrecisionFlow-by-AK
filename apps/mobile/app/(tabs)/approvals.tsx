@@ -5,7 +5,7 @@
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, RefreshControl, Alert } from 'react-native';
 import { useState } from 'react';
 import { trpc } from '../../lib/trpc';
-import { getApprovalBadgeVariant } from '@tikit/ui';
+import { getApprovalBadgeVariant } from '@precisionflow/ui';
 
 export default function ApprovalsScreen() {
   const [refreshing, setRefreshing] = useState(false);

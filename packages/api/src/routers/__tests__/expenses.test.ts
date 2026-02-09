@@ -12,7 +12,7 @@ import {
 } from '../../test/helpers';
 
 // Mock dependencies
-vi.mock('@tikit/database', () => ({
+vi.mock('@precisionflow/database', () => ({
   supabase: {},
 }));
 

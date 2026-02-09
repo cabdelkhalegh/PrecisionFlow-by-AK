@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Public Navigation', () => {
   test('should load the home page', async ({ page }) => {
     await page.goto('/');
-    await expect(page).toHaveTitle(/TiKiT OS/);
+    await expect(page).toHaveTitle(/PrecisionFlow/);
   });
 
   test('should display the hero section', async ({ page }) => {
