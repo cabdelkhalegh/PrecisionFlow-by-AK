@@ -1,11 +1,12 @@
 [build]
   base = "/"
-  command = "npm install -g pnpm && pnpm install && pnpm run build --filter=web"
+  command = "pnpm install && pnpm run build --filter=web"
   publish = "apps/web/.next"
 
 [build.environment]
   NETLIFY_USE_YARN = "false"
   NODE_VERSION = "20"
+  PNPM_FLAGS = "--shamefully-hoist"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
