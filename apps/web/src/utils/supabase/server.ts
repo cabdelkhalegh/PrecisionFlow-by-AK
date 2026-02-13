@@ -1,3 +1,5 @@
-import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { supabaseBrowser } from '@/lib/supabase-browser';
 
-export const createClient = () => createServerSupabaseClient();
+// Server-side: reuse the same client for now
+// In production, this should use createServerClient from @supabase/ssr
+export const createClient = () => supabaseBrowser;
