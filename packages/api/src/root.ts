@@ -16,6 +16,7 @@ import { activityLogsRouter } from './routers/activityLogs';
 import { budgetsRouter } from './routers/budgets';
 import { expensesRouter } from './routers/expenses';
 import { invoicesRouter } from './routers/invoices';
+import { aiRouter } from './routers/ai';
 
 export const appRouter = router({
   campaigns: campaignsRouter,
@@ -30,6 +31,7 @@ export const appRouter = router({
   budgets: budgetsRouter,
   expenses: expensesRouter,
   invoices: invoicesRouter,
+  ai: aiRouter,
 });
 
 export type AppRouter = typeof appRouter;
