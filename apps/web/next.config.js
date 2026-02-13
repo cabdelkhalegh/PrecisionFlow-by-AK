@@ -1,18 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['@tikit/api', '@tikit/types', '@tikit/database', '@tikit/ai', '@tikit/ui'],
-  output: 'standalone', // Required for Docker deployment
+  transpilePackages: [
+    '@precisionflow/api',
+    '@precisionflow/types',
+    '@precisionflow/database',
+    '@precisionflow/ai',
+    '@precisionflow/ui',
+  ],
   typescript: {
-    // Skip type checking during build (run separately with pnpm typecheck)
     ignoreBuildErrors: true,
-  },
-  eslint: {
-    // Skip ESLint during build (run separately with pnpm lint)
-    ignoreDuringBuilds: true,
-  },
-  experimental: {
-    // Server actions are enabled by default in Next.js 15
   },
   // Environment variables that should be available on the client
   env: {
