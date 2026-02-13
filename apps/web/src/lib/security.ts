@@ -34,8 +34,8 @@ export const securityHeaders: Record<string, string> = {
   'Content-Security-Policy': [
     "default-src 'self'",
     process.env.NODE_ENV === 'production'
-      ? "script-src 'self'"
-      : "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+      ? "script-src 'self' 'unsafe-inline'"
+      : "script-src 'self' 'unsafe-eval' 'unsafe-inline'", // Next.js App Router needs inline bootstrap scripts
     "style-src 'self' 'unsafe-inline'", // Tailwind requires inline styles
     "img-src 'self' data: https:",
     "font-src 'self' data:",
