@@ -32,7 +32,7 @@ export default function SignupPage() {
 
     setLoading(true);
 
-    const { error: authError } = await supabaseBrowser.auth.signUp({
+    const { data, error: authError } = await supabaseBrowser.auth.signUp({
       email,
       password,
       options: {
@@ -45,6 +45,13 @@ export default function SignupPage() {
     if (authError) {
       setError(authError.message);
       setLoading(false);
+      return;
+    }
+
+    // If email confirmations are disabled, Supabase returns a session immediately
+    if (data.session) {
+      router.push('/dashboard');
+      router.refresh();
       return;
     }
 

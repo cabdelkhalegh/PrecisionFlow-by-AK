@@ -7,6 +7,8 @@
   NETLIFY_USE_YARN = "false"
   NODE_VERSION = "20"
   PNPM_FLAGS = "--shamefully-hoist"
+  NEXT_PUBLIC_SUPABASE_URL = "https://lkyfzpgyczzqwyuoydgz.supabase.co"
+  NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxreWZ6cGd5Y3p6cXd5dW95ZGd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzNjcxNjIsImV4cCI6MjA4NTk0MzE2Mn0.RWT2K9oJbegbiLscbm1AGEtUytFk_vqFpXLDIv9ADCY"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
