@@ -9,6 +9,20 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabaseBrowser } from './supabase-browser';
 
+/**
+ * Sync a simple cookie so the Next.js middleware can detect auth state.
+ * Supabase JS v2 stores sessions in localStorage (not cookies), so
+ * the middleware has no way to know about the session otherwise.
+ */
+function syncAuthCookie(isAuthenticated: boolean) {
+  if (typeof document === 'undefined') return;
+  if (isAuthenticated) {
+    document.cookie = 'pf-auth=1; path=/; max-age=86400; SameSite=Lax';
+  } else {
+    document.cookie = 'pf-auth=; path=/; max-age=0; SameSite=Lax';
+  }
+}
+
 interface AuthContextType {
   user: User | null;
   session: Session | null;
@@ -34,6 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setSession(s);
       setUser(s?.user ?? null);
       setLoading(false);
+      syncAuthCookie(!!s);
     });
 
     // Listen for auth changes
@@ -43,6 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setSession(s);
       setUser(s?.user ?? null);
       setLoading(false);
+      syncAuthCookie(!!s);
     });
 
     return () => subscription.unsubscribe();
@@ -50,6 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     await supabaseBrowser.auth.signOut();
+    syncAuthCookie(false);
   };
 
   return (

@@ -38,11 +38,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check for Supabase auth token in cookies
-  // Supabase stores session as sb-<project-ref>-auth-token
-  const hasAuthCookie = request.cookies.getAll().some(
-    (cookie) => /^sb-[a-z]+-auth-token$/.test(cookie.name)
-  );
+  // Check for the auth cookie synced by AuthProvider.
+  // Supabase JS v2 stores sessions in localStorage, so the AuthProvider
+  // sets a simple pf-auth cookie so the middleware can detect auth state.
+  const hasAuthCookie = request.cookies.has('pf-auth');
 
   if (!hasAuthCookie) {
     const loginUrl = new URL('/login', request.url);
