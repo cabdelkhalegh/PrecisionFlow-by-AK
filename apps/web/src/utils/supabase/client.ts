@@ -1,3 +1,3 @@
-import { createBrowserSupabaseClient } from '@/lib/supabase/client';
+import { supabaseBrowser } from '@/lib/supabase-browser';
 
-export const createClient = () => createBrowserSupabaseClient();
+export const createClient = () => supabaseBrowser;
