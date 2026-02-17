@@ -279,7 +279,7 @@ describe('ContentArtifacts Router', () => {
         comments: 'Looks great!',
       });
 
-      expect(result.status).toBe('approved');
+      expect((result as any).status).toBe('approved');
     });
   });
 
@@ -305,7 +305,7 @@ describe('ContentArtifacts Router', () => {
         comments: 'Fix the audio levels',
       });
 
-      expect(result.status).toBe('changes_requested');
+      expect((result as any).status).toBe('changes_requested');
     });
   });
 

@@ -85,9 +85,8 @@ export const shortlistsRouter = router({
       
       const { data, error } = await db
         .from('campaign_shortlists')
-        .update({ 
-          status: 'removed',
-          deleted_at: new Date().toISOString() 
+        .update({
+          status: 'rejected',
         })
         .eq('campaign_id', input.campaign_id)
         .eq('creator_id', input.creator_id)

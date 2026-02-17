@@ -150,7 +150,7 @@ export const contentArtifactsRouter = router({
       const { data, error } = await db
         .from('content_artifacts')
         .update({
-          status: 'approved',
+          approval_status: 'approved',
           reviewed_at: new Date().toISOString(),
           reviewed_by: user.id,
           review_comments: input.comments,
@@ -177,7 +177,7 @@ export const contentArtifactsRouter = router({
       const { data, error } = await db
         .from('content_artifacts')
         .update({
-          status: 'changes_requested',
+          approval_status: 'changes_requested',
           reviewed_at: new Date().toISOString(),
           reviewed_by: user.id,
           review_comments: input.comments,

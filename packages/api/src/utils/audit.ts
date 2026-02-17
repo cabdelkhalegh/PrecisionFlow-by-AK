@@ -25,11 +25,10 @@ export async function logAudit(params: {
     await supabase.from('audit_logs').insert({
       table_name: tableName,
       record_id: recordId,
-      action,
-      old_data: oldData,
-      new_data: newData,
+      action: action === 'created' ? 'INSERT' : action === 'updated' ? 'UPDATE' : 'DELETE',
+      old_data: oldData as any,
+      new_data: newData as any,
       user_id: userId,
-      timestamp: new Date().toISOString(),
     });
   } catch (error) {
     // Log error but don't fail the operation

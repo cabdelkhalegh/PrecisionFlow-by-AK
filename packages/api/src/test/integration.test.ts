@@ -65,7 +65,7 @@ describe('Phase 2 Integration Tests', () => {
       const result = await caller.create({
         name: 'Test Campaign',
         clientId: mockClient.id,
-        budget: 10000,
+        budgetTotal: 10000,
         startDate: '2024-01-01',
         endDate: '2024-12-31',
       });
@@ -195,7 +195,7 @@ describe('Phase 2 Integration Tests', () => {
 
       expect(result).toBeTruthy();
       expect(result?.campaign_id).toBe(mockCampaign.id);
-      expect(result?.is_latest).toBe(true);
+      expect((result as any)?.is_latest).toBe(true);
     });
 
     it('should update campaign risk when brief is processed', async () => {
@@ -309,7 +309,7 @@ describe('Phase 2 Integration Tests', () => {
       await caller.create({
         name: 'Test Campaign',
         clientId: 'c0000000-0000-0000-0000-000000000001',
-        budget: 10000,
+        budgetTotal: 10000,
         startDate: '2024-01-01',
         endDate: '2024-12-31',
       });
@@ -446,14 +446,14 @@ describe('Phase 2 Integration Tests', () => {
       await caller.create({
         name: 'Test Campaign',
         clientId: 'c0000000-0000-0000-0000-000000000001',
-        budget: 10000,
+        budgetTotal: 10000,
         startDate: '2024-01-01',
         endDate: '2024-12-31',
       });
 
       expect(capturedAuditLog).toBeTruthy();
       expect(capturedAuditLog.user_id).toBe(mockUser.id);
-      expect(capturedAuditLog.timestamp).toBeTruthy();
+      expect(capturedAuditLog.table_name).toBe('campaigns');
     });
   });
 

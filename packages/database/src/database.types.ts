@@ -45,6 +45,7 @@ export interface Database {
           updated_at?: string
           deleted_at?: string | null
         }
+        Relationships: []
       }
       clients: {
         Row: {
@@ -83,6 +84,22 @@ export interface Database {
           deleted_at?: string | null
           created_by?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'clients_account_manager_id_fkey'
+            columns: ['account_manager_id']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'clients_created_by_fkey'
+            columns: ['created_by']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
       }
       campaigns: {
         Row: {
@@ -130,6 +147,22 @@ export interface Database {
           deleted_at?: string | null
           created_by?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'campaigns_client_id_fkey'
+            columns: ['client_id']
+            isOneToOne: false
+            referencedRelation: 'clients'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'campaigns_created_by_fkey'
+            columns: ['created_by']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
       }
       briefs: {
         Row: {
@@ -165,6 +198,22 @@ export interface Database {
           updated_at?: string
           created_by?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'briefs_campaign_id_fkey'
+            columns: ['campaign_id']
+            isOneToOne: false
+            referencedRelation: 'campaigns'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'briefs_created_by_fkey'
+            columns: ['created_by']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
       }
       approvals: {
         Row: {
@@ -200,6 +249,29 @@ export interface Database {
           requested_at?: string
           responded_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'approvals_campaign_id_fkey'
+            columns: ['campaign_id']
+            isOneToOne: false
+            referencedRelation: 'campaigns'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'approvals_requested_by_fkey'
+            columns: ['requested_by']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'approvals_approved_by_fkey'
+            columns: ['approved_by']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
       }
       creators: {
         Row: {
@@ -247,6 +319,7 @@ export interface Database {
           updated_at?: string
           deleted_at?: string | null
         }
+        Relationships: []
       }
       campaign_shortlists: {
         Row: {
@@ -279,6 +352,22 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'campaign_shortlists_campaign_id_fkey'
+            columns: ['campaign_id']
+            isOneToOne: false
+            referencedRelation: 'campaigns'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'campaign_shortlists_creator_id_fkey'
+            columns: ['creator_id']
+            isOneToOne: false
+            referencedRelation: 'creators'
+            referencedColumns: ['id']
+          },
+        ]
       }
       content_tasks: {
         Row: {
@@ -323,6 +412,22 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'content_tasks_campaign_id_fkey'
+            columns: ['campaign_id']
+            isOneToOne: false
+            referencedRelation: 'campaigns'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'content_tasks_creator_id_fkey'
+            columns: ['creator_id']
+            isOneToOne: false
+            referencedRelation: 'creators'
+            referencedColumns: ['id']
+          },
+        ]
       }
       content_artifacts: {
         Row: {
@@ -361,6 +466,15 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'content_artifacts_content_task_id_fkey'
+            columns: ['content_task_id']
+            isOneToOne: false
+            referencedRelation: 'content_tasks'
+            referencedColumns: ['id']
+          },
+        ]
       }
       budgets: {
         Row: {
@@ -396,6 +510,15 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'budgets_campaign_id_fkey'
+            columns: ['campaign_id']
+            isOneToOne: false
+            referencedRelation: 'campaigns'
+            referencedColumns: ['id']
+          },
+        ]
       }
       expenses: {
         Row: {
@@ -440,6 +563,22 @@ export interface Database {
           updated_at?: string
           created_by?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'expenses_campaign_id_fkey'
+            columns: ['campaign_id']
+            isOneToOne: false
+            referencedRelation: 'campaigns'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'expenses_created_by_fkey'
+            columns: ['created_by']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
       }
       invoices: {
         Row: {
@@ -481,6 +620,22 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'invoices_campaign_id_fkey'
+            columns: ['campaign_id']
+            isOneToOne: false
+            referencedRelation: 'campaigns'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'invoices_creator_id_fkey'
+            columns: ['creator_id']
+            isOneToOne: false
+            referencedRelation: 'creators'
+            referencedColumns: ['id']
+          },
+        ]
       }
       payments: {
         Row: {
@@ -516,6 +671,15 @@ export interface Database {
           notes?: string | null
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'payments_invoice_id_fkey'
+            columns: ['invoice_id']
+            isOneToOne: false
+            referencedRelation: 'invoices'
+            referencedColumns: ['id']
+          },
+        ]
       }
       audit_logs: {
         Row: {
@@ -548,6 +712,15 @@ export interface Database {
           user_id?: string | null
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'audit_logs_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
       }
     }
     Views: {
@@ -557,6 +730,9 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
       [_ in never]: never
     }
   }

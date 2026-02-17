@@ -18,7 +18,7 @@ export const invoicesRouter = router({
         campaignId: z.string().uuid(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        status: z.string().optional(),
+        status: z.enum(['draft', 'sent', 'paid', 'overdue', 'cancelled']).optional(),
       })
     )
     .query(async ({ ctx, input }) => {

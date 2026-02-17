@@ -2,11 +2,11 @@ import { z } from 'zod';
 import { protectedProcedure, directorProcedure, router } from '../trpc';
 import { logCreation, logUpdate } from '../utils/audit';
 
-// Approval type enum
-const approvalTypeSchema = z.enum(['brief', 'strategy', 'shortlist', 'content', 'budget_revision']);
+// Approval type enum - matches database schema
+const approvalTypeSchema = z.enum(['campaign', 'brief', 'budget', 'content', 'expense']);
 
-// Approval status enum
-const approvalStatusSchema = z.enum(['pending', 'approved', 'rejected', 'overridden']);
+// Approval status enum - matches database schema
+const approvalStatusSchema = z.enum(['pending', 'approved', 'rejected', 'override']);
 
 export const approvalsRouter = router({
   // List all approvals (with filtering)
@@ -23,8 +23,8 @@ export const approvalsRouter = router({
     .query(async ({ ctx, input }) => {
       let query = ctx.supabase
         .from('approvals')
-        .select('*, campaigns(name, client_id), users!approvals_approver_id_fkey(full_name, email)')
-        .order('created_at', { ascending: false })
+        .select('*, campaigns(name, client_id)')
+        .order('requested_at', { ascending: false })
         .range(input.offset, input.offset + input.limit - 1);
 
       if (input.campaignId) {
@@ -34,7 +34,7 @@ export const approvalsRouter = router({
         query = query.eq('status', input.status);
       }
       if (input.type) {
-        query = query.eq('approval_type', input.type);
+        query = query.eq('type', input.type);
       }
 
       const { data, error } = await query;
@@ -48,9 +48,9 @@ export const approvalsRouter = router({
     const { data, error } = await ctx.supabase
       .from('approvals')
       .select('*, campaigns(name, client_id)')
-      .eq('approver_id', ctx.user.id)
+      .eq('requested_by', ctx.user.id)
       .eq('status', 'pending')
-      .order('created_at', { ascending: false });
+      .order('requested_at', { ascending: false });
 
     if (error) throw new Error(error.message);
     return data || [];
@@ -62,7 +62,7 @@ export const approvalsRouter = router({
     .query(async ({ ctx, input }) => {
       const { data, error } = await ctx.supabase
         .from('approvals')
-        .select('*, campaigns(name, client_id), users!approvals_approver_id_fkey(full_name, email)')
+        .select('*, campaigns(name, client_id)')
         .eq('id', input.id)
         .single();
 
@@ -76,9 +76,9 @@ export const approvalsRouter = router({
     .query(async ({ ctx, input }) => {
       const { data, error } = await ctx.supabase
         .from('approvals')
-        .select('*, users!approvals_approver_id_fkey(full_name, email)')
+        .select('*')
         .eq('campaign_id', input.campaignId)
-        .order('created_at', { ascending: false });
+        .order('requested_at', { ascending: false });
 
       if (error) throw new Error(error.message);
       return data || [];
@@ -89,10 +89,8 @@ export const approvalsRouter = router({
     .input(
       z.object({
         campaignId: z.string().uuid(),
-        approvalType: approvalTypeSchema,
-        approverId: z.string().uuid(),
-        requestNotes: z.string().optional(),
-        metadata: z.record(z.any()).optional(),
+        type: approvalTypeSchema,
+        comment: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -100,11 +98,10 @@ export const approvalsRouter = router({
         .from('approvals')
         .insert({
           campaign_id: input.campaignId,
-          approval_type: input.approvalType,
-          approver_id: input.approverId,
+          type: input.type,
+          requested_by: ctx.user.id,
           status: 'pending',
-          request_notes: input.requestNotes,
-          metadata: input.metadata,
+          comment: input.comment ?? null,
         })
         .select()
         .single();
@@ -132,7 +129,6 @@ export const approvalsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      // Verify user is the approver
       const { data: approval, error: fetchError } = await ctx.supabase
         .from('approvals')
         .select('*')
@@ -141,16 +137,14 @@ export const approvalsRouter = router({
 
       if (fetchError) throw new Error(fetchError.message);
       if (!approval) throw new Error('Approval not found');
-      if (approval.approver_id !== ctx.user.id) {
-        throw new Error('Only the designated approver can approve this request');
-      }
 
       const { data, error } = await ctx.supabase
         .from('approvals')
         .update({
-          status: 'approved',
-          approved_at: new Date().toISOString(),
-          approver_comments: input.comments,
+          status: 'approved' as const,
+          approved_by: ctx.user.id,
+          responded_at: new Date().toISOString(),
+          comment: input.comments ?? null,
         })
         .eq('id', input.id)
         .select()
@@ -180,7 +174,6 @@ export const approvalsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      // Verify user is the approver
       const { data: approval, error: fetchError } = await ctx.supabase
         .from('approvals')
         .select('*')
@@ -189,16 +182,14 @@ export const approvalsRouter = router({
 
       if (fetchError) throw new Error(fetchError.message);
       if (!approval) throw new Error('Approval not found');
-      if (approval.approver_id !== ctx.user.id) {
-        throw new Error('Only the designated approver can reject this request');
-      }
 
       const { data, error } = await ctx.supabase
         .from('approvals')
         .update({
-          status: 'rejected',
-          approved_at: new Date().toISOString(),
-          approver_comments: input.reason,
+          status: 'rejected' as const,
+          approved_by: ctx.user.id,
+          responded_at: new Date().toISOString(),
+          comment: input.reason,
         })
         .eq('id', input.id)
         .select()
@@ -239,11 +230,10 @@ export const approvalsRouter = router({
       const { data, error } = await ctx.supabase
         .from('approvals')
         .update({
-          status: 'overridden',
-          approved_at: new Date().toISOString(),
-          approver_comments: `OVERRIDE: ${input.comments}`,
-          override_status: input.newStatus,
-          overridden_by: ctx.user.id,
+          status: 'override' as const,
+          approved_by: ctx.user.id,
+          responded_at: new Date().toISOString(),
+          comment: `OVERRIDE (${input.newStatus}): ${input.comments}`,
         })
         .eq('id', input.id)
         .select()
@@ -271,7 +261,7 @@ export const approvalsRouter = router({
     const { count, error } = await ctx.supabase
       .from('approvals')
       .select('*', { count: 'exact', head: true })
-      .eq('approver_id', ctx.user.id)
+      .eq('requested_by', ctx.user.id)
       .eq('status', 'pending');
 
     if (error) throw new Error(error.message);

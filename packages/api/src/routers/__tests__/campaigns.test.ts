@@ -216,7 +216,7 @@ describe('Campaigns Router', () => {
       }));
     });
 
-    it('should assign campaign_manager_id to current user', async () => {
+    it('should assign created_by to current user', async () => {
       const insertSpy = vi.fn().mockReturnValue({
         select: vi.fn().mockReturnValue({
           single: vi.fn().mockResolvedValue(mockSuccessResponse(createMockCampaign())),
@@ -234,7 +234,7 @@ describe('Campaigns Router', () => {
       });
 
       expect(insertSpy).toHaveBeenCalledWith(expect.objectContaining({
-        campaign_manager_id: mockUser.id,
+        created_by: mockUser.id,
       }));
     });
 
@@ -393,7 +393,7 @@ describe('Campaigns Router', () => {
       expect(auditInsertSpy).toHaveBeenCalledWith(expect.objectContaining({
         table_name: 'campaigns',
         record_id: mockCampaign.id,
-        action: 'created',
+        action: 'INSERT',
         user_id: mockUser.id,
       }));
     });
@@ -438,7 +438,7 @@ describe('Campaigns Router', () => {
       expect(auditInsertSpy).toHaveBeenCalledWith(expect.objectContaining({
         table_name: 'campaigns',
         record_id: 'b0000000-0000-0000-0000-000000000001',
-        action: 'updated',
+        action: 'UPDATE',
         user_id: mockUser.id,
       }));
     });
@@ -474,7 +474,7 @@ describe('Campaigns Router', () => {
       expect(auditInsertSpy).toHaveBeenCalledWith(expect.objectContaining({
         table_name: 'campaigns',
         record_id: 'b0000000-0000-0000-0000-000000000001',
-        action: 'deleted',
+        action: 'DELETE',
         user_id: mockUser.id,
       }));
     });

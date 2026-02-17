@@ -53,7 +53,7 @@ export default async function CampaignProposals({ params }: { params: { id: stri
                     <h3 className="text-xl font-bold text-gray-900">{prop.influencer?.full_name}</h3>
                     <p className="text-sm text-gray-500 mb-2">{prop.influencer?.bio?.substring(0, 100)}...</p>
                     <div className="bg-gray-50 p-3 rounded text-gray-700 italic border-l-4 border-green-500">
-                      "{prop.pitch}"
+                      &quot;{prop.pitch}&quot;
                     </div>
                   </div>
                 </div>

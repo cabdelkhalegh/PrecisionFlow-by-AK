@@ -16,8 +16,8 @@ describe('Approvals Router', () => {
   describe('list', () => {
     it('should list all approvals', async () => {
       const mockApprovals = [
-        { id: 'aa000000-0000-0000-0000-000000000001', campaign_id: 'b0000000-0000-0000-0000-000000000011', status: 'pending', approval_type: 'brief' },
-        { id: 'aa000000-0000-0000-0000-000000000002', campaign_id: 'b0000000-0000-0000-0000-000000000012', status: 'approved', approval_type: 'strategy' },
+        { id: 'aa000000-0000-0000-0000-000000000001', campaign_id: 'b0000000-0000-0000-0000-000000000011', status: 'pending', type: 'brief' },
+        { id: 'aa000000-0000-0000-0000-000000000002', campaign_id: 'b0000000-0000-0000-0000-000000000012', status: 'approved', type: 'campaign' },
       ];
 
       mockSupabase.from().select().order().range.mockResolvedValue(
@@ -62,7 +62,7 @@ describe('Approvals Router', () => {
 
     it('should filter by approval type', async () => {
       const mockApprovals = [
-        { id: 'aa000000-0000-0000-0000-000000000001', approval_type: 'brief' },
+        { id: 'aa000000-0000-0000-0000-000000000001', type: 'brief' },
       ];
 
       mockSupabase.from().select().order().range().eq.mockResolvedValue(
@@ -90,7 +90,7 @@ describe('Approvals Router', () => {
   describe('getPendingForUser', () => {
     it('should get pending approvals for current user', async () => {
       const mockApprovals = [
-        { id: 'aa000000-0000-0000-0000-000000000001', approver_id: mockUser.id, status: 'pending' },
+        { id: 'aa000000-0000-0000-0000-000000000001', requested_by: mockUser.id, status: 'pending' },
       ];
 
       mockSupabase.from().select().eq().eq().order.mockResolvedValue(
@@ -142,8 +142,8 @@ describe('Approvals Router', () => {
       const mockApproval = {
         id: 'aa000000-0000-0000-0000-000000000001',
         campaign_id: 'b0000000-0000-0000-0000-000000000011',
-        approval_type: 'brief',
-        approver_id: 'a0000000-0000-0000-0000-000000000011',
+        type: 'brief',
+        requested_by: mockUser.id,
         status: 'pending',
       };
 
@@ -154,8 +154,7 @@ describe('Approvals Router', () => {
       const caller = approvalsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       const result = await caller.create({
         campaignId: 'b0000000-0000-0000-0000-000000000011',
-        approvalType: 'brief',
-        approverId: 'a0000000-0000-0000-0000-000000000011',
+        type: 'brief',
       });
 
       expect(result).toEqual(mockApproval);
@@ -167,8 +166,7 @@ describe('Approvals Router', () => {
       await expect(
         caller.create({
           campaignId: 'invalid-uuid',
-          approvalType: 'brief',
-          approverId: 'a0000000-0000-0000-0000-000000000011',
+          type: 'brief',
         })
       ).rejects.toThrow();
     });
@@ -177,8 +175,8 @@ describe('Approvals Router', () => {
       const mockApproval = {
         id: 'aa000000-0000-0000-0000-000000000001',
         campaign_id: 'b0000000-0000-0000-0000-000000000011',
-        approval_type: 'brief',
-        approver_id: 'a0000000-0000-0000-0000-000000000011',
+        type: 'brief',
+        requested_by: mockUser.id,
       };
 
       mockSupabase.from().insert().select().single.mockResolvedValue(
@@ -188,8 +186,7 @@ describe('Approvals Router', () => {
       const caller = approvalsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       await caller.create({
         campaignId: 'b0000000-0000-0000-0000-000000000011',
-        approvalType: 'brief',
-        approverId: 'a0000000-0000-0000-0000-000000000011',
+        type: 'brief',
       });
 
       // Verify audit log was created
@@ -198,17 +195,17 @@ describe('Approvals Router', () => {
   });
 
   describe('approve', () => {
-    it('should approve as designated approver', async () => {
+    it('should approve an approval request', async () => {
       const mockApproval = {
         id: 'aa000000-0000-0000-0000-000000000001',
-        approver_id: mockUser.id,
         status: 'pending',
       };
 
       const mockUpdated = {
         ...mockApproval,
         status: 'approved',
-        approved_at: expect.any(String),
+        approved_by: mockUser.id,
+        responded_at: expect.any(String),
       };
 
       mockSupabase.from().select().eq().single.mockResolvedValue(
@@ -225,28 +222,21 @@ describe('Approvals Router', () => {
       expect(result.status).toBe('approved');
     });
 
-    it('should not allow non-approver to approve', async () => {
-      const mockApproval = {
-        id: 'aa000000-0000-0000-0000-000000000001',
-        approver_id: 'a0000000-0000-0000-0000-000000000099',
-        status: 'pending',
-      };
-
+    it('should throw if approval not found', async () => {
       mockSupabase.from().select().eq().single.mockResolvedValue(
-        mockSuccessResponse(mockApproval)
+        mockErrorResponse('Approval not found')
       );
 
       const caller = approvalsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
 
       await expect(
         caller.approve({ id: 'aa000000-0000-0000-0000-000000000001' })
-      ).rejects.toThrow('Only the designated approver can approve this request');
+      ).rejects.toThrow();
     });
 
     it('should update status on approve', async () => {
       const mockApproval = {
         id: 'aa000000-0000-0000-0000-000000000001',
-        approver_id: mockUser.id,
         status: 'pending',
       };
 
@@ -269,7 +259,6 @@ describe('Approvals Router', () => {
     it('should create audit log on approve', async () => {
       const mockApproval = {
         id: 'aa000000-0000-0000-0000-000000000001',
-        approver_id: mockUser.id,
         status: 'pending',
       };
 
@@ -290,10 +279,9 @@ describe('Approvals Router', () => {
   });
 
   describe('reject', () => {
-    it('should reject as designated approver', async () => {
+    it('should reject an approval request', async () => {
       const mockApproval = {
         id: 'aa000000-0000-0000-0000-000000000001',
-        approver_id: mockUser.id,
         status: 'pending',
       };
 
@@ -311,22 +299,16 @@ describe('Approvals Router', () => {
       expect(result.status).toBe('rejected');
     });
 
-    it('should not allow non-approver to reject', async () => {
-      const mockApproval = {
-        id: 'aa000000-0000-0000-0000-000000000001',
-        approver_id: 'a0000000-0000-0000-0000-000000000099',
-        status: 'pending',
-      };
-
+    it('should throw if approval not found on reject', async () => {
       mockSupabase.from().select().eq().single.mockResolvedValue(
-        mockSuccessResponse(mockApproval)
+        mockErrorResponse('Approval not found')
       );
 
       const caller = approvalsRouter.createCaller({ user: mockUser, supabase: mockSupabase });
 
       await expect(
         caller.reject({ id: 'aa000000-0000-0000-0000-000000000001', reason: 'Not ready' })
-      ).rejects.toThrow('Only the designated approver can reject this request');
+      ).rejects.toThrow();
     });
 
     it('should require rejection reason', async () => {
@@ -340,7 +322,6 @@ describe('Approvals Router', () => {
     it('should create audit log on reject', async () => {
       const mockApproval = {
         id: 'aa000000-0000-0000-0000-000000000001',
-        approver_id: mockUser.id,
         status: 'pending',
       };
 
@@ -387,7 +368,7 @@ describe('Approvals Router', () => {
             update: vi.fn().mockReturnValue({
               eq: vi.fn().mockReturnValue({
                 select: vi.fn().mockReturnValue({
-                  single: vi.fn().mockResolvedValue(mockSuccessResponse({ ...mockApproval, status: 'overridden' })),
+                  single: vi.fn().mockResolvedValue(mockSuccessResponse({ ...mockApproval, status: 'override' })),
                 }),
               }),
             }),
@@ -408,7 +389,7 @@ describe('Approvals Router', () => {
         comments: 'Override reason',
       });
 
-      expect(result.status).toBe('overridden');
+      expect(result.status).toBe('override');
     });
 
     it('should not allow non-director to override', async () => {
@@ -441,7 +422,7 @@ describe('Approvals Router', () => {
         eq: vi.fn().mockReturnValue({
           select: vi.fn().mockReturnValue({
             single: vi.fn().mockResolvedValue(
-              mockSuccessResponse({ id: 'aa000000-0000-0000-0000-000000000001', status: 'overridden', override_status: 'approved' })
+              mockSuccessResponse({ id: 'aa000000-0000-0000-0000-000000000001', status: 'override' })
             ),
           }),
         }),
@@ -484,8 +465,7 @@ describe('Approvals Router', () => {
 
       expect(updateSpy).toHaveBeenCalledWith(
         expect.objectContaining({
-          status: 'overridden',
-          override_status: 'approved',
+          status: 'override',
         })
       );
     });
@@ -516,7 +496,7 @@ describe('Approvals Router', () => {
             update: vi.fn().mockReturnValue({
               eq: vi.fn().mockReturnValue({
                 select: vi.fn().mockReturnValue({
-                  single: vi.fn().mockResolvedValue(mockSuccessResponse({ ...mockApproval, status: 'overridden' })),
+                  single: vi.fn().mockResolvedValue(mockSuccessResponse({ ...mockApproval, status: 'override' })),
                 }),
               }),
             }),

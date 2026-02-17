@@ -279,22 +279,11 @@ export const contentTasksRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { supabase: db } = ctx;
       
-      // Get current revision notes
-      const { data: task } = await db
-        .from('content_tasks')
-        .select('revision_notes')
-        .eq('id', input.id)
-        .single();
-      
-      const existingNotes = task?.revision_notes || [];
-      const newNotes = [...existingNotes, input.revision_notes];
-      
       const { data, error } = await db
         .from('content_tasks')
         .update({
           status: 'changes_requested',
-          revision_notes: newNotes,
-          feedback: input.revision_notes,
+          description: input.revision_notes,
         })
         .eq('id', input.id)
         .is('deleted_at', null)

@@ -9,7 +9,7 @@ import type { Database } from '@precisionflow/database';
 /**
  * Create a mock Supabase client for testing
  */
-export function createMockSupabaseClient(): SupabaseClient<Database> {
+export function createMockSupabaseClient(): any {
   const mockClient = {
     from: vi.fn().mockReturnThis(),
     select: vi.fn().mockReturnThis(),
@@ -42,6 +42,10 @@ export function createMockUser(overrides = {}) {
     id: 'a0000000-0000-0000-0000-000000000001',
     email: 'test@example.com',
     role: 'authenticated',
+    aud: 'authenticated',
+    app_metadata: {},
+    user_metadata: {},
+    created_at: new Date().toISOString(),
     ...overrides,
   };
 }

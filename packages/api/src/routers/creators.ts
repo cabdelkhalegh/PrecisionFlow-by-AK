@@ -228,29 +228,19 @@ export const creatorsRouter = router({
       // Get creator's completed tasks with pagination (limit to last 100 for performance)
       const { data: tasks, error, count } = await db
         .from('content_tasks')
-        .select('views, engagement_rate, created_at', { count: 'exact' })
+        .select('id, title, status, deliverable_type, created_at', { count: 'exact' })
         .eq('creator_id', input.id)
         .in('status', ['approved', 'published'])
         .order('created_at', { ascending: false })
         .limit(100);
-      
+
       if (error) throw new Error(`Failed to fetch performance: ${error.message}`);
-      
-      // Calculate aggregate metrics in a single pass
-      let totalViews = 0;
-      let totalEngagement = 0;
+
       const taskCount = tasks?.length || 0;
       const recentTasks = tasks?.slice(0, 5) || [];
-      
-      tasks?.forEach(t => {
-        totalViews += t.views || 0;
-        totalEngagement += t.engagement_rate || 0;
-      });
-      
+
       return {
-        totalTasksCompleted: taskCount, // Number of tasks analyzed (limited to 100)
-        averageViews: taskCount > 0 ? Math.round(totalViews / taskCount) : 0,
-        averageEngagementRate: taskCount > 0 ? parseFloat((totalEngagement / taskCount).toFixed(2)) : 0,
+        totalTasksCompleted: taskCount,
         recentTasks,
       };
     }),

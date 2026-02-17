@@ -211,7 +211,7 @@ describe('Clients Router', () => {
       });
 
       expect(result.name).toBe('New Client');
-      expect(result.email).toBe('client@example.com');
+      expect((result as any).email).toBe('client@example.com');
     });
 
     it('should assign account manager on creation', async () => {

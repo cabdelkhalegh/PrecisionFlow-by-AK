@@ -17,7 +17,7 @@ export const clientsRouter = router({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
         search: z.string().optional(),
-        tier: z.string().optional(),
+        tier: z.enum(['bronze', 'silver', 'gold', 'platinum']).optional(),
       })
     )
     .query(async ({ ctx, input }) => {
@@ -106,14 +106,11 @@ export const clientsRouter = router({
         .from('clients')
         .insert({
           name: input.name,
-          company_name: input.companyName,
-          email: input.email,
-          phone: input.phone,
-          industry: input.industry,
-          website: input.website,
+          contact_email: input.email,
+          contact_phone: input.phone,
           tier: input.tier,
-          address: input.address,
           account_manager_id: ctx.user.id,
+          created_by: ctx.user.id,
         })
         .select()
         .single();

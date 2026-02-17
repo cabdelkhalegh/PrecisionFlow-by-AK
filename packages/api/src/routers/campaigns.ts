@@ -17,7 +17,7 @@ export const campaignsRouter = router({
       z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        status: z.string().optional(),
+        status: z.enum(['draft', 'pending_approval', 'approved', 'active', 'completed', 'cancelled']).optional(),
         clientId: z.string().uuid().optional(),
       })
     )
@@ -97,11 +97,10 @@ export const campaignsRouter = router({
         .insert({
           name: input.name,
           client_id: input.clientId,
-          campaign_manager_id: ctx.user.id,
+          created_by: ctx.user.id,
           start_date: input.startDate,
           end_date: input.endDate,
-          budget_total: input.budgetTotal,
-          tags: input.tags || [],
+          budget: input.budgetTotal,
           status: 'draft',
         })
         .select()

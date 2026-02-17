@@ -133,7 +133,7 @@ describe('Briefs Router', () => {
       });
 
       expect(result).toBeTruthy();
-      expect(result?.is_latest).toBe(true);
+      expect((result as any)?.is_latest).toBe(true);
     });
 
     it('should return null if no latest brief exists', async () => {
@@ -251,8 +251,8 @@ describe('Briefs Router', () => {
         rawContent: 'Test brief content',
       });
 
-      expect(result.version).toBe(1);
-      expect(result.is_latest).toBe(true);
+      expect((result as any).version).toBe(1);
+      expect((result as any).is_latest).toBe(true);
     });
 
     it('should upload a new version and mark previous as not latest', async () => {
@@ -300,8 +300,8 @@ describe('Briefs Router', () => {
         rawContent: 'Updated brief content',
       });
 
-      expect(result.version).toBe(2);
-      expect(result.is_latest).toBe(true);
+      expect((result as any).version).toBe(2);
+      expect((result as any).is_latest).toBe(true);
     });
 
     it('should call from with briefs table on upload', async () => {
@@ -471,7 +471,7 @@ describe('Briefs Router', () => {
       const result = await caller.processWithAI({ id: brief.id });
 
       expect(result.structured_data).toBeTruthy();
-      expect(result.structured_data.missing_info).toContain('AI processing failed - manual review required');
+      expect((result.structured_data as any).missing_info).toContain('AI processing failed - manual review required');
     });
 
     it('should throw error if brief has no content', async () => {
@@ -612,10 +612,9 @@ describe('Briefs Router', () => {
   describe('approve', () => {
     it('should approve a brief', async () => {
       const approvedBrief = createMockBrief({
-        is_approved: true,
-        approved_by: mockUser.id,
+        extraction_status: 'completed',
       });
-      
+
       mockSupabase.from.mockReturnValue({
         select: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({
@@ -628,12 +627,10 @@ describe('Briefs Router', () => {
         }),
         update: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({
-            is: vi.fn().mockReturnValue({
-              select: vi.fn().mockReturnValue({
-                single: vi.fn().mockResolvedValue(
-                  mockSuccessResponse(approvedBrief)
-                ),
-              }),
+            select: vi.fn().mockReturnValue({
+              single: vi.fn().mockResolvedValue(
+                mockSuccessResponse(approvedBrief)
+              ),
             }),
           }),
         }),
@@ -649,8 +646,7 @@ describe('Briefs Router', () => {
         comments: 'Looks good!',
       });
 
-      expect(result.is_approved).toBe(true);
-      expect(result.approved_by).toBe(mockUser.id);
+      expect(result.extraction_status).toBe('completed');
     });
   });
 });

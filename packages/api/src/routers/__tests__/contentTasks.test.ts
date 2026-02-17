@@ -325,16 +325,6 @@ describe('ContentTasks Router', () => {
 
   describe('requestChanges', () => {
     it('should request changes with revision notes', async () => {
-      // First call: get existing notes
-      mockSupabase.from.mockReturnValueOnce({
-        select: vi.fn().mockReturnValue({
-          eq: vi.fn().mockReturnValue({
-            single: vi.fn().mockResolvedValue(mockSuccessResponse({ revision_notes: ['First note'] })),
-          }),
-        }),
-      });
-
-      // Second call: update with appended notes
       const updateSpy = vi.fn().mockReturnValue({
         eq: vi.fn().mockReturnValue({
           is: vi.fn().mockReturnValue({
@@ -345,7 +335,7 @@ describe('ContentTasks Router', () => {
         }),
       });
 
-      mockSupabase.from.mockReturnValueOnce({ update: updateSpy });
+      mockSupabase.from.mockReturnValue({ update: updateSpy });
 
       const caller = contentTasksRouter.createCaller({ user: mockUser, supabase: mockSupabase });
       const result = await caller.requestChanges({
@@ -356,8 +346,7 @@ describe('ContentTasks Router', () => {
       expect(result.status).toBe('changes_requested');
       expect(updateSpy).toHaveBeenCalledWith(expect.objectContaining({
         status: 'changes_requested',
-        revision_notes: ['First note', 'Please fix the lighting'],
-        feedback: 'Please fix the lighting',
+        description: 'Please fix the lighting',
       }));
     });
   });

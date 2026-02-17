@@ -100,37 +100,13 @@ export const briefsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      // Get current version number
-      const { data: existingBriefs } = await ctx.supabase
-        .from('briefs')
-        .select('version')
-        .eq('campaign_id', input.campaignId)
-        .order('version', { ascending: false })
-        .limit(1);
-
-      const nextVersion = existingBriefs && existingBriefs.length > 0 
-        ? existingBriefs[0].version + 1 
-        : 1;
-
-      // Mark previous briefs as not latest
-      if (nextVersion > 1) {
-        await ctx.supabase
-          .from('briefs')
-          .update({ is_latest: false })
-          .eq('campaign_id', input.campaignId)
-          .eq('is_latest', true);
-      }
-
       // Create new brief
       const { data, error } = await ctx.supabase
         .from('briefs')
         .insert({
           campaign_id: input.campaignId,
-          raw_content: input.rawContent,
-          raw_file_url: input.rawFileUrl,
-          version: nextVersion,
-          is_latest: true,
-          uploaded_by: ctx.user.id,
+          raw_content: input.rawContent || '',
+          created_by: ctx.user.id,
         })
         .select()
         .single();
@@ -174,13 +150,14 @@ export const briefsRouter = router({
       }
 
       let structuredData;
-      let riskLevel: 'low' | 'medium' | 'high' | 'critical' = 'medium';
+      let riskLevel: 'low' | 'medium' | 'high' = 'medium';
 
       try {
         // Import and use AI package
         const { parseBrief, calculateRiskLevel } = await import('@precisionflow/ai');
         structuredData = await parseBrief(brief.raw_content);
-        riskLevel = calculateRiskLevel(structuredData.missing_info);
+        const calculatedRisk = calculateRiskLevel(structuredData.missing_info);
+        riskLevel = calculatedRisk === 'critical' ? 'high' : calculatedRisk;
       } catch (aiError) {
         console.error('AI processing error:', aiError);
         
@@ -319,13 +296,10 @@ export const briefsRouter = router({
       const { data, error } = await ctx.supabase
         .from('briefs')
         .update({
-          is_approved: true,
-          approved_by: ctx.user.id,
-          approved_at: new Date().toISOString(),
-          approval_comments: input.comments,
+          extraction_status: 'completed' as const,
+          updated_at: new Date().toISOString(),
         })
         .eq('id', input.id)
-        .is('deleted_at', null)
         .select()
         .single();
 
