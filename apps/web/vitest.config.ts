@@ -12,6 +12,7 @@ export default defineConfig({
     exclude: [
       'node_modules/**',
       'src/test/e2e/**',
+      '.next/**',
     ],
     coverage: {
       provider: 'v8',
