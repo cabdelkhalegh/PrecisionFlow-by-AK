@@ -112,7 +112,7 @@ export default function FinancePage() {
 
         {/* Tab Content */}
         {activeTab === 'overview' && (
-          <OverviewTab budgetData={budgetData} finData={finData} isLoading={isLoading} />
+          <OverviewTab budgetData={budgetData as BudgetSummary | undefined} finData={finData} isLoading={isLoading} />
         )}
         {activeTab === 'expenses' && (
           <ExpensesTab campaigns={campaigns.data?.campaigns || []} />

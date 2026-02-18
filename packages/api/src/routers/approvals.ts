@@ -5,6 +5,25 @@ import { logCreation, logUpdate } from '../utils/audit';
 // Approval type enum
 const approvalTypeSchema = z.enum(['brief', 'strategy', 'shortlist', 'content', 'budget_revision']);
 
+// Base approval row type to avoid deep Supabase type instantiation on joins
+type ApprovalRow = {
+  id: string;
+  campaign_id: string;
+  approval_type: string;
+  status: string;
+  approver_id: string;
+  approver_comments: string | null;
+  request_notes: string | null;
+  metadata: Record<string, unknown> | null;
+  approved_at: string | null;
+  override_status: string | null;
+  overridden_by: string | null;
+  created_at: string;
+  updated_at: string | null;
+  campaigns?: { name: string; client_id: string } | null;
+  users?: { full_name: string | null; email: string } | null;
+};
+
 // Approval status enum
 const approvalStatusSchema = z.enum(['pending', 'approved', 'rejected', 'overridden']);
 
@@ -40,7 +59,7 @@ export const approvalsRouter = router({
       const { data, error } = await query;
 
       if (error) throw new Error(error.message);
-      return data || [];
+      return (data || []) as unknown as ApprovalRow[];
     }),
 
   // Get pending approvals for current user
@@ -53,7 +72,7 @@ export const approvalsRouter = router({
       .order('created_at', { ascending: false });
 
     if (error) throw new Error(error.message);
-    return data || [];
+    return (data || []) as unknown as ApprovalRow[];
   }),
 
   // Get approval by ID
@@ -67,7 +86,7 @@ export const approvalsRouter = router({
         .single();
 
       if (error) throw new Error(error.message);
-      return data;
+      return data as unknown as ApprovalRow;
     }),
 
   // Get approval history for a campaign
@@ -81,7 +100,7 @@ export const approvalsRouter = router({
         .order('created_at', { ascending: false });
 
       if (error) throw new Error(error.message);
-      return data || [];
+      return (data || []) as unknown as ApprovalRow[];
     }),
 
   // Create approval request
@@ -120,7 +139,7 @@ export const approvalsRouter = router({
         userId: ctx.user.id,
       });
 
-      return data;
+      return data as unknown as ApprovalRow;
     }),
 
   // Approve
@@ -168,7 +187,7 @@ export const approvalsRouter = router({
         userId: ctx.user.id,
       });
 
-      return data;
+      return data as unknown as ApprovalRow;
     }),
 
   // Reject
@@ -216,7 +235,7 @@ export const approvalsRouter = router({
         userId: ctx.user.id,
       });
 
-      return data;
+      return data as unknown as ApprovalRow;
     }),
 
   // Override (Directors only)
@@ -263,7 +282,7 @@ export const approvalsRouter = router({
         });
       }
 
-      return data;
+      return data as unknown as ApprovalRow;
     }),
 
   // Count pending approvals for user

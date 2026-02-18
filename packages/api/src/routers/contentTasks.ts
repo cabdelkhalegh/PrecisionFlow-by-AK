@@ -286,7 +286,7 @@ export const contentTasksRouter = router({
         .eq('id', input.id)
         .single();
       
-      const existingNotes = task?.revision_notes || [];
+      const existingNotes = Array.isArray(task?.revision_notes) ? (task.revision_notes as string[]) : [];
       const newNotes = [...existingNotes, input.revision_notes];
       
       const { data, error } = await db

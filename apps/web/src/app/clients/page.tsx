@@ -21,6 +21,18 @@ export default function ClientsPage() {
     tier: tier || undefined,
   });
 
+  type ClientItem = {
+    id: string;
+    name: string;
+    company_name: string | null;
+    email: string;
+    tier: string | null;
+    industry: string | null;
+    [key: string]: unknown;
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const clients: ClientItem[] = (data as any)?.clients ?? [];
+
   return (
     <AppLayout>
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -105,7 +117,7 @@ export default function ClientsPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {data?.clients.map((client) => (
+                  {clients.map((client) => (
                     <tr key={client.id} className="hover:bg-gray-50">
                       <td className="whitespace-nowrap px-6 py-4">
                         <div className="font-medium text-gray-900">{client.name}</div>

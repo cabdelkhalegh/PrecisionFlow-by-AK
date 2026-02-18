@@ -3,13 +3,9 @@
  * Updated to match application code expectations and migrations 001-013
  */
 
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[]
+// Non-recursive JSON type to prevent TypeScript instantiation depth errors
+// (recursive Json definition causes TS2589 "excessively deep" in tRPC generic chains)
+export type Json = string | number | boolean | null | Record<string, unknown> | unknown[];
 
 export interface Database {
   public: {
@@ -48,6 +44,7 @@ export interface Database {
           updated_at?: string
           deleted_at?: string | null
         }
+        Relationships: []
       }
       clients: {
         Row: {
@@ -104,6 +101,7 @@ export interface Database {
           deleted_at?: string | null
           created_by?: string | null
         }
+        Relationships: []
       }
       campaigns: {
         Row: {
@@ -160,6 +158,15 @@ export interface Database {
           deleted_at?: string | null
           created_by?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "campaigns_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       briefs: {
         Row: {
@@ -216,6 +223,7 @@ export interface Database {
           deleted_at?: string | null
           created_by?: string | null
         }
+        Relationships: []
       }
       approvals: {
         Row: {
@@ -263,6 +271,7 @@ export interface Database {
           created_at?: string
           updated_at?: string | null
         }
+        Relationships: []
       }
       creators: {
         Row: {
@@ -379,6 +388,7 @@ export interface Database {
           updated_at?: string
           deleted_at?: string | null
         }
+        Relationships: []
       }
       campaign_shortlists: {
         Row: {
@@ -438,6 +448,7 @@ export interface Database {
           updated_at?: string
           deleted_at?: string | null
         }
+        Relationships: []
       }
       content_tasks: {
         Row: {
@@ -539,6 +550,7 @@ export interface Database {
           updated_at?: string
           deleted_at?: string | null
         }
+        Relationships: []
       }
       content_artifacts: {
         Row: {
@@ -613,6 +625,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
       budgets: {
         Row: {
@@ -648,6 +661,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
       expenses: {
         Row: {
@@ -692,6 +706,7 @@ export interface Database {
           updated_at?: string
           created_by?: string
         }
+        Relationships: []
       }
       invoices: {
         Row: {
@@ -733,6 +748,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
       payments: {
         Row: {
@@ -768,6 +784,7 @@ export interface Database {
           notes?: string | null
           created_at?: string
         }
+        Relationships: []
       }
       audit_logs: {
         Row: {
@@ -803,6 +820,7 @@ export interface Database {
           timestamp?: string | null
           created_at?: string
         }
+        Relationships: []
       }
       activity_logs: {
         Row: {
@@ -832,6 +850,7 @@ export interface Database {
           metadata?: Json | null
           created_at?: string
         }
+        Relationships: []
       }
     }
     Views: {

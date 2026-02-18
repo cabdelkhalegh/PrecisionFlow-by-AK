@@ -4,7 +4,7 @@
  */
 
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { Database } from '@precisionflow/database';
+import type { Database, Json } from '@precisionflow/database';
 
 /**
  * Log an audit trail entry
@@ -26,8 +26,8 @@ export async function logAudit(params: {
       table_name: tableName,
       record_id: recordId,
       action,
-      old_data: oldData,
-      new_data: newData,
+      old_data: oldData as Json | null,
+      new_data: newData as Json | null,
       user_id: userId,
       timestamp: new Date().toISOString(),
     });

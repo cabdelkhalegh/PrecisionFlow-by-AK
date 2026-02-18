@@ -30,7 +30,7 @@ export const clientsRouter = router({
 
       // Apply filters
       if (input.tier) {
-        query = query.eq('tier', input.tier);
+        query = query.eq('tier', input.tier as 'bronze' | 'silver' | 'gold' | 'platinum');
       }
 
       // Full-text search on name and company

@@ -23,7 +23,18 @@ export default function CampaignsPage() {
     status: statusFilter || undefined,
   });
 
-  const campaigns = data?.campaigns || [];
+  type CampaignItem = {
+    id: string;
+    name: string;
+    status: string;
+    risk_level: string | null;
+    budget_total: number | null;
+    start_date: string | null;
+    end_date: string | null;
+    client_id: string;
+    [key: string]: unknown;
+  };
+  const campaigns = (data?.campaigns || []) as CampaignItem[];
   
   // Apply client-side filtering for risk and search
   const filteredCampaigns = campaigns.filter((campaign) => {

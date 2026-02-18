@@ -8,6 +8,27 @@ import { router, protectedProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
 import { logCreation, logUpdate, logDeletion } from '../utils/audit';
 
+// Explicit type to prevent deep Supabase type instantiation via tRPC inference
+type CampaignRow = {
+  id: string;
+  client_id: string;
+  name: string;
+  description: string | null;
+  status: string;
+  risk_level: string | null;
+  budget_total: number | null;
+  budget: number | null;
+  start_date: string | null;
+  end_date: string | null;
+  tags: string[] | null;
+  campaign_manager_id: string | null;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+  created_by: string | null;
+  clients?: Record<string, unknown> | null;
+};
+
 export const campaignsRouter = router({
   /**
    * List campaigns for the authenticated user
@@ -48,7 +69,7 @@ export const campaignsRouter = router({
       }
 
       return {
-        campaigns: data || [],
+        campaigns: (data || []) as unknown as CampaignRow[],
         total: count || 0,
       };
     }),
@@ -73,7 +94,7 @@ export const campaignsRouter = router({
         });
       }
 
-      return data;
+      return data as unknown as CampaignRow;
     }),
 
   /**
