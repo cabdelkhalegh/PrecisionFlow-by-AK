@@ -19,10 +19,8 @@ export default function DashboardPage() {
 
   type DashCampaign = { id: string; name: string; status: string; risk_level: string | null; [key: string]: unknown };
   type DashClient = { id: string; name: string; company_name: string | null; tier: string | null; [key: string]: unknown };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dashCampaigns: DashCampaign[] = (campaignsQuery.data as any)?.campaigns ?? [];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dashClients: DashClient[] = (clientsQuery.data as any)?.clients ?? [];
+  const dashCampaigns: DashCampaign[] = ((campaignsQuery.data as Record<string, unknown>)?.campaigns ?? []) as DashCampaign[];
+  const dashClients: DashClient[] = ((clientsQuery.data as Record<string, unknown>)?.clients ?? []) as DashClient[];
 
   const creatorsQuery = trpc.creators.list.useQuery({
     limit: 1,

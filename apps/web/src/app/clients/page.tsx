@@ -30,8 +30,7 @@ export default function ClientsPage() {
     industry: string | null;
     [key: string]: unknown;
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const clients: ClientItem[] = (data as any)?.clients ?? [];
+  const clients: ClientItem[] = ((data as Record<string, unknown>)?.clients ?? []) as ClientItem[];
 
   return (
     <AppLayout>
