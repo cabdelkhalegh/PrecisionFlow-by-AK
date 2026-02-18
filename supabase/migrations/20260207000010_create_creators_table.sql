@@ -104,7 +104,7 @@ CREATE POLICY creators_select_policy ON public.creators
             EXISTS (
                 SELECT 1 FROM public.users
                 WHERE users.id = auth.uid()
-                AND (users.campaign_manager = true OR users.director = true OR users.admin = true)
+                AND users.role IN ('campaign_manager', 'director', 'admin')
             )
         )
     );
@@ -116,7 +116,7 @@ CREATE POLICY creators_insert_policy ON public.creators
         EXISTS (
             SELECT 1 FROM public.users
             WHERE users.id = auth.uid()
-            AND (users.campaign_manager = true OR users.director = true OR users.admin = true)
+            AND users.role IN ('campaign_manager', 'director', 'admin')
         )
     );
 
@@ -128,7 +128,7 @@ CREATE POLICY creators_update_policy ON public.creators
         AND EXISTS (
             SELECT 1 FROM public.users
             WHERE users.id = auth.uid()
-            AND (users.campaign_manager = true OR users.director = true OR users.admin = true)
+            AND users.role IN ('campaign_manager', 'director', 'admin')
         )
     );
 
@@ -139,7 +139,7 @@ CREATE POLICY creators_delete_policy ON public.creators
         EXISTS (
             SELECT 1 FROM public.users
             WHERE users.id = auth.uid()
-            AND users.admin = true
+            AND users.role = 'admin'
         )
     );
 
