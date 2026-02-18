@@ -18,7 +18,7 @@ export default function NewClientPage() {
     phone: '',
     industry: '',
     website: '',
-    tier: 'bronze',
+    tier: 'bronze' as 'bronze' | 'silver' | 'gold' | 'platinum',
   });
 
   const createClient = trpc.clients.create.useMutation({
