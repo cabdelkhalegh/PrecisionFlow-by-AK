@@ -130,7 +130,7 @@ export default function NewClientPage() {
               >
                 Cancel
               </Button>
-              <Button type="submit" loading={createClient.isLoading}>
+              <Button type="submit" loading={createClient.isPending}>
                 Create Client
               </Button>
             </div>

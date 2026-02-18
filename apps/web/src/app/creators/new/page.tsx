@@ -258,7 +258,7 @@ export default function NewCreatorPage() {
               <Button type="button" variant="secondary" onClick={() => router.back()}>
                 Cancel
               </Button>
-              <Button type="submit" loading={createCreator.isLoading}>
+              <Button type="submit" loading={createCreator.isPending}>
                 Add Creator
               </Button>
             </div>

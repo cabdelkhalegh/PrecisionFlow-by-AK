@@ -188,7 +188,7 @@ export function ApprovalCard({ approval, showActions = false, onUpdate }: Approv
                   onClick={handleApprove}
                   variant="primary"
                   size="sm"
-                  loading={approveMutation.isLoading}
+                  loading={approveMutation.isPending}
                 >
                   Confirm Approval
                 </Button>
@@ -196,7 +196,7 @@ export function ApprovalCard({ approval, showActions = false, onUpdate }: Approv
                   onClick={handleReject}
                   variant="danger"
                   size="sm"
-                  loading={rejectMutation.isLoading}
+                  loading={rejectMutation.isPending}
                 >
                   Confirm Rejection
                 </Button>

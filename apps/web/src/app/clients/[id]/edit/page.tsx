@@ -226,7 +226,7 @@ export default function EditClientPage() {
             >
               Cancel
             </Button>
-            <Button type="submit" variant="primary" loading={updateMutation.isLoading}>
+            <Button type="submit" variant="primary" loading={updateMutation.isPending}>
               Save Changes
             </Button>
           </div>

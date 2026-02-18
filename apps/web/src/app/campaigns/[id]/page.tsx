@@ -240,7 +240,7 @@ export default function CampaignDetailPage() {
                 <BriefViewer
                   brief={latestBrief}
                   onProcessWithAI={() => handleProcessWithAI(latestBrief.id)}
-                  isProcessing={processAIMutation.isLoading}
+                  isProcessing={processAIMutation.isPending}
                 />
               </div>
             ) : (

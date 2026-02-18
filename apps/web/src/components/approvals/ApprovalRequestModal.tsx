@@ -117,7 +117,7 @@ export function ApprovalRequestModal({
           <Button
             type="submit"
             variant="primary"
-            loading={createMutation.isLoading}
+            loading={createMutation.isPending}
           >
             Submit Request
           </Button>
