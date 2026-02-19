@@ -418,7 +418,7 @@ export default function ContentTaskDetailPage() {
                   <Button
                     variant="secondary"
                     onClick={handleRequestChanges}
-                    disabled={requestChanges.isLoading}
+                    disabled={requestChanges.isPending}
                   >
                     🔄 Request Changes
                   </Button>

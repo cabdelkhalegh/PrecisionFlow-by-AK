@@ -9,9 +9,8 @@ describe('Badge Component', () => {
   });
 
   it('renders all variants', () => {
-    const variants: Array<'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info'> = [
+    const variants: Array<'default' | 'success' | 'warning' | 'danger' | 'info'> = [
       'default',
-      'primary',
       'success',
       'warning',
       'danger',

@@ -13,6 +13,13 @@ concurrency:
 env:
   NODE_VERSION: '20'
   PNPM_VERSION: '8.15.9'
+  # Supabase keys – pulled from GitHub Secrets when available, otherwise
+  # safe placeholder values are used so builds and tests can run in CI
+  # without requiring a live Supabase project.
+  # Configure real values under Settings → Secrets → Actions.
+  NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'http://localhost:54321' }}
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key-for-ci' }}
+  SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-service-role-key-for-ci' }}
 
 permissions:
   contents: read

@@ -112,7 +112,7 @@ export default function FinancePage() {
 
         {/* Tab Content */}
         {activeTab === 'overview' && (
-          <OverviewTab budgetData={budgetData} finData={finData} isLoading={isLoading} />
+          <OverviewTab budgetData={budgetData as BudgetSummary | undefined} finData={finData} isLoading={isLoading} />
         )}
         {activeTab === 'expenses' && (
           <ExpensesTab campaigns={campaigns.data?.campaigns || []} />
@@ -172,8 +172,8 @@ function OverviewTab({
         <div className="p-6">
           <h3 className="text-lg font-semibold text-gray-900">Budget Allocation</h3>
           <div className="mt-4 space-y-3">
-            {budgetData?.budgets?.length > 0 ? (
-              budgetData.budgets.map((b: BudgetItem) => {
+            {(budgetData?.budgets?.length ?? 0) > 0 ? (
+              budgetData!.budgets.map((b: BudgetItem) => {
                 const usagePercent = b.original_amount > 0
                   ? Math.round(((b.original_amount - b.current_amount) / b.original_amount) * 100)
                   : 0;

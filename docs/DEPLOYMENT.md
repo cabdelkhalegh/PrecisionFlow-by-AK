@@ -133,17 +133,48 @@ node .next/standalone/server.js
 
 ---
 
+## CI/CD (GitHub Actions)
+
+The CI workflow uses Supabase environment variables for building the Next.js app and
+running E2E tests. Placeholder values are provided by default so CI passes without
+any extra configuration. To use a real Supabase project in CI, add these secrets
+under **Settings → Secrets and variables → Actions**:
+
+| Secret | Description |
+|--------|-------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous (public) key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key |
+
+---
+
 ## Database Setup
 
-### Apply Migrations
+### Option A: Supabase SQL Editor (Quickest)
 
-The database schema is managed through SQL migrations in `packages/database/supabase/migrations/`.
+1. Open your Supabase project dashboard
+2. Navigate to **SQL Editor → New query**
+3. Paste the contents of [`supabase/setup.sql`](../supabase/setup.sql) and click **Run**
+4. (Optional) Paste [`supabase/seed.sql`](../supabase/seed.sql) to populate sample data
 
-1. Go to your Supabase project dashboard
-2. Navigate to SQL Editor
-3. Run the migration files in order:
-   - `001_initial_schema.sql`
-   - Any subsequent migration files
+### Option B: Supabase CLI
+
+```bash
+# Link to your project (first time only)
+supabase link --project-ref <your-project-ref>
+
+# Apply all migrations
+supabase db push
+```
+
+### Option C: Individual Migrations via psql
+
+```bash
+# Run each migration file in order
+for f in supabase/migrations/*.sql; do
+  psql "$DATABASE_URL" -f "$f"
+done
+```
 
 ### Seed Data (Optional)
 
@@ -151,7 +182,7 @@ To populate the database with sample data:
 
 ```sql
 -- Run in Supabase SQL Editor
--- See packages/database/supabase/seed.sql
+-- See supabase/seed.sql
 ```
 
 ---

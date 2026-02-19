@@ -64,7 +64,7 @@ export function BriefUploadModal({
     }
   };
 
-  const isLoading = uploadMutation.isLoading || processAIMutation.isLoading;
+  const isLoading = uploadMutation.isPending || processAIMutation.isPending;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Upload Campaign Brief">

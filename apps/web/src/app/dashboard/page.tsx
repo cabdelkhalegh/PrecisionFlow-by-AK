@@ -17,6 +17,11 @@ export default function DashboardPage() {
     offset: 0,
   });
 
+  type DashCampaign = { id: string; name: string; status: string; risk_level: string | null; [key: string]: unknown };
+  type DashClient = { id: string; name: string; company_name: string | null; tier: string | null; [key: string]: unknown };
+  const dashCampaigns: DashCampaign[] = ((campaignsQuery.data as Record<string, unknown>)?.campaigns ?? []) as DashCampaign[];
+  const dashClients: DashClient[] = ((clientsQuery.data as Record<string, unknown>)?.clients ?? []) as DashClient[];
+
   const creatorsQuery = trpc.creators.list.useQuery({
     limit: 1,
     offset: 0,
@@ -109,13 +114,13 @@ export default function DashboardPage() {
           </div>
           {campaignsQuery.isLoading ? (
             <div className="py-8 text-center text-gray-500">Loading campaigns...</div>
-          ) : campaignsQuery.data?.campaigns.length === 0 ? (
+          ) : dashCampaigns.length === 0 ? (
             <div className="py-8 text-center text-gray-500">
               No campaigns yet. Create your first campaign to get started!
             </div>
           ) : (
             <div className="space-y-3">
-              {campaignsQuery.data?.campaigns.map((campaign) => (
+              {dashCampaigns.map((campaign) => (
                 <Link
                   key={campaign.id}
                   href={`/campaigns/${campaign.id}`}
@@ -158,13 +163,13 @@ export default function DashboardPage() {
           </div>
           {clientsQuery.isLoading ? (
             <div className="py-8 text-center text-gray-500">Loading clients...</div>
-          ) : clientsQuery.data?.clients.length === 0 ? (
+          ) : dashClients.length === 0 ? (
             <div className="py-8 text-center text-gray-500">
               No clients yet. Add your first client to start managing campaigns!
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {clientsQuery.data?.clients.map((client) => (
+              {dashClients.map((client) => (
                 <Link
                   key={client.id}
                   href={`/clients/${client.id}`}

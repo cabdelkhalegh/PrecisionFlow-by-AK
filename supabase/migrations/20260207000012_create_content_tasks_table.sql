@@ -119,7 +119,7 @@ CREATE POLICY content_tasks_select_policy ON public.content_tasks
             EXISTS (
                 SELECT 1 FROM public.users
                 WHERE users.id = auth.uid()
-                AND (users.director = true OR users.admin = true)
+                AND users.role IN ('director', 'admin')
             )
             OR
             -- Campaign manager
@@ -149,7 +149,7 @@ CREATE POLICY content_tasks_insert_policy ON public.content_tasks
                 OR EXISTS (
                     SELECT 1 FROM public.users
                     WHERE users.id = auth.uid()
-                    AND (users.director = true OR users.admin = true)
+                    AND users.role IN ('director', 'admin')
                 )
             )
         )
@@ -169,7 +169,7 @@ CREATE POLICY content_tasks_update_policy ON public.content_tasks
                     OR EXISTS (
                         SELECT 1 FROM public.users
                         WHERE users.id = auth.uid()
-                        AND (users.director = true OR users.admin = true)
+                        AND users.role IN ('director', 'admin')
                     )
                 )
             )

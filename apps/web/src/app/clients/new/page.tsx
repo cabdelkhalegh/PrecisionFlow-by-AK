@@ -18,7 +18,7 @@ export default function NewClientPage() {
     phone: '',
     industry: '',
     website: '',
-    tier: 'bronze',
+    tier: 'bronze' as 'bronze' | 'silver' | 'gold' | 'platinum',
   });
 
   const createClient = trpc.clients.create.useMutation({
@@ -130,7 +130,7 @@ export default function NewClientPage() {
               >
                 Cancel
               </Button>
-              <Button type="submit" loading={createClient.isLoading}>
+              <Button type="submit" loading={createClient.isPending}>
                 Create Client
               </Button>
             </div>

@@ -72,7 +72,7 @@ export default function ClientDetailPage() {
               </Button>
             </div>
           </div>
-          <Badge variant={getTierColor(client.tier)}>{client.tier.toUpperCase()}</Badge>
+          <Badge variant={getTierColor(client.tier ?? '')}>{(client.tier ?? '').toUpperCase()}</Badge>
         </div>
 
         {/* Client Information */}
@@ -81,7 +81,7 @@ export default function ClientDetailPage() {
           <div className="grid grid-cols-2 gap-6">
             <div>
               <h3 className="text-sm font-medium text-gray-500 mb-1">Company</h3>
-              <p className="text-gray-900">{client.company}</p>
+              <p className="text-gray-900">{client.company_name}</p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-gray-500 mb-1">Industry</h3>
@@ -111,7 +111,9 @@ export default function ClientDetailPage() {
             {client.address && (
               <div className="col-span-2">
                 <h3 className="text-sm font-medium text-gray-500 mb-1">Address</h3>
-                <p className="text-gray-900">{client.address}</p>
+                <p className="text-gray-900">
+                  {typeof client.address === 'string' ? client.address : JSON.stringify(client.address)}
+                </p>
               </div>
             )}
           </div>
