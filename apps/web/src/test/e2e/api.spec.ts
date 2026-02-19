@@ -23,9 +23,18 @@ test.describe('API Endpoints', () => {
 
   test('unknown API routes return appropriate status', async ({ request }) => {
     const response = await request.get('/api/nonexistent', { maxRedirects: 0 });
-    // Middleware redirects unauthenticated non-public routes to /login (302)
+    const status = response.status();
+    // Middleware redirects unauthenticated non-public routes to /login (302/307)
     // or Next.js returns 404 for truly unknown API routes
-    expect([302, 404]).toContain(response.status());
+    if (status === 404) {
+      expect(status).toBe(404);
+      return;
+    }
+
+    expect([302, 307]).toContain(status);
+    const location = response.headers()['location'];
+    expect(location).toBeTruthy();
+    expect(location).toContain('/login');
   });
 });
 
