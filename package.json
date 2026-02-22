@@ -1,8 +1,8 @@
 {
-  "name": "precisionflow",
+  "name": "ubuntu-tikit-os",
   "version": "1.0.0",
   "private": true,
-  "description": "PrecisionFlow - Campaign Execution & Intelligence Platform",
+  "description": "Ubuntu TiKiT OS - Campaign Execution & Intelligence Platform (Version B)",
   "keywords": [
     "influencer-marketing",
     "campaign-management",

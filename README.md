@@ -1,6 +1,8 @@
-# 🎯 PrecisionFlow by AK
+# 🎯 Ubuntu TiKiT OS (Version B)
 
-**PrecisionFlow — Campaign Execution & Intelligence Platform**
+**Formerly:** PrecisionFlow by AK
+**Current Version:** Ubuntu TiKiT OS
+**Status:** In Development (Pilot Phase)
 
 An enterprise-grade operating system for influencer marketing agencies. Built with campaign-centric design, AI-powered brief processing, multi-layer approval gates, and full financial traceability.
 
@@ -41,6 +43,7 @@ pnpm test               # 236+ unit & integration tests
 | **CI/CD** | ✅ GitHub Actions |
 | **Security** | ✅ Headers, rate limiting, auth middleware |
 | **Deployment** | ✅ Docker + Vercel ready |
+| **Key Feature** | ✅ **Campaign Pipeline Board (Kanban)** |
 
 ---
 
@@ -88,6 +91,7 @@ pnpm test               # 236+ unit & integration tests
 - Budget tracking and financial oversight
 - Multi-tab campaign detail: Overview, Shortlist, Content Tasks
 - AI-powered brief parsing with risk assessment
+- **New: Campaign Pipeline Board (Kanban)**
 
 ### Creator Management
 - Searchable creator database with platform filters
@@ -252,10 +256,10 @@ git commit -m "feat(scope): description"
 
 ## 📞 Contact
 
-**Product Owner:** PrecisionFlow Team
+**Product Owner:** Ubuntu TiKiT OS Team
 **Created by:** Adi Mustapha
 **Reviewed by:** Cherif Hamadi
-**Powered by:** PrecisionFlow by AK
+**Powered by:** Ubuntu TiKiT OS
 
 ---
 
@@ -275,7 +279,8 @@ git commit -m "feat(scope): description"
 | 0.4.0 | Feb 2026 | Creator management, content workflow, financial tracking |
 | 0.5.0 | Feb 2026 | AI brief parsing, auth, E2E tests, CI/CD, security hardening |
 | **1.0.0** | **Feb 2026** | **🚀 Production-ready: all phases complete** |
+| **Ubuntu TiKiT OS** | **Feb 2026** | **Renamed & Integrated Campaign Pipeline Board** |
 
 ---
 
-*Last updated: February 9, 2026*
+*Last updated: February 22, 2026*

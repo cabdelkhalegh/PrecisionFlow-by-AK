@@ -1,3 +1,3 @@
-import { createBrowserSupabaseClient } from '@/lib/supabase/client';
+import { getSupabase } from '@precisionflow/database';
 
-export const createClient = () => createBrowserSupabaseClient();
+export const createClient = () => getSupabase();

@@ -5,8 +5,8 @@ import { ToastProvider } from '@/components/ui/Toast';
 import { AuthProvider } from '@/lib/auth-provider';
 
 export const metadata: Metadata = {
-  title: 'PrecisionFlow - Campaign Execution & Intelligence',
-  description: 'Enterprise-grade operating system for influencer marketing agencies',
+  title: '🦖 Ubuntu TiKiT OS (Dev) - Campaign Intelligence',
+  description: 'Ubuntu TiKiT OS - Development Version (Version B)',
 };
 
 export default function RootLayout({

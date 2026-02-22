@@ -8,11 +8,12 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { BriefUploadModal } from '@/components/briefs/BriefUploadModal';
 import { BriefViewer } from '@/components/briefs/BriefViewer';
+import { CampaignPipelineBoard } from '@/components/campaigns/CampaignPipelineBoard';
 import { trpc } from '@/lib/trpc';
 import { useToast } from '@/components/ui/Toast';
 import Link from 'next/link';
 
-type TabKey = 'overview' | 'shortlist' | 'tasks';
+type TabKey = 'overview' | 'shortlist' | 'tasks' | 'pipeline';
 
 export default function CampaignDetailPage() {
   const params = useParams();
@@ -21,7 +22,7 @@ export default function CampaignDetailPage() {
   const { showToast } = useToast();
 
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<TabKey>('overview');
+  const [activeTab, setActiveTab] = useState<TabKey>('pipeline');
 
   // Fetch campaign
   const { data: campaignData, isLoading: campaignLoading, refetch: refetchCampaign } = trpc.campaigns.getById.useQuery(
@@ -130,9 +131,10 @@ export default function CampaignDetailPage() {
   };
 
   const tabs: { key: TabKey; label: string; count?: number }[] = [
+    { key: 'pipeline', label: 'Pipeline Board' },
     { key: 'overview', label: 'Overview' },
     { key: 'shortlist', label: 'Shortlist', count: shortlistData?.length ?? 0 },
-    { key: 'tasks', label: 'Content Tasks', count: tasksData?.length ?? 0 },
+    { key: 'tasks', label: 'Tasks', count: tasksData?.length ?? 0 },
   ];
 
   return (
@@ -192,6 +194,10 @@ export default function CampaignDetailPage() {
         </div>
 
         {/* Tab Content */}
+        {activeTab === 'pipeline' && (
+          <CampaignPipelineBoard campaignId={campaignId} />
+        )}
+
         {activeTab === 'overview' && (
           <>
             {/* Campaign Overview */}

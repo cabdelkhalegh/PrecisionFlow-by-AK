@@ -46,9 +46,12 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <div className="flex">
               {/* Logo */}
               <div className="flex flex-shrink-0 items-center">
-                <Link href="/dashboard" className="text-xl font-bold text-blue-600">
-                  🎯 PrecisionFlow
+                <Link href="/dashboard" className="text-xl font-bold text-orange-600">
+                  🦖 Ubuntu TiKiT OS
                 </Link>
+                <span className="ml-2 text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-semibold">
+                  DEV
+                </span>
               </div>
               {/* Navigation Links */}
               <div className="ml-6 flex space-x-8">
@@ -61,8 +64,8 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                       href={item.href}
                       className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium relative ${
                         isActive
-                          ? 'border-blue-500 text-gray-900'
-                          : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                          ? 'border-orange-500 text-gray-900'
+                          : 'border-transparent text-gray-500 hover:border-orange-300 hover:text-gray-700'
                       }`}
                     >
                       <span className="mr-2">{item.icon}</span>
@@ -83,7 +86,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 <>
                   <div className="flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2">
                     <span className="text-sm text-gray-700">{displayName}</span>
-                    <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-medium">
+                    <div className="h-8 w-8 rounded-full bg-orange-500 flex items-center justify-center text-white text-sm font-medium">
                       {initials}
                     </div>
                   </div>
@@ -97,7 +100,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               ) : (
                 <Link
                   href="/login"
-                  className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                  className="rounded-md bg-orange-600 px-3 py-2 text-sm font-medium text-white hover:bg-orange-700"
                 >
                   Sign In
                 </Link>
