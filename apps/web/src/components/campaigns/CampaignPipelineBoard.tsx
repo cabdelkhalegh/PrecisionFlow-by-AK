@@ -55,9 +55,9 @@ export function CampaignPipelineBoard({ campaignId }: CampaignPipelineBoardProps
 
   const columns = [
     { title: 'Proposed', items: proposedItems, type: 'shortlist', color: 'bg-gray-50' },
-    { title: 'Approved', items: approvedItems, type: 'shortlist', color: 'bg-blue-50' },
-    { title: 'In Production', items: productionTasks, type: 'task', color: 'bg-yellow-50' },
-    { title: 'Live / Done', items: completedTasks, type: 'task', color: 'bg-green-50' },
+    { title: 'Approved', items: approvedItems, type: 'shortlist', color: 'bg-yellow-100 border-t-4 border-yellow-500' },
+    { title: 'In Production', items: productionTasks, type: 'task', color: 'bg-yellow-50 border-t-4 border-yellow-300' },
+    { title: 'Live / Done', items: completedTasks, type: 'task', color: 'bg-green-50 border-t-4 border-green-500' },
   ];
 
   return (

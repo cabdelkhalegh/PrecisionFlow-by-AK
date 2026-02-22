@@ -2,54 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ubuntu TiKiT OS - Distinctive Orange/Amber Theme */
+/* Ubuntu TiKiT OS - Distinctive Gold/Amber Theme */
 @layer base {
   :root {
-    --primary: 24 100% 50%;        /* Vibrant Orange */
-    --primary-dark: 24 100% 40%;
-    --secondary: 45 100% 51%;      /* Golden Yellow */
-    --accent: 160 84% 39%;         /* Teal accent */
+    --primary: 43 96% 56%;         /* Vibrant Gold (#FFC107) */
+    --primary-dark: 35 92% 33%;    /* Dark Bronze (#A36B00) */
+    --secondary: 48 100% 50%;      /* Bright Yellow Gold */
+    --accent: 199 89% 48%;         /* Cyan Contrast */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 24 100% 50%;           /* Orange ring */
+    --border: 43 96% 85%;          /* Pale Gold Border */
+    --input: 43 96% 85%;
+    --ring: 43 96% 56%;            /* Gold ring */
   }
 }
 
 @layer components {
-  /* Override default blue colors with orange theme */
-  .bg-blue-50 { @apply bg-orange-50; }
-  .bg-blue-100 { @apply bg-orange-100; }
-  .bg-blue-500 { @apply bg-orange-500; }
-  .bg-blue-600 { @apply bg-orange-600; }
-  .text-blue-500 { @apply text-orange-500; }
-  .text-blue-600 { @apply text-orange-600; }
-  .text-blue-700 { @apply text-orange-700; }
-  .border-blue-500 { @apply border-orange-500; }
-  .hover\:bg-blue-600:hover { @apply hover:bg-orange-600; }
-  .hover\:text-blue-700:hover { @apply hover:text-orange-700; }
-  .hover\:border-gray-300:hover { @apply hover:border-orange-300; }
+  /* Override default blue colors with Gold theme */
+  .bg-blue-50 { @apply bg-yellow-50; }
+  .bg-blue-100 { @apply bg-yellow-100; }
+  .bg-blue-500 { @apply bg-yellow-500; }
+  .bg-blue-600 { @apply bg-yellow-600; }
+  .text-blue-500 { @apply text-yellow-600; }  /* Darker text for readability */
+  .text-blue-600 { @apply text-yellow-700; }
+  .text-blue-700 { @apply text-yellow-800; }
+  .border-blue-500 { @apply border-yellow-500; }
+  .hover\:bg-blue-600:hover { @apply hover:bg-yellow-600; }
+  .hover\:text-blue-700:hover { @apply hover:text-yellow-700; }
+  .hover\:border-gray-300:hover { @apply hover:border-yellow-400; }
   
   /* Badge overrides for Ubuntu TiKiT branding */
   .badge-primary {
-    @apply bg-orange-100 text-orange-700 border-orange-200;
+    @apply bg-yellow-100 text-yellow-800 border-yellow-300;
   }
 }
 
 /* Visual indicator banner */
 body::before {
-  content: "🦖 Ubuntu TiKiT OS (Dev Version)";
+  content: "🦖 Ubuntu TiKiT OS (Dev Version) - Gold Edition";
   display: block;
-  background: linear-gradient(90deg, #ff6b00 0%, #ffa500 100%);
-  color: white;
+  background: linear-gradient(90deg, #FFD700 0%, #B8860B 100%); /* Gold Gradient */
+  color: black;
   text-align: center;
   padding: 4px 0;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 12px;
   position: sticky;
   top: 0;
   z-index: 9999;
+  border-bottom: 1px solid #B8860B;
 }

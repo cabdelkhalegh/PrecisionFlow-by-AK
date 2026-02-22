@@ -46,11 +46,11 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <div className="flex">
               {/* Logo */}
               <div className="flex flex-shrink-0 items-center">
-                <Link href="/dashboard" className="text-xl font-bold text-orange-600">
+                <Link href="/dashboard" className="text-xl font-bold text-yellow-600">
                   🦖 Ubuntu TiKiT OS
                 </Link>
-                <span className="ml-2 text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-semibold">
-                  DEV
+                <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 border border-yellow-300 px-2 py-1 rounded-full font-bold shadow-sm">
+                  GOLD
                 </span>
               </div>
               {/* Navigation Links */}
@@ -64,14 +64,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                       href={item.href}
                       className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium relative ${
                         isActive
-                          ? 'border-orange-500 text-gray-900'
-                          : 'border-transparent text-gray-500 hover:border-orange-300 hover:text-gray-700'
+                          ? 'border-yellow-500 text-gray-900'
+                          : 'border-transparent text-gray-500 hover:border-yellow-300 hover:text-gray-700'
                       }`}
                     >
                       <span className="mr-2">{item.icon}</span>
                       {item.name}
                       {showCount && (
-                        <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-orange-500 rounded-full">
+                        <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-yellow-900 bg-yellow-400 rounded-full border border-yellow-500 shadow-sm">
                           {pendingCount}
                         </span>
                       )}
@@ -86,7 +86,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 <>
                   <div className="flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2">
                     <span className="text-sm text-gray-700">{displayName}</span>
-                    <div className="h-8 w-8 rounded-full bg-orange-500 flex items-center justify-center text-white text-sm font-medium">
+                    <div className="h-8 w-8 rounded-full bg-yellow-400 flex items-center justify-center text-yellow-900 text-sm font-bold border border-yellow-500">
                       {initials}
                     </div>
                   </div>
@@ -100,7 +100,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               ) : (
                 <Link
                   href="/login"
-                  className="rounded-md bg-orange-600 px-3 py-2 text-sm font-medium text-white hover:bg-orange-700"
+                  className="rounded-md bg-yellow-600 px-3 py-2 text-sm font-bold text-white shadow-sm hover:bg-yellow-700 border border-yellow-700"
                 >
                   Sign In
                 </Link>
